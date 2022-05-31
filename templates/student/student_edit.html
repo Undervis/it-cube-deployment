@@ -1,0 +1,40 @@
+{% extends 'create.html' %}
+
+{% block title %}Редактирование{% endblock %}
+{% block head_title %}Редактирование{% endblock %}
+{% block bdate_label %}<span class="ms-2 text-muted"><small>Дата рождения</small></span>{% endblock %}
+{% block petition_doc %}
+    {% if student.petition_doc %}
+        <span class="ms-2 text-muted ms-auto"><small>ЗАГРУЖЕНО</small></span>
+    {% else %}
+        <span class="ms-2 text-muted text-uppercase ms-auto"><small>Не загружено</small></span>
+    {% endif %}
+{% endblock %}
+{% block sms_doc %}
+    {% if student.sms_agreement_doc %}
+        <span class="ms-2 text-muted ms-auto"><small>ЗАГРУЖЕНО</small></span>
+    {% else %}
+        <span class="ms-2 text-muted text-uppercase ms-auto"><small>Не загружено</small></span>
+    {% endif %}
+{% endblock %}
+{% block agree_doc %}
+    {% if student.agreement_doc %}
+        <span class="ms-2 text-muted ms-auto"><small>ЗАГРУЖЕНО</small></span>
+    {% else %}
+        <span class="ms-2 text-muted text-uppercase ms-auto"><small>Не загружено</small></span>
+    {% endif %}
+{% endblock %}
+{% block passport_doc %}
+    {% if student.passport_copy_parent %}
+        <span class="ms-2 text-muted ms-auto"><small>ЗАГРУЖЕНО</small></span>
+    {% else %}
+        <span class="ms-2 text-muted text-uppercase ms-auto"><small>Не загружено</small></span>
+    {% endif %}
+{% endblock %}
+{% block passport_or_birth_doc %}
+    {% if student.passport_or_birth_copy %}
+        <span class="ms-2 text-muted ms-auto"><small>ЗАГРУЖЕНО</small></span>
+    {% else %}
+        <span class="ms-2 text-muted text-uppercase ms-auto"><small>Не загружено</small></span>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,110 @@
+<div class="card mt-4">
+    <span class="card-header text-center text-muted">Документы</span>
+    <div class="list-group list-group-flush">
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-1 pt-2">
+                        <span class="fs-6 text-muted">ЗАЯВЛЕНИЕ НА ЗАЧИСЛЕНИЕ</span><br>
+                    </div>
+                </div>
+                <div class="col-8 pe-1">
+                    <div class="p-1 alert alert-secondary h-100 m-0 hstack">
+                        {% if student.petition_doc %}
+                            <span class="fs-6 mx-auto ps-1">
+                                                <a class="text-decoration-none"
+                                                   href="/{{ student.petition_doc.name }}">{{ student.petition_doc.name|slice:"17:"|truncatechars:32 }}</a>
+                                            </span>
+                        {% else %}
+                            <span class="fs-6 mx-auto ps-1">Не загружено</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-1 pt-2">
+                        <span class="fs-6 text-muted">РАСПИСКА О ПОЛУЧЕНИИ SMS СООБЩЕНИЙ</span><br>
+                    </div>
+                </div>
+                <div class="col-8 pe-1">
+                    <div class="p-1 alert alert-secondary m-0 hstack h-100">
+                        {% if student.sms_agreement_doc %}
+                            <span class="fs-6 mx-auto ps-1">
+                                                <a class="text-decoration-none"
+                                                   href="/{{ student.sms_agreement_doc.name }}">{{ student.sms_agreement_doc.name|slice:"17:"|truncatechars:32 }}</a>
+                                            </span>
+                        {% else %}
+                            <span class="fs-6 mx-auto ps-1">Не загружено</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-1 pt-2">
+                        <span class="fs-6 text-muted text-uppercase">Согласие на обработку персональных данных</span><br>
+                    </div>
+                </div>
+                <div class="col-8 pe-1">
+                    <div class="p-1 alert alert-secondary m-0 hstack h-100">
+                        {% if student.agreement_doc %}
+                            <span class="fs-6 mx-auto ps-1">
+                                                <a class="text-decoration-none"
+                                                   href="/{{ student.agreement_doc.name }}">{{ student.agreement_doc.name|slice:"17:"|truncatechars:32 }}</a>
+                                            </span>
+                        {% else %}
+                            <span class="fs-6 mx-auto ps-1">Не загружено</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-1 pt-2">
+                        <span class="fs-6 text-muted text-uppercase">Копия паспорта родителя</span><br>
+                    </div>
+                </div>
+                <div class="col-8 pe-1">
+                    <div class="p-1 alert alert-secondary m-0 hstack h-100">
+                        {% if student.passport_copy_parent %}
+                            <span class="fs-6 mx-auto ps-1">
+                                                <a class="text-decoration-none"
+                                                   href="/{{ student.passport_copy_parent.name }}">{{ student.passport_copy_parent.name|slice:"17:"|truncatechars:32 }}</a>
+                                            </span>
+                        {% else %}
+                            <span class="fs-6 mx-auto ps-1">Не загружено</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-1 pt-2">
+                        <span class="fs-6 text-muted text-uppercase">Копия паспорта/свидетельства о рождении ребёнка</span><br>
+                    </div>
+                </div>
+                <div class="col-8 pe-1">
+                    <div class="p-1 alert alert-secondary m-0 hstack h-100">
+                        {% if student.passport_copy_parent %}
+                            <span class="fs-6 mx-auto ps-1">
+                                                <a class="text-decoration-none"
+                                                   href="/{{ student.passport_copy_parent.name }}">{{ student.passport_copy_parent.name|slice:"17:"|truncatechars:32 }}</a>
+                                            </span>
+                        {% else %}
+                            <span class="fs-6 mx-auto ps-1">Не загружено</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

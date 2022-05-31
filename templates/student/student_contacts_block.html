@@ -1,0 +1,62 @@
+{% load static %}
+<div class="card">
+    <span class="card-header text-center text-muted">Контакты</span>
+    <div class="list-group list-group-flush">
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-1 pt-2">
+                        <span class="fs-6 text-muted">ФИО РОДИТЕЛЯ</span><br>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="p-1">
+                        <span class="fs-5">{{ student.parent_name }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-1 pt-2">
+                        <span class="fs-6 text-muted">НОМЕР РОДИТЕЛЯ</span><br>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="p-1">
+                        <span class="fs-5">{{ student.parent_number }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-1 pt-2">
+                        <span class="fs-6 text-muted">АДРЕС ПРОЖИВАНИЯ</span><br>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="p-1">
+                        <span class="fs-5">{{ student.address }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-1 pt-2">
+                        <span class="fs-6 text-muted">ЭЛЕКТРОННЫЙ АДРЕС</span><br>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="p-1">
+                        <span class="fs-5">{{ student.email }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

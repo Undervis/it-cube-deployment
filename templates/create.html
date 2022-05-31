@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Создание заявки{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="hstack gap-4">
+            <h2 class="my-4 text-uppercase">{% block head_title %}Создание заявки{% endblock %}</h2>
+            <a class="btn btn-primary ms-auto border-0 text-uppercase" href="#" onclick="history.back()">Вернуться назад
+                <img class="ms-1" src="{% static 'icons/icons/arrow-return-left.svg' %}"
+                     style="filter: invert(1);">
+            </a>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    <div class="card mb-4">
+                        <span class="card-header text-muted">Данные ребёнка</span>
+                        <div class="p-3">
+                            <div class="row">
+                                <div class="mb-3 col">
+                                    {{ student_form.last_name }}
+                                </div>
+                                <div class="mb-3 col">
+                                    {{ student_form.first_name }}
+                                </div>
+                                <div class="mb-3 col">
+                                    {{ student_form.middle_name }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col">
+                                    <label for="birthInput" class="form-label">Дата рождения</label>
+                                    {% block bdate_label %}{% endblock %}
+                                    {{ student_form.birthday }}
+                                </div>
+                                <div class="mb-3 col">
+                                    <label for="socialInput" class="form-label">Социальная категория</label>
+                                    {{ student_form.social_category }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">
+                                    <label for="schoolInput" class="form-label">Школа</label>
+                                    <div class="input-group">
+                                        {{ student_form.school }}
+                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <label for="directionInput" class="form-label">Направление</label>
+                                    {{ student_form.direction }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <span class="card-header text-muted">Контактные данные</span>
+                        <div class="p-3">
+                            <div class="mb-3">
+                                <label for="addressInput" class="form-label">Адрес</label>
+                                {{ student_form.address }}
+                            </div>
+                            <div class="mb-3">
+                                <label for="parentNameInput" class="form-label">ФИО Родителя</label>
+                                {{ student_form.parent_name }}
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="emailInput" class="form-label">Электронный адрес</label>
+                                    {{ student_form.email }}
+                                </div>
+                                <div class="col">
+                                    <label for="phoneInput" class="form-label">Номер телефона родителя</label>
+                                    {{ student_form.parent_number }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <span class="text-muted card-header">Документы</span>
+                        <div class="p-3 pb-1">
+                            <div class="mb-3">
+                                <div class="hstack mb-2">
+                                    <label for="petitionFile">Заявление на зачисление</label>
+
+                                    {% block petition_doc %}{% endblock %}
+                                </div>
+                                {{ student_form.petition_doc }}
+                            </div>
+                            <div class="mb-3">
+                                <div class="hstack mb-2">
+                                    <label for="SMSAgreeFile">Расписка на получение SMS
+                                        сообщений</label>
+                                    {% block sms_doc %}{% endblock %}
+                                </div>
+                                {{ student_form.sms_agreement_doc }}
+                            </div>
+                            <div class="mb-3">
+                                <div class="hstack mb-2">
+                                    <label for="AgreeFile">Согласие на обработку персональных
+                                        данных</label>
+                                    {% block agree_doc %}{% endblock %}
+                                </div>
+                                {{ student_form.agreement_doc }}
+                            </div>
+                            <div class="mb-3">
+                                <div class="hstack mb-2">
+                                    <label for="passportFile">Копия паспорта родителя</label>
+                                    {% block passport_doc %}{% endblock %}
+                                </div>
+                                {{ student_form.passport_copy_parent }}
+                            </div>
+                            <div class="mb-3">
+                                <div class="hstack mb-2">
+                                    <label for="passportOrBirthFile">Копия паспорта/свидетельства о
+                                        рождении ребёнка</label>
+                                    {% block passport_or_birth_doc %}{% endblock %}
+                                </div>
+                                {{ student_form.passport_or_birth_copy }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-4" style="transform: translateY(-3px)">
+                        <span class="card-header">Пожалуйста проверьте все данные перед сохранением</span>
+                        <div class="row p-3">
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary border-0">Сохранить заявку</button>
+                            </div>
+                            <div class="col-8">
+                                {{ errors }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}

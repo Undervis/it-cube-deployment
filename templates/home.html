@@ -1,0 +1,329 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <header class="p-3 mb-3 border-bottom bg-white">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-9">
+                    <div class="hstack">
+                        <a href="/" class="text-dark text-decoration-none">
+                            <img src="{% static 'it-cube-logo.png' %}" height="32">
+                            <span style="transform: translateY(10%)"
+                                  class="d-inline-block fs-5 ms-3">IT-CUBE САТКА</span>
+                        </a>
+                        <div class="ms-auto">
+                            <a class="btn btn-success me-2 border-0 text-uppercase" href="/admin">
+                                <img class="me-2" src="{% static 'icons/icons/sliders.svg' %}"
+                                     style="filter: invert(1); transform: translateY(-12%)">Управление
+                            </a>
+                            <a class="btn btn-primary border-0 text-uppercase" href="{% url 'create' %}">
+                                <img class="me-1" src="{% static 'icons/icons/plus-circle.svg' %}"
+                                     style="filter: invert(1); transform: translateY(-5%)">
+                                Создать заявку</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="hstack">
+                        <form class="me-3 me-lg-3 w-100 input-group" role="search">
+                            <input type="search" class="form-control quicksearch" placeholder="Поиск..."
+                                   aria-label="Поиск">
+                        </form>
+
+                        <div class="dropdown ms-auto">
+                            <a href="#" class="link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                {% if user.userprofile.photo %}
+                                <img src="{{ user.userprofile.photo.url }}" alt="mdo" width="32" height="32"
+                                     class="rounded-circle" style="object-fit: cover">
+                                {% else %}
+                                <img src="{% static 'icons/icons/person-circle.svg' %}" width="32" height="32"
+                                     class="rounded-circle" style="object-fit: cover; filter: invert(1) brightness(30%)">
+                                {% endif %}
+                            </a>
+                            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                                <li><a class="dropdown-item" href="#">Новый проект...</a></li>
+                                <li><a class="dropdown-item" href="#">Настройка</a></li>
+                                <li><a class="dropdown-item" href="#">Профиль</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Выйти</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid px-4">
+        <div class="row">
+            <div class="col-9">
+                <div class="hstack gap-2">
+                    <p class="fs-4 text-uppercase">Учащиеся<span class="text-muted ms-2">{{ students.count }}</span></p>
+                    <div class="ms-auto mb-3">
+                        <div class="dropdown">
+                            <button type="button"
+                                    class="text-uppercase btn btn-outline-primary border-0 dropdown-toggle"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false" data-bs-auto-close="outside">
+                                Отображаемые поля
+                            </button>
+
+                            <div class="dropdown-menu" id="looking-fields">
+                                <div class="form-check mx-2" hidden>
+                                    <input type="checkbox" data-field="student" class="form-check-input"
+                                           id="studentCheck"
+                                           checked>
+                                    <label class="form-check-label" for="studentCheck">Дата рождения</label>
+                                </div>
+                                <div class="form-check mx-2">
+                                    <input type="checkbox" data-field="bdate" class="form-check-input" id="birthCheck"
+                                           checked>
+                                    <label class="form-check-label" for="birthCheck">Дата рождения</label>
+                                </div>
+                                <hr class="dropdown-divider">
+                                <div class="form-check mx-2">
+                                    <input type="checkbox" data-field="school" class="form-check-input"
+                                           id="schoolCheck">
+                                    <label class="form-check-label" for="schoolCheck">Школа</label>
+                                </div>
+                                <hr class="dropdown-divider">
+                                <div class="form-check mx-2">
+                                    <input type="checkbox" data-field="group" class="form-check-input" id="groupCheck"
+                                           checked>
+                                    <label class="form-check-label" for="groupCheck">Группа</label>
+                                </div>
+                                <hr class="dropdown-divider">
+                                <div class="form-check mx-2">
+                                    <input type="checkbox" data-field="parent-name" class="form-check-input"
+                                           id="parentNameCheck" checked>
+                                    <label class="form-check-label" for="parentNameCheck">ФИО Родителя</label>
+                                </div>
+                                <hr class="dropdown-divider">
+                                <div class="form-check mx-2">
+                                    <input type="checkbox" data-field="parent-number" class="form-check-input"
+                                           id="parentNumberCheck" checked>
+                                    <label class="form-check-label" for="parentNumberCheck">Номер Родителя</label>
+                                </div>
+                                <hr class="dropdown-divider">
+                                <div class="form-check mx-2">
+                                    <input type="checkbox" data-field="address" class="form-check-input"
+                                           id="addressCheck" checked>
+                                    <label class="form-check-label" for="addressCheck">Адрес</label>
+                                </div>
+                                <hr class="dropdown-divider">
+                                <div class="form-check mx-2">
+                                    <input type="checkbox" data-field="social-category" class="form-check-input"
+                                           id="socialCheck">
+                                    <label class="form-check-label" for="socialCheck">Социальная категория</label>
+                                </div>
+                                <hr class="dropdown-divider">
+                                <div class="form-check mx-2">
+                                    <input type="checkbox" data-field="status" class="form-check-input" id="statusCheck"
+                                           checked>
+                                    <label class="form-check-label" for="statusCheck">Статус</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card table-responsive" style="border-bottom: none">
+                    <table class="table table-hover mb-0 align-middle" id="main-table">
+                        <thead class="card-header align-middle">
+                        <tr>
+                            <td class="col text-center" data-field="student-name">ФИО</td>
+                            <td class="col text-center" data-field="bdate">Дата рождения</td>
+                            <td class="col text-center" data-field="school" hidden>Школа</td>
+                            <td class="col text-center" data-field="group">Группа</td>
+                            <td class="col text-center" data-field="parent-name">ФИО Родителя</td>
+                            <td class="col text-center" data-field="parent-number">Номер родителя</td>
+                            <td class="col text-center" data-field="address">Адрес проживания</td>
+                            <td class="col text-center" data-field="social-category" hidden>Социальная категория</td>
+                            <td class="col text-center" data-field="status">Статус</td>
+                        </tr>
+                        </thead>
+                        <tbody class="grid">
+                        {% if students %}
+                            {% for s in students %}
+                                <tr class="tr-item grid-item" ondblclick="location.href='/student/{{ s.id }}';"
+                                    style="cursor:pointer">
+                                    <td data-field="student-name" class="col text-center">
+                                        <span>{{ s.last_name }} {{ s.first_name }} {{ s.middle_name }}</span>
+                                    </td>
+                                    <td data-field="bdate" class="col text-center">
+                                        <span><a title="{{ s.birthday }}">{{ s.birthday|date:"d.m.Y" }}</a></span>
+                                    </td>
+                                    <td data-field="school" class="col text-center" hidden>
+                                        <span>{{ s.school.school_name }}</span>
+                                    </td>
+                                    <td data-field="group" class="col text-center">
+                                        {% if s.group %}
+                                            <span class="my-auto badge fw-normal bg-primary"
+                                                  title="Бюджет">{{ s.group.group_name }}</span>
+                                            {% if s.paid_group %}
+                                                <span class="my-auto badge fw-normal bg-success"
+                                                      title="Внебюджет">{{ s.paid_group }}</span>
+                                            {% endif %}
+                                        {% else %}
+                                            {% if s.paid_group %}
+                                                <span class="my-auto badge fw-normal bg-success"
+                                                      title="Внебюджет">{{ s.paid_group }}</span>
+                                            {% else %}
+                                                <span class="my-auto badge fw-normal bg-info">Не определено</span>
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+                                    <td data-field="parent-name" class="col text-center">
+                                        <span>{{ s.parent_name }}</span>
+                                    </td>
+                                    <td data-field="parent-number" class="col text-center">
+                                        <span>{{ s.parent_number }}</span>
+                                    </td>
+                                    <td data-field="address" class="col text-center">
+                                        <span>{{ s.address }}</span>
+                                    </td>
+                                    <td data-field="social-category" class="col text-center" hidden>
+                                        {% if s.social_category == 0 %}
+                                            <span>Отсутствует</span>
+                                        {% endif %}
+                                        {% if s.social_category == 1 %}
+                                            <span>Многодетная семья</span>
+                                        {% endif %}
+                                        {% if s.social_category == 2 %}
+                                            <span>Неполная семья</span>
+                                        {% endif %}
+                                        {% if s.social_category == 3 %}
+                                            <span>Инвалидность</span>
+                                        {% endif %}
+                                        {% if s.social_category == 4 %}
+                                            <span>ОВЗ</span>
+                                        {% endif %}
+                                    </td>
+                                    <td data-field="status" class="col text-center">
+                                        {% if s.status == 0 %}
+                                            {% if s.adding_document %}
+                                                <span class="badge bg-primary fw-normal text-wrap">Зачислен</span>
+                                            {% endif %}
+                                            {% if s.is_paid %}
+                                                <span class="badge bg-success fw-normal text-wrap">Внебюджет
+                                                    {% if s.paid_delete_doc %} | Отчислен {% endif %}
+                                                </span>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if s.status == 1 %}
+                                            <span class="badge bg-info fw-normal text-wrap">Рассматривается</span>
+                                            {% if s.is_paid %}
+                                                <span class="badge bg-success fw-normal text-wrap">Внебюджет
+                                                    {% if s.paid_delete_doc %} | Отчислен {% endif %}
+                                                </span>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if s.status == 2 %}
+                                            {% if s.delete_document %}
+                                                <span class="badge bg-danger fw-normal text-wrap">Отчислен</span>
+                                            {% endif %}
+                                            {% if s.is_paid %}
+                                                <span class="badge bg-success fw-normal text-wrap">Внебюджет
+                                                    {% if s.paid_delete_doc %} | Отчислен {% endif %}
+                                                </span>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if s.status == 3 %}
+                                            <span class="badge bg-info fw-normal text-wrap">Рассматривается</span>
+                                            {% if s.is_paid %}
+                                                <span class="badge bg-success fw-normal text-wrap">Внебюджет
+                                                    {% if s.paid_delete_doc %} | Отчислен {% endif %}
+                                                </span>
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <span class="p-3 mb-0">Учащихся в этом разделе нет</span>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-3">
+                <ul class="nav nav-pills nav-fill m-0 gap-2" id="rightTab" role="tablist"
+                    style="transform: translateY(-2px)">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="dirs-tab" data-bs-toggle="tab">Направления
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="teachers-tab" data-bs-toggle="tab">Педагоги
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="groups-tab" data-bs-toggle="tab">Группы
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="mt-2" style="transform: translateY(4px)">
+                    <div class="panel home tab-pane show" id="homePanel" role="tabpanel" aria-labelledby="dirs-tab"
+                         tabindex="0">
+                        <div>
+                            <a class="list-item active" href="/">
+                                <img src="{% static 'icons/icons/back.svg' %}" class="me-2"
+                                     style="transform: translateY(-5%)">
+                                Все</a><br>
+                            {% for d in directions %}
+                                <a class="list-item" href="/?direction={{ d.id }}">
+                                    <img src="{% static 'icons/icons/diagram-3.svg' %}" class="me-2"
+                                         style="transform: translateY(-5%)">
+                                    {{ d.direction_name }}</a><br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="panel home tab-pane" id="groupsPanel" role="tabpanel" aria-labelledby="groups-tab"
+                         tabindex="0" hidden>
+                        <div>
+                            <a class="list-item active" href="/">
+                                <img src="{% static 'icons/icons/back.svg' %}" class="me-2"
+                                     style="transform: translateY(-5%)">
+                                Все</a><br>
+                            {% for g in groups %}
+                                <a class="list-item" href="/?group={{ g.id }}">
+                                    <img src="{% static 'icons/icons/layers.svg' %}" class="me-2"
+                                         style="transform: translateY(-5%)">
+                                    {{ g.group_name }}</a><br>
+                            {% endfor %}
+                            {% for pg in paid_groups %}
+                                <a class="list-item" href="/?paidgroup={{ pg.id }}">
+                                    <img src="{% static 'icons/icons/layers-half.svg' %}" class="me-2"
+                                         style="transform: translateY(-5%)">
+                                    {{ pg.group_name }}</a><br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="panel home tab-pane" id="teachersPanel" role="tabpanel" aria-labelledby="teachers-tab"
+                         tabindex="0" hidden>
+                        <div>
+                            <a class="list-item active" href="/">
+                                <img src="{% static 'icons/icons/back.svg' %}" class="me-2"
+                                     style="transform: translateY(-5%)">
+                                Все</a><br>
+                            {% for t in teachers %}
+                                {% if t.userprofile.is_teacher %}
+                                    <a class="list-item" href="/?teacher={{ t.id }}">
+                                        <img src="{% static 'icons/icons/person.svg' %}" class="me-2"
+                                             style="transform: translateY(-5%)">
+                                        {{ t.userprofile.last_name }}
+                                        {{ t.userprofile.first_name }} {{ t.userprofile.middle_name }}</a><br>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'it-cube-logo.png' %}"/>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'google_sans/style.css' %}">
+    <link rel="stylesheet" href="{% static 'custom.css' %}">
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/isotope.js' %}"></script>
+    <script src="{% static 'js/cookie-jquery.js' %}"></script>
+    <script src="{% static 'js/table.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</head>
+<body style="font-family: Google Sans">
+{% block content %}
+{% endblock %}
+</body>
+</html>

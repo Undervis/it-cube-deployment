@@ -1,0 +1,52 @@
+{% load static %}
+<hr>
+<a class="list-item active danger" href="/edit/{{ student.id }}" data-bs-toggle="modal"
+   data-bs-target="#deletePaidModal">
+    <img src="{% static 'icons/icons/person-dash.svg' %}" class="me-2"
+         style="transform: translateY(-5%);">
+    Отчислить (Внебюджет)</a><br>
+<div class="modal fade" id="deletePaidModal" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="deletePaidModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Отчисление</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Закрыть"></button>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    {{ errors }}
+                    <div class="mb-3">
+                        <label for="commentInput" class="form-label">Причина отчисления</label>
+                        {{ paid_delete_form.paid_delete_comment }}
+                    </div>
+                    <div class="mb-3" id="deleteDateBlock">
+                        <label for="deleteDateInput" class="form-label">Дата
+                            отчисления</label>
+                        {{ paid_delete_form.paid_delete_date }}
+                    </div>
+                    <div id="deleteFileBlock">
+                        <span class="fs-5">Для отчисления обучающегося загрузите приказ о зачислении</span>
+                        <br>
+                        <div class="alert alert-danger">
+                            <b class="text-danger">ВНИМАНИЕ</b><br>
+                            <span>Проверьте приказ на наличие ошибок прежде чем загружать</span><br>
+                            <span>После отчисления его нельзя будет изменить</span>
+                        </div>
+                        {{ paid_delete_form.paid_delete_doc }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Закрыть
+                    </button>
+                    <button type="submit" id="addingBtn" class="btn btn-danger border-0">
+                        Отчислить
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

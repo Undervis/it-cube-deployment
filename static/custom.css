@@ -1,0 +1,106 @@
+.bg-warning {
+    background: linear-gradient(-45deg, rgba(255, 193, 7, 1) 0%, rgb(255, 210, 78) 100%);
+}
+
+.bg-primary {
+    background: linear-gradient(45deg, rgba(13, 110, 253, 1) 0%, rgb(0, 178, 255) 100%);
+}
+
+.bg-info {
+    background: linear-gradient(90deg, #2ed6e6 0%, #66a6ff 100%)
+}
+
+.bg-success {
+    background: linear-gradient(90deg, #11998e 0%, #30cf6c 100%)
+}
+
+.bg-danger {
+    background: linear-gradient(90deg, #cb356b 0%, #bd3f32 100%);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, rgba(13, 110, 253, 1) 0%, rgb(0, 149, 255) 100%);
+}
+
+.btn-success {
+    background: linear-gradient(90deg, #11998e 0%, #30cf6c 100%)
+}
+
+body {
+    background: white;
+}
+
+.rounded-circle:hover {
+    box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+}
+
+.btn:hover {
+    box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+}
+
+.student.card:hover {
+    border-color: rgb(13, 110, 253);
+    color: rgb(13, 110, 253);
+}
+
+.card {
+    box-shadow: none;
+}
+
+.panel.home {
+    padding: 2%;
+    border-radius: 5px;
+    border: 1px solid #e0e1e4;
+}
+
+.panel a {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 1%;
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.panel a.active {
+    text-decoration: none;
+    color: white;
+    background: linear-gradient(45deg, rgba(13, 110, 253, 1) 0%, rgb(0, 149, 255) 100%);
+    border-radius: 5px;
+}
+
+.panel a.active.danger {
+    background: linear-gradient(90deg, #cb356b 0%, #bd3f32 100%);
+}
+
+.panel a.active img {
+    filter: invert(1);
+}
+
+.panel a:hover img {
+    filter: invert(1);
+}
+
+.panel a:hover {
+    text-decoration: none;
+    color: white;
+    background: rgb(13, 110, 253);
+    background: linear-gradient(45deg, rgba(13, 110, 253, 1) 0%, rgb(0, 149, 255) 100%);
+    border-radius: 5px;
+    box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+}
+
+.btn-outline-primary {
+    background-color: transparent;
+}
+
+.btn-outline-primary:hover {
+    color: white;
+    background: rgb(13, 110, 253);
+    background: linear-gradient(45deg, rgba(13, 110, 253, 1) 0%, rgb(0, 149, 255) 100%);
+    box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+}
+
+:root {
+    --color-text: #212529;
+    --color-secondary: #6c757d;
+}

@@ -1,0 +1,123 @@
+<div class="card mb-4">
+    <span class="card-header text-center text-muted">Бюджет</span>
+    <div class="list-group list-group-flush">
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-1 pt-2">
+                        <span class="fs-6 text-muted text-uppercase">Группа</span><br>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="p-1">
+                        {% if student.group %}
+                            <span class="fs-5">{{ student.group }}</span>
+                        {% else %}
+                            <span class="fs-5">Не определено</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-1 pt-2">
+                        <span class="fs-6 text-muted text-uppercase">Направление</span><br>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="p-1">
+                        <span class="fs-5">{{ student.direction }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if student.adding_document %}
+            <div class="list-group-item bg-light">
+                <p class="mb-0 text-primary text-center">Зачисление</p>
+            </div>
+            <div class="list-group-item">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="p-1 pt-2">
+                            <span class="fs-6 text-muted text-uppercase">Дата зачисления</span><br>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="p-1">
+                            <span class="fs-5">{{ student.adding_date }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="p-1 pt-2">
+                            <span class="fs-6 text-muted text-uppercase">Приказ о зачислении</span><br>
+                        </div>
+                    </div>
+                    <div class="col-8 pe-1">
+                        <div class="p-1 alert alert-secondary m-0 hstack h-100">
+                                        <span class="fs-6 mx-auto ps-1">
+                                                <a class="text-decoration-none"
+                                                   href="/{{ student.adding_document.name }}">{{ student.adding_document.name|slice:"17:"|truncatechars:32 }}</a>
+                                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if student.delete_document %}
+            <div class="list-group-item bg-light">
+                <p class="mb-0 text-danger text-center">Отчисление</p>
+            </div>
+            <div class="list-group-item">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="p-1 pt-2">
+                            <span class="fs-6 text-muted text-uppercase">Причина отчисления</span><br>
+                        </div>
+                    </div>
+                    <div class="col-8 pe-1">
+                        <div class="p-1">
+                            <span class="fs-5">{{ student.delete_comment }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="p-1 pt-2">
+                            <span class="fs-6 text-muted text-uppercase">Дата отчисления</span><br>
+                        </div>
+                    </div>
+                    <div class="col-8 pe-1">
+                        <div class="p-1">
+                            <span class="fs-5">{{ student.delete_date }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="p-1 pt-2">
+                            <span class="fs-6 text-muted text-uppercase">Приказ об отчислении</span><br>
+                        </div>
+                    </div>
+                    <div class="col-8 pe-1">
+                        <div class="p-1 alert alert-secondary m-0 hstack h-100">
+                                        <span class="fs-6 mx-auto ps-1">
+                                                <a class="text-decoration-none"
+                                                   href="/{{ student.delete_document.name }}">{{ student.delete_document.name|slice:"17:"|truncatechars:32 }}</a>
+                                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>

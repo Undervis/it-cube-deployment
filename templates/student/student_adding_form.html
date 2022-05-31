@@ -1,0 +1,63 @@
+{% load static %}
+<a class="list-item active" href="#" data-bs-toggle="modal"
+   data-bs-target="#staticBackdrop">
+    <img src="{% static 'icons/icons/person-plus.svg' %}" class="me-1"
+         style="transform: translateY(-5%)">Зачислить на бюджет</a>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Зачисление</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Закрыть"></button>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    {{ errors }}
+                    {% if student.status == 1 %}
+                        <b class="text-danger">ЗАЧИСЛЕНИЕ НЕВОЗМОЖНО</b><br>
+                        <span>У данного абитуриента загружены не все документы</span><br><br>
+                        <span>Загрузите все документы чтобы зачислить</span>
+                    {% else %}
+                        <div class="mb-3">
+                            <label for="groupInput" class="form-label">Группа</label>
+                            {{ student_form.group }}
+                        </div>
+                        <div class="mb-3" id="addingDateBlock">
+                            <label for="addingDateInput" class="form-label">Дата
+                                зачисления</label>
+                            {{ student_form.adding_date }}
+                        </div>
+                        <div id="addingFileBlock">
+                            <span class="fs-5">Для зачисления абитуриента загрузите приказ о зачислении</span>
+                            <br>
+                            <div class="alert alert-danger">
+                                <b class="text-danger">ВНИМАНИЕ</b><br>
+                                <span>Проверьте приказ на наличие ошибок прежде чем загружать</span><br>
+                                <span>После зачисления его нельзя будет изменить</span>
+                            </div>
+                            {{ student_form.adding_document }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    {% if student.status == 1 %}
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Закрыть
+                        </button>
+                    {% else %}
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Закрыть
+                        </button>
+                        <button type="submit" id="addingBtn" class="btn btn-primary border-0">
+                            Зачислить
+                        </button>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
