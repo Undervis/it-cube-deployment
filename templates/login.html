@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}
+    Вход
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <img src="{% static 'it-cube-logo.png' %}"
+             style="width: 25%; margin-top: 5rem; display: block; margin-left: auto; margin-right: auto; opacity: 85%">
+        <div class="col">
+            <div class="card"
+                 style="margin: 5% auto 5%; max-width: 30rem">
+                <form action="{% url 'login' %}" class="card-body" method="post">
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <p><b>Неверный логин или пароль</b></p>
+                            <span><i>Логин и пароль чувствительны к регистру, убедитесь что выключен CapsLock</i></span>
+                        </div>
+                    {% endif %}
+                    <h4 class="h4 mb-2 fw-normal">Пожалуйста, войдите</h4>
+                    {% csrf_token %}
+                    <div class="form-floating mb-2">
+                        {{ form.username }}
+                        <label for="floatingInput">Логин</label>
+                    </div>
+                    <div class="form-floating mb-4">
+                        {{ form.password }}
+                        <label for="floatingPassword">Пароль</label>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-dark" type="submit">Войти
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

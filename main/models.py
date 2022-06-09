@@ -26,15 +26,6 @@ class Direction(models.Model):
         return self.direction_name
 
 
-class School(models.Model):
-    school_name = models.CharField('Название образовательной организации', max_length=64)
-
-    class Meta:
-        verbose_name_plural = 'Образовательные организации'
-
-    def __str__(self):
-        return self.school_name
-
 
 class PaidGroup(models.Model):
     group_name = models.CharField('Название группы', max_length=64)
@@ -85,12 +76,12 @@ class Student(models.Model):
     group = models.ForeignKey(Group, on_delete=models.PROTECT, verbose_name='Группа', blank=True, null=True)
     parent_name = models.CharField('ФИО Родителя', max_length=96)
     parent_number = PhoneNumberField('Номер телефона родителя')
-    address = models.CharField('Адрес проживания', max_length=96)
+    address = models.CharField('Адрес проживания', max_length=96, blank=True, null=True)
     email = models.EmailField('Электронный адрес')
     status = models.IntegerField("Статус", choices=student_status, default=3)
     social_category = models.IntegerField("Социальная категория", choices=student_social_category, default=0)
-    school = models.ForeignKey(School, on_delete=models.PROTECT, verbose_name='Школа')
-    petition_date = models.DateField("Дата подачи заявления", auto_now=True)
+    school = models.CharField(max_length=128, verbose_name='Школа', blank=True, null=True)
+    petition_date = models.DateTimeField("Дата подачи заявления", blank=True, null=True)
     direction = models.ForeignKey(Direction, on_delete=models.PROTECT, verbose_name='Направление')
 
     # Зачисление/отчисление

@@ -37,7 +37,7 @@
             <span class="fs-4 ms-3 text-uppercase">{{ student.school }}</span>
         </div>
         <div class="row mt-4">
-            <div class="col-5">
+            <div class="col">
                 {% if student.status == 3 or student.status == 1 %}
                     <div class="card mb-4">
                         <div class="row p-2">
@@ -61,42 +61,50 @@
                     {% include 'student/student_paid_block.html' %}
                 {% endif %}
             </div>
-            <div class="col-5">
+            <div class="col">
                 {% include 'student/student_contacts_block.html' %}
-                {% include 'student/student_docs_block.html' %}
+                {% if user_can_edit %}
+                    {% include 'student/student_docs_block.html' %}
+                {% endif %}
             </div>
-            <div class="col-2">
-                <p class="fs-4 text-uppercase">Действия</p>
-                <div class="panel">
-                    {% if student.status == 2 and student.paid_delete_doc %}
-                        <p class="alert alert-info">Обучающийся отчислен, операции невозможны</p>
-                    {% endif %}
-                    {% if student.status == 2 and not student.is_paid %}
-                        <p class="alert alert-info">Обучающийся отчислен, операции невозможны</p>
-                    {% endif %}
-                    {% if student.status != 2 %}
-                        {% if student.status == 3 or student.status == 1 or not student.group %}
-                            {% include 'student/student_adding_form.html' %}
+            {% if user_can_edit %}
+                <div class="col-2">
+                    <p class="fs-4 text-uppercase">Действия</p>
+                    <div class="panel">
+                        {% if student.status == 2 and student.paid_delete_doc %}
+                            <p class="alert alert-info">Обучающийся отчислен, операции невозможны</p>
                         {% endif %}
-                    {% endif %}
-                    {% if not student.is_paid %}
-                        {% include 'student/student_paid_adding_form.html' %}
-                    {% endif %}
-                    {% if student.status != 2 or not student.paid_delete_doc %}
-                        <a class="list-item active" href="/edit/{{ student.id }}">
-                            <img src="{% static 'icons/icons/pencil-square.svg' %}" class="me-2"
-                                 style="transform: translateY(-5%);">
-                            Редактировать</a><br>
-                    {% endif %}
-                    {% if student.status == 0 and student.group %}
-                        {% include 'student/student_delete_form.html' %}
-                    {% endif %}
-                    {% if student.is_paid and not student.paid_delete_doc %}
-                        {% include 'student/student_paid_delete_form.html' %}
-                    {% endif %}
-                </div>
+                        {% if student.status == 2 and not student.is_paid %}
+                            <p class="alert alert-info">Обучающийся отчислен, операции невозможны</p>
+                        {% endif %}
+                        {% if user_can_adding %}
+                            {% if student.status != 2 %}
+                                {% if student.status == 3 or student.status == 1 or not student.group %}
+                                    {% include 'student/student_adding_form.html' %}
+                                {% endif %}
+                            {% endif %}
+                            {% if not student.is_paid %}
+                                {% include 'student/student_paid_adding_form.html' %}
+                            {% endif %}
+                        {% endif %}
+                        {% if student.status != 2 or not student.paid_delete_doc %}
+                            <a class="list-item active" href="/edit/{{ student.id }}">
+                                <img src="{% static 'icons/icons/pencil-square.svg' %}" class="me-2"
+                                     style="transform: translateY(-5%);">
+                                Редактировать</a><br>
+                        {% endif %}
+                        {% if user_can_delete %}
+                            {% if student.status == 0 and student.group %}
+                                {% include 'student/student_delete_form.html' %}
+                            {% endif %}
+                            {% if student.is_paid and not student.paid_delete_doc %}
+                                {% include 'student/student_paid_delete_form.html' %}
+                            {% endif %}
+                        {% endif %}
+                    </div>
 
-            </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

@@ -102,7 +102,10 @@ $(document).ready(function () {
             var buttonResult = buttonFilter ? $this.is(buttonFilter) : true;
             return searchResult && buttonResult;
         },
-        
+        getSortData: {
+            name: '.name'
+        },
+        sortBy: name
     })
 
     var $quicksearch = $('.quicksearch').keyup(debounce(function () {
@@ -114,6 +117,11 @@ $(document).ready(function () {
         qsRegex = new RegExp($quicksearch.val(), 'gi');
         $grid.isotope();
     }))
+
+    $('#table-header').on('click', 'a', function (){
+        let sortByValue = $(this).attr('data-sort');
+        $grid.isotope({ sortBy: sortByValue });
+    })
 
 // flatten object by concatting values
     function concatValues(obj) {

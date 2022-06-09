@@ -13,16 +13,18 @@
                             <span style="transform: translateY(10%)"
                                   class="d-inline-block fs-5 ms-3">IT-CUBE САТКА</span>
                         </a>
-                        <div class="ms-auto">
-                            <a class="btn btn-success me-2 border-0 text-uppercase" href="/admin">
-                                <img class="me-2" src="{% static 'icons/icons/sliders.svg' %}"
-                                     style="filter: invert(1); transform: translateY(-12%)">Управление
-                            </a>
-                            <a class="btn btn-primary border-0 text-uppercase" href="{% url 'create' %}">
-                                <img class="me-1" src="{% static 'icons/icons/plus-circle.svg' %}"
-                                     style="filter: invert(1); transform: translateY(-5%)">
-                                Создать заявку</a>
-                        </div>
+                        {% if user_can_edit %}
+                            <div class="ms-auto">
+                                <a class="btn btn-success me-2 border-0 text-uppercase" href="/admin">
+                                    <img class="me-2" src="{% static 'icons/icons/sliders.svg' %}"
+                                         style="filter: invert(1); transform: translateY(-12%)">Управление
+                                </a>
+                                <a class="btn btn-primary border-0 text-uppercase" href="{% url 'create' %}">
+                                    <img class="me-1" src="{% static 'icons/icons/plus-circle.svg' %}"
+                                         style="filter: invert(1); transform: translateY(-5%)">
+                                    Создать заявку</a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-3">
@@ -36,21 +38,27 @@
                             <a href="#" class="link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                                data-bs-toggle="dropdown" aria-expanded="false">
                                 {% if user.userprofile.photo %}
-                                <img src="{{ user.userprofile.photo.url }}" alt="mdo" width="32" height="32"
-                                     class="rounded-circle" style="object-fit: cover">
+                                    <img src="{{ user.userprofile.photo.url }}" alt="mdo" width="32" height="32"
+                                         class="rounded-circle" style="object-fit: cover">
                                 {% else %}
-                                <img src="{% static 'icons/icons/person-circle.svg' %}" width="32" height="32"
-                                     class="rounded-circle" style="object-fit: cover; filter: invert(1) brightness(30%)">
+                                    <img src="{% static 'icons/icons/person-circle.svg' %}" width="32" height="32"
+                                         class="rounded-circle"
+                                         style="object-fit: cover; filter: invert(1) brightness(30%)">
                                 {% endif %}
                             </a>
                             <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="#">Новый проект...</a></li>
-                                <li><a class="dropdown-item" href="#">Настройка</a></li>
+                                <li><span class="dropdown-item-text fw-bold" href="#">
+                                    {{ user.userprofile.last_name }} {{ user.userprofile.first_name }}
+                                </span></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Тёмная тема</a></li>
                                 <li><a class="dropdown-item" href="#">Профиль</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Выйти</a></li>
+                                <li><a class="dropdown-item" href="/logout">Выйти</a></li>
                             </ul>
                         </div>
                     </div>
@@ -131,11 +139,11 @@
                     </div>
                 </div>
 
-                <div class="card table-responsive" style="border-bottom: none">
+                <div class="card table-responsive mb-4" style="border-bottom: none">
                     <table class="table table-hover mb-0 align-middle" id="main-table">
                         <thead class="card-header align-middle">
-                        <tr>
-                            <td class="col text-center" data-field="student-name">ФИО</td>
+                        <tr id="table-header">
+                            <td class="col text-center" data-sort="name" data-field="student-name">ФИО</td>
                             <td class="col text-center" data-field="bdate">Дата рождения</td>
                             <td class="col text-center" data-field="school" hidden>Школа</td>
                             <td class="col text-center" data-field="group">Группа</td>
@@ -151,14 +159,16 @@
                             {% for s in students %}
                                 <tr class="tr-item grid-item" ondblclick="location.href='/student/{{ s.id }}';"
                                     style="cursor:pointer">
+
                                     <td data-field="student-name" class="col text-center">
-                                        <span>{{ s.last_name }} {{ s.first_name }} {{ s.middle_name }}</span>
+                                        <span class="petition-date" hidden>{{ s.petition_date|date:"U" }}</span>
+                                        <span class="name">{{ s.last_name }} {{ s.first_name }} {{ s.middle_name }}</span>
                                     </td>
                                     <td data-field="bdate" class="col text-center">
                                         <span><a title="{{ s.birthday }}">{{ s.birthday|date:"d.m.Y" }}</a></span>
                                     </td>
                                     <td data-field="school" class="col text-center" hidden>
-                                        <span>{{ s.school.school_name }}</span>
+                                        <span>{{ s.school }}</span>
                                     </td>
                                     <td data-field="group" class="col text-center">
                                         {% if s.group %}
@@ -209,33 +219,20 @@
                                                 <span class="badge bg-primary fw-normal text-wrap">Зачислен</span>
                                             {% endif %}
                                             {% if s.is_paid %}
-                                                <span class="badge bg-success fw-normal text-wrap">Внебюджет
+                                                <span class="badge bg-success mt-1 fw-normal text-wrap">Внебюджет
                                                     {% if s.paid_delete_doc %} | Отчислен {% endif %}
                                                 </span>
                                             {% endif %}
                                         {% endif %}
-                                        {% if s.status == 1 %}
+                                        {% if s.status == 1 or s.status == 3 %}
                                             <span class="badge bg-info fw-normal text-wrap">Рассматривается</span>
-                                            {% if s.is_paid %}
-                                                <span class="badge bg-success fw-normal text-wrap">Внебюджет
-                                                    {% if s.paid_delete_doc %} | Отчислен {% endif %}
-                                                </span>
-                                            {% endif %}
                                         {% endif %}
                                         {% if s.status == 2 %}
                                             {% if s.delete_document %}
                                                 <span class="badge bg-danger fw-normal text-wrap">Отчислен</span>
                                             {% endif %}
                                             {% if s.is_paid %}
-                                                <span class="badge bg-success fw-normal text-wrap">Внебюджет
-                                                    {% if s.paid_delete_doc %} | Отчислен {% endif %}
-                                                </span>
-                                            {% endif %}
-                                        {% endif %}
-                                        {% if s.status == 3 %}
-                                            <span class="badge bg-info fw-normal text-wrap">Рассматривается</span>
-                                            {% if s.is_paid %}
-                                                <span class="badge bg-success fw-normal text-wrap">Внебюджет
+                                                <span class="badge bg-success mt-1 fw-normal text-wrap">Внебюджет
                                                     {% if s.paid_delete_doc %} | Отчислен {% endif %}
                                                 </span>
                                             {% endif %}
@@ -250,80 +247,31 @@
                     </table>
                 </div>
             </div>
-            <div class="col-3">
-                <ul class="nav nav-pills nav-fill m-0 gap-2" id="rightTab" role="tablist"
-                    style="transform: translateY(-2px)">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="dirs-tab" data-bs-toggle="tab">Направления
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="teachers-tab" data-bs-toggle="tab">Педагоги
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="groups-tab" data-bs-toggle="tab">Группы
-                        </button>
-                    </li>
-                </ul>
-
-                <div class="mt-2" style="transform: translateY(4px)">
-                    <div class="panel home tab-pane show" id="homePanel" role="tabpanel" aria-labelledby="dirs-tab"
-                         tabindex="0">
-                        <div>
-                            <a class="list-item active" href="/">
-                                <img src="{% static 'icons/icons/back.svg' %}" class="me-2"
+            {% if not user.userprofile.is_teacher %}
+                {% include 'home_rightmenu_manager.html' %}
+            {% else %}
+                <div class="col-3">
+                    <p class="fs-4 text-uppercase">Группы</p>
+                    <div class="panel home">
+                        <a class="list-item active" href="/">
+                            <img src="{% static 'icons/icons/back.svg' %}" class="me-2"
+                                 style="transform: translateY(-5%)">
+                            Все</a><br>
+                        {% for g in groups %}
+                            <a class="list-item" href="/?group={{ g.id }}">
+                                <img src="{% static 'icons/icons/layers.svg' %}" class="me-2"
                                      style="transform: translateY(-5%)">
-                                Все</a><br>
-                            {% for d in directions %}
-                                <a class="list-item" href="/?direction={{ d.id }}">
-                                    <img src="{% static 'icons/icons/diagram-3.svg' %}" class="me-2"
-                                         style="transform: translateY(-5%)">
-                                    {{ d.direction_name }}</a><br>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="panel home tab-pane" id="groupsPanel" role="tabpanel" aria-labelledby="groups-tab"
-                         tabindex="0" hidden>
-                        <div>
-                            <a class="list-item active" href="/">
-                                <img src="{% static 'icons/icons/back.svg' %}" class="me-2"
+                                {{ g.group_name }}</a><br>
+                        {% endfor %}
+                        {% for pg in paid_groups %}
+                            <a class="list-item" href="/?paidgroup={{ pg.id }}">
+                                <img src="{% static 'icons/icons/layers-half.svg' %}" class="me-2"
                                      style="transform: translateY(-5%)">
-                                Все</a><br>
-                            {% for g in groups %}
-                                <a class="list-item" href="/?group={{ g.id }}">
-                                    <img src="{% static 'icons/icons/layers.svg' %}" class="me-2"
-                                         style="transform: translateY(-5%)">
-                                    {{ g.group_name }}</a><br>
-                            {% endfor %}
-                            {% for pg in paid_groups %}
-                                <a class="list-item" href="/?paidgroup={{ pg.id }}">
-                                    <img src="{% static 'icons/icons/layers-half.svg' %}" class="me-2"
-                                         style="transform: translateY(-5%)">
-                                    {{ pg.group_name }}</a><br>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="panel home tab-pane" id="teachersPanel" role="tabpanel" aria-labelledby="teachers-tab"
-                         tabindex="0" hidden>
-                        <div>
-                            <a class="list-item active" href="/">
-                                <img src="{% static 'icons/icons/back.svg' %}" class="me-2"
-                                     style="transform: translateY(-5%)">
-                                Все</a><br>
-                            {% for t in teachers %}
-                                {% if t.userprofile.is_teacher %}
-                                    <a class="list-item" href="/?teacher={{ t.id }}">
-                                        <img src="{% static 'icons/icons/person.svg' %}" class="me-2"
-                                             style="transform: translateY(-5%)">
-                                        {{ t.userprofile.last_name }}
-                                        {{ t.userprofile.first_name }} {{ t.userprofile.middle_name }}</a><br>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
+                                {{ pg.group_name }}</a><br>
+                        {% endfor %}
                     </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

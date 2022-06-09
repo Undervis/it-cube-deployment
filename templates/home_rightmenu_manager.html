@@ -1,0 +1,75 @@
+{% load static %}
+<div class="col-3">
+    <ul class="nav nav-pills nav-fill m-0 gap-2" id="rightTab" role="tablist"
+        style="transform: translateY(-2px)">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="dirs-tab" data-bs-toggle="tab">Направления
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="teachers-tab" data-bs-toggle="tab">Педагоги
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="groups-tab" data-bs-toggle="tab">Группы
+            </button>
+        </li>
+    </ul>
+
+    <div class="mt-2" style="transform: translateY(4px)">
+        <div class="panel home tab-pane show" id="homePanel" role="tabpanel" aria-labelledby="dirs-tab"
+             tabindex="0">
+            <div>
+                <a class="list-item active" href="/">
+                    <img src="{% static 'icons/icons/back.svg' %}" class="me-2"
+                         style="transform: translateY(-5%)">
+                    Все</a><br>
+                {% for d in directions %}
+                    <a class="list-item" href="/?direction={{ d.id }}">
+                        <img src="{% static 'icons/icons/diagram-3.svg' %}" class="me-2"
+                             style="transform: translateY(-5%)">
+                        {{ d.direction_name }}</a><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="panel home tab-pane" id="groupsPanel" role="tabpanel" aria-labelledby="groups-tab"
+             tabindex="0" hidden>
+            <div>
+                <a class="list-item active" href="/">
+                    <img src="{% static 'icons/icons/back.svg' %}" class="me-2"
+                         style="transform: translateY(-5%)">
+                    Все</a><br>
+                {% for g in groups %}
+                    <a class="list-item" href="/?group={{ g.id }}">
+                        <img src="{% static 'icons/icons/layers.svg' %}" class="me-2"
+                             style="transform: translateY(-5%)">
+                        {{ g.group_name }}</a><br>
+                {% endfor %}
+                {% for pg in paid_groups %}
+                    <a class="list-item" href="/?paidgroup={{ pg.id }}">
+                        <img src="{% static 'icons/icons/layers-half.svg' %}" class="me-2"
+                             style="transform: translateY(-5%)">
+                        {{ pg.group_name }}</a><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="panel home tab-pane" id="teachersPanel" role="tabpanel" aria-labelledby="teachers-tab"
+             tabindex="0" hidden>
+            <div>
+                <a class="list-item active" href="/">
+                    <img src="{% static 'icons/icons/back.svg' %}" class="me-2"
+                         style="transform: translateY(-5%)">
+                    Все</a><br>
+                {% for t in teachers %}
+                    {% if t.userprofile.is_teacher %}
+                        <a class="list-item" href="/?teacher={{ t.id }}">
+                            <img src="{% static 'icons/icons/person.svg' %}" class="me-2"
+                                 style="transform: translateY(-5%)">
+                            {{ t.userprofile.last_name }}
+                            {{ t.userprofile.first_name }} {{ t.userprofile.middle_name }}</a><br>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

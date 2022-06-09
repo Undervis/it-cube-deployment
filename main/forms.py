@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import AuthenticationForm
 from django.forms import *
 from .models import *
 
@@ -104,3 +105,14 @@ class DeletePaidStudentForm(ModelForm):
 
         for key in self.fields:
             self.fields[key].required = True
+
+
+class AuthUserForm(AuthenticationForm, ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
