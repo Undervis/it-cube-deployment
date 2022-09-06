@@ -25,7 +25,7 @@
                          style="transform: translateY(-5%)">
                     Все</a><br>
                 {% for d in directions %}
-                    <a class="list-item" href="/?direction={{ d.id }}">
+                    <a class="list-item" href="?direction={{ d.id }}">
                         <img src="{% static 'icons/icons/diagram-3.svg' %}" class="me-2"
                              style="transform: translateY(-5%)">
                         {{ d.direction_name }}</a><br>
@@ -40,13 +40,13 @@
                          style="transform: translateY(-5%)">
                     Все</a><br>
                 {% for g in groups %}
-                    <a class="list-item" href="/?group={{ g.id }}">
+                    <a class="list-item" href="?group={{ g.id }}">
                         <img src="{% static 'icons/icons/layers.svg' %}" class="me-2"
                              style="transform: translateY(-5%)">
                         {{ g.group_name }}</a><br>
                 {% endfor %}
                 {% for pg in paid_groups %}
-                    <a class="list-item" href="/?paidgroup={{ pg.id }}">
+                    <a class="list-item" href="?paidgroup={{ pg.id }}">
                         <img src="{% static 'icons/icons/layers-half.svg' %}" class="me-2"
                              style="transform: translateY(-5%)">
                         {{ pg.group_name }}</a><br>
@@ -62,7 +62,7 @@
                     Все</a><br>
                 {% for t in teachers %}
                     {% if t.userprofile.is_teacher %}
-                        <a class="list-item" href="/?teacher={{ t.id }}">
+                        <a class="list-item" href="?teacher={{ t.id }}">
                             <img src="{% static 'icons/icons/person.svg' %}" class="me-2"
                                  style="transform: translateY(-5%)">
                             {{ t.userprofile.last_name }}

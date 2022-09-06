@@ -75,7 +75,7 @@ def journal(request):
     else:
         students = get_students_teacher(request)
 
-    return render(request, 'journal.html', {'students': students,
+    return render(request, 'journal.html', {'students': students[:12],
                                             'user_can_edit': user_can_edit,
                                             'directions': directions,
                                             'teachers': users, 'user': user,

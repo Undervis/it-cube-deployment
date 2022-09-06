@@ -16,27 +16,27 @@ $(document).ready(function () {
 
     $('.nav-item').each(function () {
         if ($href.indexOf('direction') > 0) {
-            $(this).children('button').removeClass('active')
+            $(this).children('a').removeClass('active')
             $('#dirs-tab').addClass('active')
             $('#homePanel').prop('hidden', false)
             $('#groupsPanel').prop('hidden', true)
             $('#teachersPanel').prop('hidden', true)
         }
         if (($href.indexOf('group') > 0) || ($href.indexOf('paidgroup') > 0)) {
-            $(this).children('button').removeClass('active')
+            $(this).children('a').removeClass('active')
             $('#groups-tab').addClass('active')
             $('#homePanel').prop('hidden', true)
             $('#groupsPanel').prop('hidden', false)
             $('#teachersPanel').prop('hidden', true)
         }
         if ($href.indexOf('teacher') > 0) {
-            $(this).children('button').removeClass('active')
+            $(this).children('a').removeClass('active')
             $('#teachers-tab').addClass('active')
             $('#homePanel').prop('hidden', true)
             $('#groupsPanel').prop('hidden', true)
             $('#teachersPanel').prop('hidden', false)
         }
-        $(this).children('button').on('click', function () {
+        $(this).children('a').on('click', function () {
             if ($(this).hasClass('active')) {
                 let $tab = $(this).attr('id')
                 if ($tab === 'dirs-tab') {
