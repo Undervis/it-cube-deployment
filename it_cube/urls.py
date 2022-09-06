@@ -11,4 +11,5 @@ urlpatterns = [
     path('login', views.MainLoginView.as_view(), name='login'),
     path('logout', views.MainLogout.as_view(), name='logout'),
     path('load', views.load_file, name='load'),
+    path('journal', views.journal, name='journal')
 ]

@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Журнал{% endblock %}
+
+{% block content %}
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center col-md-2 ms-4 mb-2 mb-md-0 text-dark text-decoration-none">
+            <img src="{% static 'it-cube-logo.png' %}" height="32" alt="cube">
+            <span class="d-inline-block fs-5 ms-3">IT-CUBE САТКА</span>
+        </a>
+
+        <ul class="nav nav-pills col-12 gap-2 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li class="nav-item"><a href="{% url 'home' %}" class="nav-link btn btn-primary border-0 px-3">
+                <img src="{% static 'icons/icons/list.svg' %}" class="me-2"
+                     style="transform: translateY(-10%) translateX(-5%)"
+                     alt="cube"> Списки</a></li>
+            <li><a href="{% url 'journal' %}" class="nav-link btn btn-primary border-0 px-3 active">
+                <img src="{% static 'icons/icons/journal-album.svg' %}" class="me-2"
+                     style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Журнал</a></li>
+            {% if user_can_edit %}
+                <li><a href="/admin" class="nav-link btn btn-primary border-0 px-3">
+                    <img src="{% static 'icons/icons/sliders.svg' %}" class="me-2"
+                         style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Управление</a></li>
+            {% endif %}
+        </ul>
+
+        <div class="hstack col-md-2 text-end me-2">
+            <div class="dropdown ms-auto">
+                <a href="#" class="link-dark text-decoration-none dropdown-toggle"
+                   id="dropdownUser1"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if user.userprofile.photo %}
+                        <img src="{{ user.userprofile.photo.url }}" alt="mdo" width="32"
+                             height="32"
+                             class="rounded-circle" style="object-fit: cover">
+                    {% else %}
+                        <img src="{% static 'icons/icons/person-circle.svg' %}"
+                             width="32" height="32"
+                             class="rounded-circle"
+                             style="object-fit: cover; filter: invert(1) brightness(30%)">
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li><span class="dropdown-item-text fw-bold" href="#">
+                                    {{ user.userprofile.last_name }} {{ user.userprofile.first_name }}
+                                </span></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Тёмная тема (В разработке)</a>
+                    </li>
+                    <li><a class="dropdown-item" href="#">Профиль (В разработке)</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="row mx-2">
+        <div class="col-9">
+            <ul class="nav navbar nav-pills py-0 mb-3 nav-fill gap-2">
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary active">Сентябрь</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary">Октябрь</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary">Ноябрь</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary">Декабрь</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary">Январь</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary">Февраль</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary">Март</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary">Апрель</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary border-0">Май</a>
+                </li>
+            </ul>
+            <div class="card table-responsive border-top-0">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-light">
+                    <tr>
+                        <th scope="col" class="text-center">#</th>
+                        <th scope="col" class="text-center" style="width: 300px"><sub>Фамилия Имя</sub> \ <sup>Дата
+                            проведения</sup></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                        <th scope="col" class="text-center"><input type="text" class="journal-date text-center"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row" class="text-center">1</th>
+                        <td class="text-center">Лычковский Константин</td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <select class="journal-mark text-center">
+                                <option value="0" selected></option>
+                                <option value="1">НБ</option>
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% if not user.userprofile.is_teacher %}
+            {% include 'home_rightmenu_manager.html' %}
+        {% else %}
+            <div class="col-3">
+                <p class="fs-4 text-uppercase">Группы</p>
+                <div class="panel home">
+                    <a class="list-item active" href="/">
+                        <img src="{% static 'icons/icons/back.svg' %}" class="me-2"
+                             style="transform: translateY(-5%)">
+                        Все</a><br>
+                    {% for g in groups %}
+                        <a class="list-item" href="/?group={{ g.id }}">
+                            <img src="{% static 'icons/icons/layers.svg' %}" class="me-2"
+                                 style="transform: translateY(-5%)">
+                            {{ g.group_name }}</a><br>
+                    {% endfor %}
+                    {% for pg in paid_groups %}
+                        <a class="list-item" href="/?paidgroup={{ pg.id }}">
+                            <img src="{% static 'icons/icons/layers-half.svg' %}" class="me-2"
+                                 style="transform: translateY(-5%)">
+                            {{ pg.group_name }}</a><br>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+{% endblock %}

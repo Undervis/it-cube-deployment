@@ -26,16 +26,48 @@
     background: linear-gradient(90deg, #11998e 0%, #30cf6c 100%)
 }
 
+.nav-link {
+    color: black;
+    border-radius: 10px;
+    transition: ease-in-out 0.3s;
+}
+
+button.nav-link:hover {
+    color: white;
+    border-radius: 10px;
+    background: rgba(13, 110, 253, 1);
+}
+
+button.nav-link.active {
+    border-radius: 10px;
+    background: rgba(13, 110, 253, 1);
+    color: white;
+}
+
+button.nav-link:hover img{
+    filter: invert(1);
+}
+
+.nav-link.active img{
+    filter: invert(1);
+}
+
 body {
     background: white;
 }
 
 .rounded-circle:hover {
-    box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+    background-color: rgba(13, 110, 253, 1);
+}
+
+.btn {
+    background-color: rgba(13, 110, 253, 1);
+    transition: ease-in-out 0.2s;
 }
 
 .btn:hover {
-    box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+    filter: hue-rotate(20deg);
+    box-shadow: 2px 2px 8px 0 rgba(34, 60, 80, 0.2);
 }
 
 .student.card:hover {
@@ -57,14 +89,17 @@ body {
     display: inline-block;
     padding: 5px 10px;
     margin: 1%;
+    background-color: white;
+    border-radius: 5px;
     text-decoration: none;
     color: var(--color-text);
+    transition: ease-in-out 0.2s;
 }
 
 .panel a.active {
     text-decoration: none;
     color: white;
-    background: linear-gradient(45deg, rgba(13, 110, 253, 1) 0%, rgb(0, 149, 255) 100%);
+    background: rgba(13, 110, 253, 1);
     border-radius: 5px;
 }
 
@@ -76,17 +111,19 @@ body {
     filter: invert(1);
 }
 
-.panel a:hover img {
-    filter: invert(1);
-}
-
 .panel a:hover {
     text-decoration: none;
+    color: #0a58ca;
+    background: white;
+    filter: hue-rotate(20deg);
+    box-shadow: 2px 2px 8px 0 rgba(34, 60, 80, 0.2);
+}
+
+.panel a.active:hover {
     color: white;
-    background: rgb(13, 110, 253);
-    background: linear-gradient(45deg, rgba(13, 110, 253, 1) 0%, rgb(0, 149, 255) 100%);
-    border-radius: 5px;
-    box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+    background: rgba(13, 110, 253, 1);
+    filter: hue-rotate(20deg);
+    box-shadow: 2px 2px 8px 0 rgba(34, 60, 80, 0.2);
 }
 
 .btn-outline-primary {
@@ -97,7 +134,8 @@ body {
     color: white;
     background: rgb(13, 110, 253);
     background: linear-gradient(45deg, rgba(13, 110, 253, 1) 0%, rgb(0, 149, 255) 100%);
-    box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+    filter: hue-rotate(20deg);
+    box-shadow: 2px 2px 8px 0 rgba(34, 60, 80, 0.2);
 }
 
 :root {

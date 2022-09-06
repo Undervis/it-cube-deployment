@@ -54,6 +54,35 @@ def get_students_teacher(request):
 
 
 @login_required(login_url='/login')
+def journal(request):
+    if not request.user.has_perm('main.can_edit'):
+        user_can_edit = False
+    else:
+        user_can_edit = True
+
+    user = request.user
+    directions = Direction.objects.all()
+    users = User.objects.all()
+    if not user.userprofile.is_teacher:
+        groups = Group.objects.all()
+        paid_groups = PaidGroup.objects.all()
+    else:
+        groups = Group.objects.filter(teacher=user)
+        paid_groups = PaidGroup.objects.filter(teacher=user)
+
+    if not user.userprofile.is_teacher:
+        students = get_students_manager(request)
+    else:
+        students = get_students_teacher(request)
+
+    return render(request, 'journal.html', {'students': students,
+                                            'user_can_edit': user_can_edit,
+                                            'directions': directions,
+                                            'teachers': users, 'user': user,
+                                            'groups': groups, 'paid_groups': paid_groups})
+
+
+@login_required(login_url='/login')
 def home(request):
     if not request.user.has_perm('main.can_edit'):
         user_can_edit = False

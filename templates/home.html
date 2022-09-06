@@ -3,66 +3,69 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-    <header class="p-3 mb-3 border-bottom bg-white">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-9">
-                    <div class="hstack">
-                        <a href="/" class="text-dark text-decoration-none">
-                            <img src="{% static 'it-cube-logo.png' %}" height="32">
-                            <span style="transform: translateY(10%)"
-                                  class="d-inline-block fs-5 ms-3">IT-CUBE САТКА</span>
-                        </a>
-                        {% if user_can_edit %}
-                            <div class="ms-auto">
-                                <a class="btn btn-success me-2 border-0 text-uppercase" href="/admin">
-                                    <img class="me-2" src="{% static 'icons/icons/sliders.svg' %}"
-                                         style="filter: invert(1); transform: translateY(-12%)">Управление
-                                </a>
-                                <a class="btn btn-primary border-0 text-uppercase" href="{% url 'create' %}">
-                                    <img class="me-1" src="{% static 'icons/icons/plus-circle.svg' %}"
-                                         style="filter: invert(1); transform: translateY(-5%)">
-                                    Создать заявку</a>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="hstack">
-                        <form class="me-3 me-lg-3 w-100 input-group" role="search">
-                            <input type="search" class="form-control quicksearch" placeholder="Поиск..."
-                                   aria-label="Поиск">
-                        </form>
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center col-md-2 ms-4 mb-2 mb-md-0 text-dark text-decoration-none">
+            <img src="{% static 'it-cube-logo.png' %}" height="32" alt="cube">
+            <span class="d-inline-block fs-5 ms-3">IT-CUBE САТКА</span>
+        </a>
 
-                        <div class="dropdown ms-auto">
-                            <a href="#" class="link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                {% if user.userprofile.photo %}
-                                    <img src="{{ user.userprofile.photo.url }}" alt="mdo" width="32" height="32"
-                                         class="rounded-circle" style="object-fit: cover">
-                                {% else %}
-                                    <img src="{% static 'icons/icons/person-circle.svg' %}" width="32" height="32"
-                                         class="rounded-circle"
-                                         style="object-fit: cover; filter: invert(1) brightness(30%)">
-                                {% endif %}
-                            </a>
-                            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                                <li><span class="dropdown-item-text fw-bold" href="#">
+        <ul class="nav nav-pills col-12 gap-2 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="{% url 'home' %}" class="nav-link btn btn-primary border-0 px-3 active">
+                <img src="{% static 'icons/icons/list.svg' %}" class="me-2"
+                     style="transform: translateY(-10%) translateX(-5%)"
+                     alt="cube"> Списки</a></li>
+            <li><a href="{% url 'journal' %}" class="nav-link btn btn-primary border-0 px-3 px-3">
+                <img src="{% static 'icons/icons/journal-album.svg' %}" class="me-2"
+                     style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Журнал</a></li>
+            {% if user_can_edit %}
+                <li><a href="/admin" class="nav-link btn btn-primary border-0 px-3">
+                    <img src="{% static 'icons/icons/sliders.svg' %}" class="me-2"
+                         style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Управление</a></li>
+                <li><a href="{% url 'create' %}" class="nav-link btn btn-primary border-0 px-3">
+                    <img src="{% static 'icons/icons/plus-lg.svg' %}" class="me-2"
+                         style="transform: translateY(-10%) translateX(-5%)"
+                         alt="cube"> Добавить ученика</a></li>
+            {% endif %}
+        </ul>
+
+        <div class="hstack col-md-3 text-end me-2">
+            <form class="me-3 me-lg-3 w-100 input-group" role="search">
+                <input type="search" class="form-control quicksearch"
+                       placeholder="Поиск..."
+                       aria-label="Поиск">
+            </form>
+
+            <div class="dropdown ms-auto">
+                <a href="#" class="link-dark text-decoration-none dropdown-toggle"
+                   id="dropdownUser1"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if user.userprofile.photo %}
+                        <img src="{{ user.userprofile.photo.url }}" alt="mdo" width="32"
+                             height="32"
+                             class="rounded-circle" style="object-fit: cover">
+                    {% else %}
+                        <img src="{% static 'icons/icons/person-circle.svg' %}"
+                             width="32" height="32"
+                             class="rounded-circle"
+                             style="object-fit: cover; filter: invert(1) brightness(30%)">
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li><span class="dropdown-item-text fw-bold" href="#">
                                     {{ user.userprofile.last_name }} {{ user.userprofile.first_name }}
                                 </span></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Тёмная тема</a></li>
-                                <li><a class="dropdown-item" href="#">Профиль</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="/logout">Выйти</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Тёмная тема (В разработке)</a>
+                    </li>
+                    <li><a class="dropdown-item" href="#">Профиль (В разработке)</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+                </ul>
             </div>
         </div>
     </header>
@@ -73,12 +76,11 @@
                     <p class="fs-4 text-uppercase">Учащиеся<span class="text-muted ms-2">{{ students.count }}</span></p>
                     <div class="ms-auto mb-3">
                         <div class="dropdown">
-                            <button type="button"
-                                    class="text-uppercase btn btn-outline-primary border-0 dropdown-toggle"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false" data-bs-auto-close="outside">
+                            <a class="text-uppercase btn btn-primary border-0 dropdown-toggle"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false" data-bs-auto-close="outside">
                                 Отображаемые поля
-                            </button>
+                            </a>
 
                             <div class="dropdown-menu" id="looking-fields">
                                 <div class="form-check mx-2" hidden>

@@ -29,7 +29,7 @@ class StudentForm(ModelForm):
                                         'placeholder': 'ул.Ленина 10, кв.10, г.Москва, Московская обл.'}),
             'email': EmailInput(attrs={'class': 'form-control', 'id': 'emailInput', 'placeholder': 'name@example.com'}),
             'social_category': Select(attrs={'class': 'form-select', 'id': 'socialInput'}),
-            'school': Select(attrs={'class': 'form-select', 'id': 'schoolInput'}),
+            'school':TextInput(attrs={'class': 'form-control text-capitalize', 'id': 'schoolInput'}),
             'agreement_doc': FileInput(attrs={'class': 'form-control', 'id': 'AgreeFile'}),
             'sms_agreement_doc': FileInput(attrs={'class': 'form-control', 'id': 'SMSAgreeFile'}),
             'petition_doc': FileInput(attrs={'class': 'form-control', 'id': 'petitionFile'}),

@@ -1,0 +1,32 @@
+.journal-mark {
+    display: inline-block;
+    width: 100%;
+    background: none;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    margin: 0;
+    padding: 0;
+}
+
+.journal-date {
+    border: none;
+    display: inline-block;
+    width: 100%;
+    background: none;
+    margin: 0;
+    padding: 0;
+}
+
+.journal-mark::-ms-expand {
+    display: none;
+}
+
+.table-bordered > :not(caption) > * :first-child, .table-bordered > :not(caption) > * :last-child {
+    border-width: 1px 0;
+}
+.table-bordered > :not(caption) > * > * {
+    border-width: 0 1px;
+}
