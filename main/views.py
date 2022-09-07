@@ -4,8 +4,10 @@ import openpyxl
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.urls import reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import *
 from .forms import *
@@ -61,8 +63,6 @@ def journal(request):
         user_can_edit = True
 
     user = request.user
-    directions = Direction.objects.all()
-    users = User.objects.all()
     if not user.userprofile.is_teacher:
         groups = Group.objects.all()
         paid_groups = PaidGroup.objects.all()
@@ -75,11 +75,22 @@ def journal(request):
     else:
         students = get_students_teacher(request)
 
-    return render(request, 'journal.html', {'students': students[:12],
-                                            'user_can_edit': user_can_edit,
-                                            'directions': directions,
-                                            'teachers': users, 'user': user,
+    if not request.GET:
+        first_group = groups.first()
+        students = students.filter(group=first_group).order_by('last_name')
+
+    cols = [i for i in range(1, 17)]
+
+    return render(request, 'journal.html', {'students': students, 'cols': cols,
+                                            'user_can_edit': user_can_edit, 'user': user,
                                             'groups': groups, 'paid_groups': paid_groups})
+
+
+@csrf_exempt
+@login_required(login_url='/login')
+def load_json(request):
+    print(request.POST)
+    return JsonResponse(request.POST)
 
 
 @login_required(login_url='/login')

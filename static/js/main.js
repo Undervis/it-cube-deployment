@@ -3,18 +3,18 @@ $(document).ready(function () {
 
     $('.panel').each(function () {
         let $btn = $('.list-item')
-        if ($href.indexOf('/?') > 0) {
+        if ($href.indexOf('?') > 0) {
             $btn.removeClass('active')
         }
         $btn.each(function () {
-            if ($(this).attr('href') === $href.substring($href.indexOf('/?'))) {
+            if ($(this).attr('href') === $href.substring($href.indexOf('?'))) {
                 $(this).addClass('active')
             }
         })
 
     })
 
-    $('.nav-item').each(function () {
+    $('.nav-item.menu').each(function () {
         if ($href.indexOf('direction') > 0) {
             $(this).children('a').removeClass('active')
             $('#dirs-tab').addClass('active')
