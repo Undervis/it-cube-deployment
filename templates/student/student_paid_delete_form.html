@@ -1,10 +1,11 @@
 {% load static %}
 <hr>
-<a class="list-item active danger" href="/edit/{{ student.id }}" data-bs-toggle="modal"
-   data-bs-target="#deletePaidModal">
-    <img src="{% static 'icons/icons/person-dash.svg' %}" class="me-2"
+<div>
+    <img src="{% static 'icons/icons/person-dash.svg' %}" class="mx-2"
          style="transform: translateY(-5%);">
-    Отчислить (Внебюджет)</a><br>
+    <a class="list-item active danger" href="/edit/{{ student.id }}" data-bs-toggle="modal"
+       data-bs-target="#deletePaidModal">Отчислить (Внебюджет)</a>
+</div>
 <div class="modal fade" id="deletePaidModal" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="deletePaidModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">

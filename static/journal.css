@@ -11,7 +11,7 @@
     padding: 0;
 }
 
-.journal-date {
+.journal-date, .journal-tb {
     border: none;
     display: inline-block;
     width: 100%;
@@ -29,4 +29,15 @@
 }
 .table-bordered > :not(caption) > * > * {
     border-width: 0 1px;
+}
+
+.btn.btn-success:hover {filter: hue-rotate(-20deg)}
+
+input:focus {
+    outline: none;
+}
+
+select:focus {
+    outline: 1px solid #999999;
+    border-radius: 5px;
 }

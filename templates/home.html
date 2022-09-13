@@ -255,21 +255,24 @@
                 <div class="col-3">
                     <p class="fs-4 text-uppercase">Группы</p>
                     <div class="panel home">
-                        <a class="list-item active" href="/">
-                            <img src="{% static 'icons/icons/back.svg' %}" class="me-2"
+                        <div>
+                            <img src="{% static 'icons/icons/back.svg' %}" class="mx-2"
                                  style="transform: translateY(-5%)">
-                            Все</a><br>
+                            <a class="list-item active" href="/">Все</a>
+                        </div>
                         {% for g in groups %}
-                            <a class="list-item" href="/?group={{ g.id }}">
-                                <img src="{% static 'icons/icons/layers.svg' %}" class="me-2"
+                            <div>
+                                <img src="{% static 'icons/icons/layers.svg' %}" class="mx-2"
                                      style="transform: translateY(-5%)">
-                                {{ g.group_name }}</a><br>
+                                <a class="list-item" href="?group={{ g.id }}">{{ g.group_name }}</a>
+                            </div>
                         {% endfor %}
                         {% for pg in paid_groups %}
-                            <a class="list-item" href="/?paidgroup={{ pg.id }}">
-                                <img src="{% static 'icons/icons/layers-half.svg' %}" class="me-2"
+                            <div>
+                                <img src="{% static 'icons/icons/layers-half.svg' %}" class="mx-2"
                                      style="transform: translateY(-5%)">
-                                {{ pg.group_name }}</a><br>
+                                <a class="list-item" href="?paidgroup={{ pg.id }}">{{ pg.group_name }}</a>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>

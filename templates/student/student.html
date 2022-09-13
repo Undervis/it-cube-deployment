@@ -88,10 +88,11 @@
                             {% endif %}
                         {% endif %}
                         {% if student.status != 2 or not student.paid_delete_doc %}
-                            <a class="list-item active" href="/edit/{{ student.id }}">
-                                <img src="{% static 'icons/icons/pencil-square.svg' %}" class="me-2"
+                            <div>
+                                <img src="{% static 'icons/icons/pencil-square.svg' %}" class="mx-2"
                                      style="transform: translateY(-5%);">
-                                Редактировать</a><br>
+                                <a class="list-item active" href="/edit/{{ student.id }}">Редактировать</a><br>
+                            </div>
                         {% endif %}
                         {% if user_can_delete %}
                             {% if student.status == 0 and student.group %}

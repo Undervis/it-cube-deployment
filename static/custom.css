@@ -61,17 +61,20 @@ body {
 }
 
 .btn {
-    background-color: rgba(13, 110, 253, 1);
     transition: ease-in-out 0.2s;
 }
 
 a.nav-link.btn {
-    background: #f5f5f5;
+    background: #f0f0f0;
 }
 
-.btn:hover {
-    filter: brightness(110%);
-    box-shadow: 1px 1px 6px 0 rgba(34, 60, 80, 0.2);
+.nav-link.btn:hover {
+    background: rgb(38, 124, 252);
+    color: white;
+}
+
+.nav-link.btn:hover img {
+    filter: invert(1);
 }
 
 .student.card:hover {
@@ -90,15 +93,17 @@ a.nav-link.btn {
 }
 
 .panel a {
+    max-width: 85%;
     display: inline-block;
     padding: 5px 10px;
     margin: 1%;
-    background-color: white;
+    background-color: #f0f0f0;
     border-radius: 5px;
     text-decoration: none;
     color: var(--color-text);
     transition: ease-in-out 0.2s;
 }
+
 
 .panel a.active {
     text-decoration: none;
@@ -117,10 +122,10 @@ a.nav-link.btn {
 
 .panel a:hover {
     text-decoration: none;
-    color: #0a58ca;
-    background: white;
+    color: white;
+    background: rgb(38, 124, 252);
+    border: none;
     filter: hue-rotate(20deg);
-    box-shadow: 2px 2px 6px 0 rgba(34, 60, 80, 0.2);
 }
 
 .panel a.active:hover {

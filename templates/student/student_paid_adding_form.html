@@ -1,8 +1,11 @@
 {% load static %}
-<a class="list-item active" href="#" data-bs-toggle="modal"
-   data-bs-target="#modalPaidGroup">
-    <img src="{% static 'icons/icons/person-plus.svg' %}" class="me-1"
-         style="transform: translateY(-5%)">Зачислить на внебюджет</a>
+<div>
+    <img src="{% static 'icons/icons/person-plus.svg' %}" class="mx-2"
+         style="transform: translateY(-5%)">
+    <a class="list-item active" href="#" data-bs-toggle="modal"
+       data-bs-target="#modalPaidGroup">Зачислить на внебюджет</a>
+</div>
+
 <div class="modal fade" id="modalPaidGroup" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="modalPaidGroupLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
