@@ -83,6 +83,7 @@ class Student(models.Model):
     school = models.CharField(max_length=128, verbose_name='Школа', blank=True, null=True)
     petition_date = models.DateTimeField("Дата подачи заявления", blank=True, null=True)
     direction = models.ForeignKey(Direction, on_delete=models.PROTECT, verbose_name='Направление')
+    comment = models.TextField('Комментарий', blank=True, null=True)
 
     # Зачисление/отчисление
     adding_date = models.DateField('Дата зачисления', blank=True, null=True)

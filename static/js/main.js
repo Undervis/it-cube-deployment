@@ -118,9 +118,9 @@ $(document).ready(function () {
         $grid.isotope();
     }))
 
-    $('#table-header').on('click', 'a', function (){
+    $('#table-header').on('click', 'a', function () {
         let sortByValue = $(this).attr('data-sort');
-        $grid.isotope({ sortBy: sortByValue });
+        $grid.isotope({sortBy: sortByValue});
     })
 
 // flatten object by concatting values

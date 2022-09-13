@@ -10,7 +10,7 @@ class StudentForm(ModelForm):
             'last_name', 'first_name', 'middle_name',
             'birthday', 'parent_name', 'parent_number',
             'address', 'email', 'social_category', 'school', 'petition_doc',
-            'agreement_doc', 'sms_agreement_doc',
+            'agreement_doc', 'sms_agreement_doc', 'comment',
             'passport_copy_parent', 'passport_or_birth_copy', 'direction'
         ]
         widgets = {
@@ -29,13 +29,15 @@ class StudentForm(ModelForm):
                                         'placeholder': 'ул.Ленина 10, кв.10, г.Москва, Московская обл.'}),
             'email': EmailInput(attrs={'class': 'form-control', 'id': 'emailInput', 'placeholder': 'name@example.com'}),
             'social_category': Select(attrs={'class': 'form-select', 'id': 'socialInput'}),
-            'school':TextInput(attrs={'class': 'form-control text-capitalize', 'id': 'schoolInput'}),
+            'school': TextInput(attrs={'class': 'form-control text-capitalize',
+                                       'id': 'schoolInput', 'placeholder': 'МКОУ СОШ №0'}),
             'agreement_doc': FileInput(attrs={'class': 'form-control', 'id': 'AgreeFile'}),
             'sms_agreement_doc': FileInput(attrs={'class': 'form-control', 'id': 'SMSAgreeFile'}),
             'petition_doc': FileInput(attrs={'class': 'form-control', 'id': 'petitionFile'}),
             'passport_copy_parent': FileInput(attrs={'class': 'form-control', 'id': 'passportFile'}),
             'passport_or_birth_copy': FileInput(attrs={'class': 'form-control', 'id': 'passportOrBirthFile'}),
             'direction': Select(attrs={'class': 'form-select', 'id': 'directionInput'}),
+            'comment': Textarea(attrs={'class': 'form-control', 'id': 'commentInput', 'style': 'height: 165px'})
         }
 
 

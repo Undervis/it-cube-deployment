@@ -58,5 +58,49 @@
                 </div>
             </div>
         </div>
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-1 pt-2">
+                        <span class="fs-6 text-muted text-uppercase">Социальный статус</span><br>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="p-1">
+                        <span class="fs-5">
+                            {% if student.social_category == 0 %}
+                                Отсутствует
+                            {% endif %}
+                            {% if student.social_category == 1 %}
+                                Многодетная семья
+                            {% endif %}
+                            {% if student.social_category == 2 %}
+                                Неполная семья
+                            {% endif %}
+                            {% if student.social_category == 3 %}
+                                Инвалидность
+                            {% endif %}
+                            {% if student.social_category == 4 %}
+                                ОВЗ
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-1 pt-2">
+                        <span class="fs-6 text-muted text-uppercase">Комментарий</span><br>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="p-1">
+                        <span class="fs-5">{{ student.comment }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

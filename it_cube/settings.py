@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os.path
 from pathlib import Path
+from getpass import getpass
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -26,7 +26,6 @@ SECRET_KEY = 'django-insecure-e8_sxr+@12h9!qx23_!u_m(u(!yzrus!gfz7s_*i_r%i2h10g5
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -76,17 +75,22 @@ WSGI_APPLICATION = 'it_cube.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+with open('it_cube/db_conf.txt', 'r') as f:
+    lines = f.readlines()
+    name = lines[0].removesuffix('\n')
+    user = lines[1].removesuffix('\n')
+    password = lines[2].removesuffix('\n')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'it-cube',
-        'USER': 'root',
-        'PASSWORD': 'admin',
+        'NAME': name,
+        'USER': user,
+        'PASSWORD': password,
         'HOST': '127.0.0.1',
         'PORT': '3306'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -118,7 +122,6 @@ TIME_ZONE = 'Asia/Ashgabat'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/

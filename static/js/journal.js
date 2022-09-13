@@ -1,10 +1,15 @@
 $(document).ready(function () {
     $('.month').each(function () { // Селектор месяцев
+        $(this).removeClass('active')
+        if ($(this).text() === $.cookie('last_month')){
+            $(this).addClass('active')
+        }
         $(this).on('click', function () {
             $('.month').each(function () {
                 $(this).removeClass('active')
             });
             $(this).addClass('active');
+            $.cookie('last_month', $(this).text(), {expires: 300})
             load_data()
         })
     })
@@ -29,14 +34,14 @@ $(document).ready(function () {
         })
     })
 
-    if (document.location.href.indexOf('journal') > 0){
-        $('input').each(function (){
-            $(this).on('change', function (){
+    if (document.location.href.indexOf('journal') > 0) {
+        $('input').each(function () {
+            $(this).on('change', function () {
                 $('#warning-text').prop('hidden', false)
             })
         })
-        $('select').each(function (){
-            $(this).on('change', function (){
+        $('select').each(function () {
+            $(this).on('change', function () {
                 $('#warning-text').prop('hidden', false)
             })
         })
@@ -121,7 +126,7 @@ $(document).ready(function () {
         }
     }
 
-    // Первоначальный вызов функции загрузки данных
+    // Первоначальная загрузка данных
     load_data()
 
     // Кнопка скачать

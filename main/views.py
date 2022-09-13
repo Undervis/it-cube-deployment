@@ -445,6 +445,8 @@ def edit_student(request, pk):
 
 @login_required(login_url='/login')
 def create(request):
+    if not request.user.has_perm('main.can_edit'):
+        raise PermissionDenied
     errors = ''
     if request.POST:
         student_form = StudentForm(request.POST, request.FILES)

@@ -78,6 +78,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card my-4" style="transform: translateY(-3px)">
+                        <span class="card-header">Пожалуйста проверьте все данные перед сохранением</span>
+                        <div class="row p-3">
+                            <div class="col-5">
+                                <button type="submit" class="btn btn-primary border-0">Сохранить заявку</button>
+                            </div>
+                            <div class="col-7">
+                                {{ errors }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col">
                     <div class="card">
@@ -90,6 +101,7 @@
                                     {% block petition_doc %}{% endblock %}
                                 </div>
                                 {{ student_form.petition_doc }}
+                                <button class="btn btn-primary" onclick="scan()">Сканировать</button>
                             </div>
                             <div class="mb-3">
                                 <div class="hstack mb-2">
@@ -124,15 +136,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card mt-4" style="transform: translateY(-3px)">
-                        <span class="card-header">Пожалуйста проверьте все данные перед сохранением</span>
-                        <div class="row p-3">
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary border-0">Сохранить заявку</button>
-                            </div>
-                            <div class="col-8">
-                                {{ errors }}
-                            </div>
+                    <div class="card my-4">
+                        <span class="card-header">Комментарий</span>
+                        <div class="card-body">
+                            {{ student_form.comment }}
                         </div>
                     </div>
                 </div>

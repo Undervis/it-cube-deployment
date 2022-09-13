@@ -66,7 +66,7 @@
             <ul class="nav navbar nav-pills py-0 mb-3 nav-fill gap-2">
                 {% for m in months %}
                     <li class="nav-item">
-                        <a class="nav-link month btn btn-primary {% if forloop.counter == 1 %}active{% endif %}">{{ m }}</a>
+                        <a class="nav-link month btn btn-primary">{{ m }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -88,7 +88,7 @@
                             <span class="text-warning me-4" id="warning-text" hidden>
                                 Внимание! Таблица изменена, необходимо её сохранить
                             </span>
-                            <a id="export-table" class="btn btn-success border-0 me-2">
+                            <a id="export-table" class="btn btn-primary border-0 me-2">
                                 <img src="{% static 'icons/icons/device-hdd.svg' %}"
                                      style="filter: invert(1); transform: translateY(-5%)" class="me-1"/>
                                 Сохранить</a>
