@@ -1,21 +1,21 @@
 .bg-warning {
-    background: linear-gradient(-45deg, rgba(255, 193, 7, 1) 0%, rgb(255, 210, 78) 100%);
+    background: rgb(255, 182, 26);
 }
 
 .bg-primary {
-    background: linear-gradient(45deg, rgba(13, 110, 253, 1) 0%, rgb(0, 178, 255) 100%);
+    background: rgb(13, 121, 252);
 }
 
 .bg-info {
-    background: linear-gradient(90deg, #00bbcc 0%, #66a6ff 100%)
+    background: rgb(52, 159, 209);
 }
 
 .bg-success {
-    background: linear-gradient(90deg, #11998e 0%, #30cf6c 100%)
+    background: rgb(48, 207, 108);
 }
 
 .bg-danger {
-    background: linear-gradient(90deg, #cb356b 0%, #bd3f32 100%);
+    background: rgb(189, 63, 50);
 }
 
 .btn-primary {
@@ -23,7 +23,20 @@
 }
 
 .btn-success {
-    background: linear-gradient(90deg, #11998e 0%, #30cf6c 100%)
+    background: rgb(48, 207, 108);
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.card-header:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.nav-item .nav-link {
+    border-radius: 10px;
 }
 
 .nav-link {
@@ -56,16 +69,17 @@ body {
     background: white;
 }
 
-.rounded-circle:hover {
-    background-color: rgba(13, 110, 253, 1);
-}
-
 .btn {
     transition: ease-in-out 0.2s;
+    border-radius: 10px;
+}
+
+.form-control, .form-select, .alert, .dropdown-menu{
+    border-radius: 10px;
 }
 
 a.nav-link.btn {
-    background: #f0f0f0;
+    background: #ebebeb;
 }
 
 .nav-link.btn:hover {
@@ -82,23 +96,23 @@ a.nav-link.btn {
     color: rgb(13, 110, 253);
 }
 
-.card {
-    box-shadow: none;
+.panel.home {
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px solid #e0e1e4;
 }
 
-.panel.home {
-    padding: 2%;
-    border-radius: 5px;
-    border: 1px solid #e0e1e4;
+.list-group-item {
+    background: none;
 }
 
 .panel a {
     max-width: 85%;
     display: inline-block;
-    padding: 5px 10px;
+    padding: 7px 12px;
     margin: 1%;
-    background-color: #f0f0f0;
-    border-radius: 5px;
+    background-color: #ebebeb;
+    border-radius: 10px;
     text-decoration: none;
     color: var(--color-text);
     transition: ease-in-out 0.2s;
@@ -109,11 +123,11 @@ a.nav-link.btn {
     text-decoration: none;
     color: white;
     background: rgba(13, 110, 253, 1);
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .panel a.active.danger {
-    background: linear-gradient(90deg, #cb356b 0%, #bd3f32 100%);
+    background: #bd3f32;
 }
 
 .panel a.active img {
@@ -128,11 +142,14 @@ a.nav-link.btn {
     filter: hue-rotate(20deg);
 }
 
+.panel a.danger.active:hover {
+    background: #cc4539;
+}
+
 .panel a.active:hover {
     color: white;
     background: rgba(13, 110, 253, 1);
     filter: hue-rotate(20deg);
-    box-shadow: 2px 2px 6px 0 rgba(34, 60, 80, 0.2);
 }
 
 .btn-outline-primary {
@@ -144,7 +161,6 @@ a.nav-link.btn {
     background: rgb(13, 110, 253);
     background: linear-gradient(45deg, rgba(13, 110, 253, 1) 0%, rgb(0, 149, 255) 100%);
     filter: hue-rotate(20deg);
-    box-shadow: 2px 2px 6px 0 rgba(34, 60, 80, 0.2);
 }
 
 :root {

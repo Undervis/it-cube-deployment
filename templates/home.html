@@ -10,18 +10,18 @@
         </a>
 
         <ul class="nav nav-pills col-12 gap-2 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{% url 'home' %}" class="nav-link btn btn-primary border-0 px-3 active">
+            <li class="nav-item"><a href="{% url 'home' %}" class="nav-link btn btn-primary border-0 px-3 active">
                 <img src="{% static 'icons/icons/list.svg' %}" class="me-2"
                      style="transform: translateY(-10%) translateX(-5%)"
                      alt="cube"> Списки</a></li>
-            <li><a href="{% url 'journal' %}" class="nav-link btn btn-primary border-0 px-3 px-3">
+            <li class="nav-item"><a href="{% url 'journal' %}" class="nav-link btn btn-primary border-0 px-3 px-3">
                 <img src="{% static 'icons/icons/journal-album.svg' %}" class="me-2"
                      style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Журнал</a></li>
             {% if user_can_edit %}
-                <li><a href="/admin" class="nav-link btn btn-primary border-0 px-3">
+                <li class="nav-item"><a href="/admin" class="nav-link btn btn-primary border-0 px-3">
                     <img src="{% static 'icons/icons/sliders.svg' %}" class="me-2"
                          style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Управление</a></li>
-                <li><a href="{% url 'create' %}" class="nav-link btn btn-primary border-0 px-3">
+                <li class="nav-item"><a href="{% url 'create' %}" class="nav-link btn btn-primary border-0 px-3">
                     <img src="{% static 'icons/icons/plus-lg.svg' %}" class="me-2"
                          style="transform: translateY(-10%) translateX(-5%)"
                          alt="cube"> Добавить ученика</a></li>
@@ -51,8 +51,9 @@
                     {% endif %}
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                    <li><img src="{{ user.userprofile.photo }}" style="object-fit: cover"
-                             class="rounded mx-2 mb-2" height="256"></li>
+                    <li><img src="{{ user.userprofile.photo }}" width="256"
+                             style="object-fit: cover; border-radius: 10px"
+                             class="mx-2 mb-2" height="256"></li>
                     <li><span class="dropdown-item-text fw-bold" href="#">
                                     {{ user.userprofile.last_name }} {{ user.userprofile.first_name }}
                                 </span></li>

@@ -97,7 +97,11 @@
                 </div>
                 <div class="col-8">
                     <div class="p-1">
-                        <span class="fs-5">{{ student.comment }}</span>
+                        {% if student.comment %}
+                            <span class="fs-5">{{ student.comment }}</span>
+                            {% else %}
+                            <span class="fs-5 text-muted">Комментарий отсутствует</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>

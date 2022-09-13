@@ -114,6 +114,11 @@ class Student(models.Model):
     class Meta:
         verbose_name_plural = 'Учащиеся'
         verbose_name = 'учащийся'
+        permissions = [
+            ('can_edit', 'Can edit students'),
+            ('can_adding', 'Can adding students'),
+            ('can_delete', 'Can delete students')
+        ]
 
     def __str__(self):
         return self.last_name + ' ' + self.first_name + ' ' + self.middle_name

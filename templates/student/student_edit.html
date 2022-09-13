@@ -4,36 +4,36 @@
 {% block head_title %}Редактирование{% endblock %}
 {% block petition_doc %}
     {% if student.petition_doc %}
-        <span class="ms-2 text-muted ms-auto"><small>ЗАГРУЖЕНО</small></span>
+        <span class="ms-2 badge bg-success fw-normal ms-auto">ЗАГРУЖЕНО</span>
     {% else %}
-        <span class="ms-2 text-muted text-uppercase ms-auto"><small>Не загружено</small></span>
+        <span class="ms-2 badge bg-danger fw-normal text-uppercase ms-auto">Не загружено</span>
     {% endif %}
 {% endblock %}
 {% block sms_doc %}
     {% if student.sms_agreement_doc %}
-        <span class="ms-2 text-muted ms-auto"><small>ЗАГРУЖЕНО</small></span>
+        <span class="ms-2 badge bg-success fw-normal ms-auto">ЗАГРУЖЕНО</span>
     {% else %}
-        <span class="ms-2 text-muted text-uppercase ms-auto"><small>Не загружено</small></span>
+         <span class="ms-2 badge bg-danger fw-normal text-uppercase ms-auto">Не загружено</span>
     {% endif %}
 {% endblock %}
 {% block agree_doc %}
     {% if student.agreement_doc %}
-        <span class="ms-2 text-muted ms-auto"><small>ЗАГРУЖЕНО</small></span>
+        <span class="ms-2 badge bg-success fw-normal ms-auto">ЗАГРУЖЕНО</span>
     {% else %}
-        <span class="ms-2 text-muted text-uppercase ms-auto"><small>Не загружено</small></span>
+         <span class="ms-2 badge bg-danger fw-normal text-uppercase ms-auto">Не загружено</span>
     {% endif %}
 {% endblock %}
 {% block passport_doc %}
     {% if student.passport_copy_parent %}
-        <span class="ms-2 text-muted ms-auto"><small>ЗАГРУЖЕНО</small></span>
+        <span class="ms-2 badge bg-success fw-normal ms-auto">ЗАГРУЖЕНО</span>
     {% else %}
-        <span class="ms-2 text-muted text-uppercase ms-auto"><small>Не загружено</small></span>
+         <span class="ms-2 badge bg-danger fw-normal text-uppercase ms-auto">Не загружено</span>
     {% endif %}
 {% endblock %}
 {% block passport_or_birth_doc %}
     {% if student.passport_or_birth_copy %}
-        <span class="ms-2 text-muted ms-auto"><small>ЗАГРУЖЕНО</small></span>
+        <span class="ms-2 badge bg-success fw-normal ms-auto">ЗАГРУЖЕНО</span>
     {% else %}
-        <span class="ms-2 text-muted text-uppercase ms-auto"><small>Не загружено</small></span>
+         <span class="ms-2 badge bg-danger fw-normal text-uppercase ms-auto">Не загружено</span>
     {% endif %}
 {% endblock %}

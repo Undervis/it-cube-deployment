@@ -15,11 +15,11 @@
                 <img src="{% static 'icons/icons/list.svg' %}" class="me-2"
                      style="transform: translateY(-10%) translateX(-5%)"
                      alt="cube"> Списки</a></li>
-            <li><a href="{% url 'journal' %}" class="nav-link btn btn-primary border-0 px-3 active">
+            <li class="nav-item"><a href="{% url 'journal' %}" class="nav-link btn btn-primary border-0 px-3 active">
                 <img src="{% static 'icons/icons/journal-album.svg' %}" class="me-2"
                      style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Журнал</a></li>
             {% if user_can_edit %}
-                <li><a href="/admin" class="nav-link btn btn-primary border-0 px-3">
+                <li class="nav-item"><a href="/admin" class="nav-link btn btn-primary border-0 px-3">
                     <img src="{% static 'icons/icons/sliders.svg' %}" class="me-2"
                          style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Управление</a></li>
             {% endif %}
@@ -42,6 +42,8 @@
                     {% endif %}
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li><img src="{{ user.userprofile.photo }}" width="256" style="object-fit: cover; border-radius: 10px"
+                             class="mx-2 mb-2" height="256"></li>
                     <li><span class="dropdown-item-text fw-bold" href="#">
                                     {{ user.userprofile.last_name }} {{ user.userprofile.first_name }}
                                 </span></li>
@@ -70,22 +72,22 @@
                     </li>
                 {% endfor %}
             </ul>
-
-            <div class="card mb-2">
-                <div class="card-body d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
+        <hr style="width: 99%; margin: 1% auto;">
+            <div class="card mb-3 border-0">
+                <div class="card-body p-0 d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
                     <ul class="nav nav-pills col-12 gap-2 col-md-auto mb-2 justify-content-center mb-md-0"
                         id="top-panel">
                         <li class="nav-item"><a data-index="0" class="nav-link top-panel btn btn-primary border-0 px-3">
                             <img src="{% static 'icons/icons/journal-bookmark.svg' %}" class="me-2"
                                  style="transform: translateY(-10%) translateX(-5%)"
                                  alt="cube"> Техника безопасности</a></li>
-                        <li><a data-index="1" class="nav-link top-panel btn btn-primary border-0 px-3 active">
+                        <li class="nav-item"><a data-index="1" class="nav-link top-panel btn btn-primary border-0 px-3 active">
                             <img src="{% static 'icons/icons/journal-album.svg' %}" class="me-2"
                                  style="transform: translateY(-10%) translateX(-5%)" alt="cube">Журнал</a></li>
                     </ul>
                     <div class="hstack ms-auto">
                         {% if user.userprofile.is_teacher %}
-                            <span class="text-warning me-4" id="warning-text" hidden>
+                            <span class="text-danger me-4" id="warning-text" hidden>
                                 Внимание! Таблица изменена, необходимо её сохранить
                             </span>
                             <a id="export-table" class="btn btn-primary border-0 me-2">
