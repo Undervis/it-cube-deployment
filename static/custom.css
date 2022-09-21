@@ -31,6 +31,7 @@
 }
 
 .card-header:first-child {
+    background: none;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }

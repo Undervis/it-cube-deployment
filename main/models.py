@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from it_cube.settings import BASE_DIR
 
 
 class UserProfile(models.Model):
@@ -9,14 +10,14 @@ class UserProfile(models.Model):
     first_name = models.CharField('Имя', max_length=20)
     middle_name = models.CharField('Отчество', max_length=20)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    photo = models.ImageField('Фото', upload_to='static/photos', null=True, blank=True)
+    photo = models.ImageField('Фото', upload_to='photos', null=True, blank=True)
 
     def __str__(self):
         return self.user.username
 
 
 class Direction(models.Model):
-    direction_name = models.CharField('Название направления', max_length=64)
+    direction_name = models.CharField('Название направления', max_length=96)
     teachers = models.ManyToManyField(User, verbose_name='Педагоги')
 
     class Meta:
@@ -24,7 +25,6 @@ class Direction(models.Model):
 
     def __str__(self):
         return self.direction_name
-
 
 
 class PaidGroup(models.Model):
@@ -94,7 +94,8 @@ class Student(models.Model):
 
     # Внебюджет
     is_paid = models.BooleanField('Внебюджет', default=False)
-    paid_group = models.ForeignKey(PaidGroup, on_delete=models.PROTECT, verbose_name='Внебюджетная группа', blank=True, null=True)
+    paid_group = models.ForeignKey(PaidGroup, on_delete=models.PROTECT, verbose_name='Внебюджетная группа', blank=True,
+                                   null=True)
     paid_doc = models.FileField('Договор внебюджет', upload_to='static/documents', blank=True)
     paid_date = models.DateField('Дата зачисления внебюджет', blank=True, null=True)
     paid_delete_doc = models.FileField('Приказ отчисления внебюджет', upload_to='static/documents', blank=True)

@@ -21,8 +21,6 @@ class EUserAdmin(UserAdmin):
     list_display = UserAdmin.list_display
 
 
-# admin.site.register(UserProfile, UserProfileAdmin)
-
 admin.site.unregister(User)
 admin.site.register(User, EUserAdmin)
 

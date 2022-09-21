@@ -9,11 +9,11 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
+from it_cube.settings import BASE_DIR
 
 from .models import *
 from .forms import *
 import openpyxl as xl
-from openpyxl.styles import table
 
 class MainLoginView(LoginView):
     template_name = 'login.html'
@@ -89,8 +89,9 @@ def journal(request):
     months = ['Сентябрь', "Октябрь", "Ноябрь", "Декабрь", "Январь", "Февраль", "Март", "Апрель", "Май"]
 
     tables = []
+    table_db = Table()
     try:
-        wb = xl.load_workbook('static/journal/' + group_name + '.xlsx')
+        wb = xl.load_workbook(str(BASE_DIR) + '/static/journal/' + group_name + '.xlsx')
         for m in months:
             try:
                 sheet = wb.get_sheet_by_name(m)
@@ -151,7 +152,7 @@ def journal(request):
 
     return render(request, 'journal.html', {'students': students.order_by('last_name'), 'cols': cols, 'months': months,
                                             'user_can_edit': user_can_edit, 'user': user, 'tables': tables,
-                                            'groups': groups, 'paid_groups': paid_groups, 'table_tb': table_tb})
+                                            'groups': groups, 'paid_groups': paid_groups, 'table_tb': table_db})
 
 
 class Table:
@@ -168,7 +169,7 @@ def load_json(request):
     if request.POST:
         table_data = json.loads(str(request.POST.get('data')))
         print(table_data)
-        file_name = 'static/journal/' + table_data['group'] + '.xlsx'
+        file_name = str(BASE_DIR) + '/static/journal/' + table_data['group'] + '.xlsx'
         try:
             wb = xl.load_workbook(file_name)
         except FileNotFoundError:

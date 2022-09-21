@@ -1,3 +1,4 @@
+
 """
 Django settings for it_cube project.
 
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-e8_sxr+@12h9!qx23_!u_m(u(!yzrus!gfz7s_*i_r%i2h10g5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.88.2"]
 
 # Application definition
 
@@ -75,19 +76,13 @@ WSGI_APPLICATION = 'it_cube.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-with open('it_cube/db_conf.txt', 'r') as f:
-    lines = f.readlines()
-    name = lines[0].removesuffix('\n')
-    user = lines[1].removesuffix('\n')
-    password = lines[2].removesuffix('\n')
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': name,
-        'USER': user,
-        'PASSWORD': password,
-        'HOST': '127.0.0.1',
+        'NAME': 'it_cube',
+        'USER': 'django',
+        'PASSWORD': 'Th398951',
+        'HOST': 'localhost',
         'PORT': '3306'
     }
 }
@@ -130,6 +125,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+MEDIA_ROOT = os.path.join(BASE_DIR, '/static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
