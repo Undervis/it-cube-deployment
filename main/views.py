@@ -275,10 +275,10 @@ def get_xlsx(file):
         student.first_name = worksheet.cell(i, 7).value
         student.middle_name = worksheet.cell(i, 8).value
         student.birthday = worksheet.cell(i, 9).value
-
-        student.parent_name = worksheet.cell(i, 12).value.capitalize() + " " + \
-                              worksheet.cell(i, 13).value.capitalize() + " " + \
-                              worksheet.cell(i, 14).value.capitalize()
+        print(i)
+        student.parent_name = str(worksheet.cell(i, 12).value).capitalize() + " " + \
+                              str(worksheet.cell(i, 13).value).capitalize() + " " + \
+                              str(worksheet.cell(i, 14).value).capitalize()
 
         student.parent_number = worksheet.cell(i, 15).value
         student.email = worksheet.cell(i, 16).value
@@ -296,18 +296,26 @@ def get_xlsx(file):
                     student.social_category = 4
         student.status = 1
         student.school = worksheet.cell(i, 11).value
+        student.comment = worksheet.cell(i, 26).value
         student.direction = Direction.objects.get(direction_name=worksheet.cell(i, 24).value)
         if Student.objects.filter(last_name=student.last_name,
                                   first_name=student.first_name,
-                                  middle_name=student.middle_name).count() == 0:
+                                  middle_name=student.middle_name,
+                                  direction=student.direction).count() == 0:
             student.save()
 
 
 def load_file(request):
-    filename = input('Путь к файлу: ')
-    get_xlsx(filename)
+    if request.POST:
+        load_form = LoadTableForm(request.POST, request.FILES)
+        if load_form.is_valid():
+            load_form.save()
 
-    return redirect('/')
+            filename = LoadTable.objects.last()
+            get_xlsx(filename.file_name)
+    else:
+        load_form = LoadTableForm
+    return render(request, 'load.html', {'load_form': load_form})
 
 
 @login_required(login_url='/login')

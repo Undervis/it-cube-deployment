@@ -123,3 +123,7 @@ class Student(models.Model):
 
     def __str__(self):
         return self.last_name + ' ' + self.first_name + ' ' + self.middle_name
+
+
+class LoadTable(models.Model):
+    file_name = models.FileField(upload_to='tables')

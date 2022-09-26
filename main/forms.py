@@ -119,3 +119,13 @@ class AuthUserForm(AuthenticationForm, ModelForm):
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['class'] = 'form-control'
 
+
+class LoadTableForm(ModelForm):
+    class Meta:
+        model = LoadTable
+        fields = ['file_name']
+        widgets = {
+            'file_name': FileInput(attrs={
+                'id': 'load-file'
+            })
+        }
