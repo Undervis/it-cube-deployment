@@ -126,6 +126,6 @@ class LoadTableForm(ModelForm):
         fields = ['file_name']
         widgets = {
             'file_name': FileInput(attrs={
-                'id': 'load-file'
+                'id': 'load-file', 'class': 'form-control'
             })
         }

@@ -1,14 +1,17 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Загрузка</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ load_form.file_name }}
-        <button type="submit">Загрузить</button>
-    </form>
+<form method="post" class="p-4" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ load_form.file_name }}
+    <button type="submit" class="mt-2 btn btn-primary">Загрузить</button>
+</form>
 </body>
 </html>
