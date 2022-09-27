@@ -15,6 +15,7 @@ from .models import *
 from .forms import *
 import openpyxl as xl
 
+
 class MainLoginView(LoginView):
     template_name = 'login.html'
     form_class = AuthUserForm
@@ -108,7 +109,7 @@ def journal(request):
                         table.students.append({"name": str(sheet.cell(row=row, column=1).value), "marks": []})
                         for col in range(2, 18):
                             if sheet.cell(row=row, column=col).value == "НБ":
-                                table.students[row-2]["marks"].append(1)
+                                table.students[row - 2]["marks"].append(1)
                             elif sheet.cell(row=row, column=col).value == "Б":
                                 table.students[row - 2]["marks"].append(2)
                             else:
@@ -163,6 +164,7 @@ class Table:
         self.themes = []
         self.tb = []
 
+
 @csrf_exempt
 @login_required(login_url='/login')
 def load_json(request):
@@ -184,13 +186,13 @@ def load_json(request):
         sheet.cell(row=1, column=1).value = 'Фамилия Имя'
         sheet.column_dimensions['A'].width = 20
         for i in range(len(table_data['dates'])):
-            sheet.cell(row=1, column=i+2).value = table_data['dates'][i]
+            sheet.cell(row=1, column=i + 2).value = table_data['dates'][i]
 
         for x in range(len(table_data['students'])):
-            sheet.cell(row=x+2, column=1).value = table_data['students'][x]['name']
+            sheet.cell(row=x + 2, column=1).value = table_data['students'][x]['name']
             for y in range(len(table_data['students'][x]['marks'])):
                 if table_data['students'][x]['marks'][y] == '0':
-                    sheet.cell(row=x + 2, column=y+2).value = ""
+                    sheet.cell(row=x + 2, column=y + 2).value = ""
                 elif table_data['students'][x]['marks'][y] == '1':
                     sheet.cell(row=x + 2, column=y + 2).value = "НБ"
                 elif table_data['students'][x]['marks'][y] == '2':
@@ -222,11 +224,11 @@ def load_json(request):
         sheet_tb.column_dimensions['F'].width = 30
 
         for row in range(len(table_data['tb'])):
-            sheet_tb.cell(row=row+2, column=1).value = table_data['tb'][row]['name']
-            sheet_tb.cell(row=row+2, column=2).value = table_data['tb'][row]['date-bs']
-            sheet_tb.cell(row=row+2, column=3).value = table_data['tb'][row]['theme-bs']
-            sheet_tb.cell(row=row+2, column=5).value = table_data['tb'][row]['date-pdd']
-            sheet_tb.cell(row=row+2, column=6).value = table_data['tb'][row]['theme-pdd']
+            sheet_tb.cell(row=row + 2, column=1).value = table_data['tb'][row]['name']
+            sheet_tb.cell(row=row + 2, column=2).value = table_data['tb'][row]['date-bs']
+            sheet_tb.cell(row=row + 2, column=3).value = table_data['tb'][row]['theme-bs']
+            sheet_tb.cell(row=row + 2, column=5).value = table_data['tb'][row]['date-pdd']
+            sheet_tb.cell(row=row + 2, column=6).value = table_data['tb'][row]['theme-pdd']
 
         wb.save(file_name)
 
@@ -300,12 +302,21 @@ def get_xlsx(file):
         student.direction = Direction.objects.get(direction_name=worksheet.cell(i, 24).value)
         if Student.objects.filter(last_name=student.last_name,
                                   first_name=student.first_name,
-                                  middle_name=student.middle_name,
-                                  direction=student.direction).count() == 0:
+                                  middle_name=student.middle_name).count() == 0:
             student.save()
+        else:
+            student_old = Student.objects.filter(last_name=student.last_name,
+                                                 first_name=student.first_name,
+                                                 middle_name=student.middle_name).first()
+            if student_old:
+                student_old.comment = str(student.comment) + '\n' + str(student.direction.direction_name)
+                student_old.save()
 
 
+@login_required(login_url='/login')
 def load_file(request):
+    if not request.user.has_perm('main.can_edit'):
+        raise PermissionDenied
     if request.POST:
         load_form = LoadTableForm(request.POST, request.FILES)
         if load_form.is_valid():

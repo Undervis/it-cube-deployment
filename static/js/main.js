@@ -108,12 +108,16 @@ $(document).ready(function () {
         sortBy: name
     })
 
-    var $quicksearch = $('.quicksearch').keyup(debounce(function () {
+    let searchbar = $('.quicksearch')
+    qsRegex = new RegExp(searchbar.val(), 'gi');
+    $grid.isotope();
+
+    var $quicksearch = searchbar.keyup(debounce(function () {
         qsRegex = new RegExp($quicksearch.val(), 'gi');
         $grid.isotope();
     }));
 
-    $('.quicksearch').on('click', debounce(function () {
+    searchbar.on('click', debounce(function () {
         qsRegex = new RegExp($quicksearch.val(), 'gi');
         $grid.isotope();
     }))
