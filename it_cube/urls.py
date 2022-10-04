@@ -1,5 +1,8 @@
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
+
+from it_cube import settings
 from main import views
 
 urlpatterns = [
@@ -12,5 +15,7 @@ urlpatterns = [
     path('logout', views.MainLogout.as_view(), name='logout'),
     path('load', views.load_file, name='load'),
     path('journal', views.journal, name='journal'),
-    path('load-journal', views.load_json,)
+    path('load-journal', views.load_json)
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -50,7 +50,10 @@
                              style="object-fit: cover; filter: invert(1) brightness(30%)">
                     {% endif %}
                 </a>
+                {% include 'user_profile.html' %}
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li><img src="{{ user.userprofile.photo.url }}" width="256" height="256" style="object-fit: cover"
+                             class="m-2 mt-0 rounded-1"></li>
                     <li><span class="dropdown-item-text fw-bold" href="#">
                                     {{ user.userprofile.last_name }} {{ user.userprofile.first_name }}
                                 </span></li>
@@ -59,7 +62,11 @@
                     </li>
                     <li><a class="dropdown-item" href="#">Тёмная тема (В разработке)</a>
                     </li>
-                    <li><a class="dropdown-item" href="#">Профиль (В разработке)</a>
+                    <li>
+                        <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#profileModal">
+                            Профиль
+                        </button>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
@@ -145,7 +152,9 @@
                     <table class="table table-hover mb-0 align-middle" id="main-table">
                         <thead class="card-header align-middle">
                         <tr id="table-header">
-                            <td class="col text-center" style="min-width: 300px" data-sort="name" data-field="student-name">ФИО</td>
+                            <td class="col text-center" style="min-width: 300px" data-sort="name"
+                                data-field="student-name">ФИО
+                            </td>
                             <td class="col text-center" data-field="bdate">Дата рождения</td>
                             <td class="col text-center" data-field="school" hidden>Школа</td>
                             <td class="col text-center" data-field="group">Группа</td>

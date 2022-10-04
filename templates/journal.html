@@ -42,6 +42,8 @@
                     {% endif %}
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li><img src="{{ user.userprofile.photo.url }}" style="object-fit: cover; max-width: 512px"
+                             class="m-2 mt-0 rounded-1"></li>
                     <li><span class="dropdown-item-text fw-bold" href="#">
                                     {{ user.userprofile.last_name }} {{ user.userprofile.first_name }}
                                 </span></li>

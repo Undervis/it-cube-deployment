@@ -13,7 +13,7 @@
                         {% if student.petition_doc %}
                             <span class="fs-6 mx-auto ps-1">
                                                 <a class="text-decoration-none"
-                                                   href="/{{ student.petition_doc.name }}">{{ student.petition_doc.name|slice:"17:"|truncatechars:32 }}</a>
+                                                   href="/media/{{ student.petition_doc.name }}">{{ student.petition_doc.name|slice:"10:"|truncatechars:32 }}</a>
                                             </span>
                         {% else %}
                             <span class="fs-6 mx-auto ps-1">Не загружено</span>
@@ -34,7 +34,7 @@
                         {% if student.sms_agreement_doc %}
                             <span class="fs-6 mx-auto ps-1">
                                                 <a class="text-decoration-none"
-                                                   href="/{{ student.sms_agreement_doc.name }}">{{ student.sms_agreement_doc.name|slice:"17:"|truncatechars:32 }}</a>
+                                                   href="/media/{{ student.sms_agreement_doc.name }}">{{ student.sms_agreement_doc.name|slice:"10:"|truncatechars:32 }}</a>
                                             </span>
                         {% else %}
                             <span class="fs-6 mx-auto ps-1">Не загружено</span>
@@ -55,7 +55,7 @@
                         {% if student.agreement_doc %}
                             <span class="fs-6 mx-auto ps-1">
                                                 <a class="text-decoration-none"
-                                                   href="/{{ student.agreement_doc.name }}">{{ student.agreement_doc.name|slice:"17:"|truncatechars:32 }}</a>
+                                                   href="/media/{{ student.agreement_doc.name }}">{{ student.agreement_doc.name|slice:"10:"|truncatechars:32 }}</a>
                                             </span>
                         {% else %}
                             <span class="fs-6 mx-auto ps-1">Не загружено</span>
@@ -76,7 +76,7 @@
                         {% if student.passport_copy_parent %}
                             <span class="fs-6 mx-auto ps-1">
                                                 <a class="text-decoration-none"
-                                                   href="/{{ student.passport_copy_parent.name }}">{{ student.passport_copy_parent.name|slice:"17:"|truncatechars:32 }}</a>
+                                                   href="/media/{{ student.passport_copy_parent.name }}">{{ student.passport_copy_parent.name|slice:"10:"|truncatechars:32 }}</a>
                                             </span>
                         {% else %}
                             <span class="fs-6 mx-auto ps-1">Не загружено</span>
@@ -97,7 +97,7 @@
                         {% if student.passport_copy_parent %}
                             <span class="fs-6 mx-auto ps-1">
                                                 <a class="text-decoration-none"
-                                                   href="/{{ student.passport_copy_parent.name }}">{{ student.passport_copy_parent.name|slice:"17:"|truncatechars:32 }}</a>
+                                                   href="/media/{{ student.passport_or_birth_copy.name }}">{{ student.passport_or_birth_copy.name|slice:"10:"|truncatechars:32 }}</a>
                                             </span>
                         {% else %}
                             <span class="fs-6 mx-auto ps-1">Не загружено</span>

@@ -1,0 +1,30 @@
+{% load static %}
+
+<div class="modal fade" id="profileModal" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 20px">
+            <div class="modal-header border-bottom-0 pt-3 px-4 pb-0">
+                <h4 class="modal-title" id="staticBackdropLabel">Профиль</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body mt-0">
+                <div class="row">
+                    <div class="col">
+                        <img src="{{ user.userprofile.photo.url }}" class="w-100"
+                             style="object-fit: cover; border-radius: 10px"/>
+                        <a class="btn btn-primary mt-2 w-100">
+                            <img class="me-1" style="transform: translateY(-10%); filter: invert(1)" src="{% static 'icons/icons/images.svg' %}"/>
+                            Изменить фото</a>
+                        <a class="btn btn-primary mt-2 w-100">
+                            <img class="me-1" style="transform: translateY(-10%); filter: invert(1)" src="{% static 'icons/icons/key.svg' %}"/>
+                            Изменить пароль</a>
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

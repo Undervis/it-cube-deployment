@@ -88,29 +88,29 @@ class Student(models.Model):
     # Зачисление/отчисление
     adding_date = models.DateField('Дата зачисления', blank=True, null=True)
     delete_date = models.DateField('Дата отчисления', blank=True, null=True)
-    adding_document = models.FileField('Приказ зачисления', upload_to='static/documents', blank=True)
-    delete_document = models.FileField('Приказ отчисления', upload_to='static/documents', blank=True)
+    adding_document = models.FileField('Приказ зачисления', upload_to='documents', blank=True)
+    delete_document = models.FileField('Приказ отчисления', upload_to='documents', blank=True)
     delete_comment = models.CharField('Причина отчисления', max_length=128, default='')
 
     # Внебюджет
     is_paid = models.BooleanField('Внебюджет', default=False)
     paid_group = models.ForeignKey(PaidGroup, on_delete=models.PROTECT, verbose_name='Внебюджетная группа', blank=True,
                                    null=True)
-    paid_doc = models.FileField('Договор внебюджет', upload_to='static/documents', blank=True)
+    paid_doc = models.FileField('Договор внебюджет', upload_to='documents', blank=True)
     paid_date = models.DateField('Дата зачисления внебюджет', blank=True, null=True)
-    paid_delete_doc = models.FileField('Приказ отчисления внебюджет', upload_to='static/documents', blank=True)
+    paid_delete_doc = models.FileField('Приказ отчисления внебюджет', upload_to='documents', blank=True)
     paid_delete_date = models.DateField('Дата отчисления внебюджет', blank=True, null=True)
     paid_delete_comment = models.CharField('Причина отчисления внебюджет', max_length=128, default='')
 
     # Основные документы
-    petition_doc = models.FileField('Заявление на зачисление', upload_to='static/documents', blank=True)
-    sms_agreement_doc = models.FileField('Расписка на получение SMS сообщений', upload_to='static/documents',
+    petition_doc = models.FileField('Заявление на зачисление', upload_to='documents', blank=True)
+    sms_agreement_doc = models.FileField('Расписка на получение SMS сообщений', upload_to='documents',
                                          blank=True)
-    agreement_doc = models.FileField('Согласие на обработку персональных данных', upload_to='static/documents',
+    agreement_doc = models.FileField('Согласие на обработку персональных данных', upload_to='documents',
                                      blank=True)
-    passport_copy_parent = models.FileField('Копия паспорта родителя', upload_to='static/documents', blank=True)
+    passport_copy_parent = models.FileField('Копия паспорта родителя', upload_to='documents', blank=True)
     passport_or_birth_copy = models.FileField('Копия паспорта/свидетельства о рождении ребёнка',
-                                              upload_to='static/documents', blank=True)
+                                              upload_to='documents', blank=True)
 
     class Meta:
         verbose_name_plural = 'Учащиеся'
