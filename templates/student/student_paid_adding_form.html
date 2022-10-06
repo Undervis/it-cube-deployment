@@ -2,7 +2,7 @@
 <div>
     <img src="{% static 'icons/icons/person-plus.svg' %}" class="mx-2"
          style="transform: translateY(-5%)">
-    <a class="list-item active" href="#" data-bs-toggle="modal"
+    <a class="list-item active" href="#" data-bs-toggle="modal" style="max-width: 70%"
        data-bs-target="#modalPaidGroup">Зачислить на внебюджет</a>
 </div>
 
@@ -19,31 +19,25 @@
                 {% csrf_token %}
                 <div class="modal-body">
                     {{ errors }}
-                    {% if student.status == 1 %}
-                        <b class="text-danger">ЗАЧИСЛЕНИЕ НЕВОЗМОЖНО</b><br>
-                        <span>У данного абитуриента загружены не все документы</span><br><br>
-                        <span>Загрузите все документы чтобы зачислить</span>
-                    {% else %}
-                        <div class="mb-3">
-                            <label for="paidGroupInput" class="form-label">Группа</label>
-                            {{ paid_form.paid_group }}
+                    <div class="mb-3">
+                        <label for="paidGroupInput" class="form-label">Группа</label>
+                        {{ paid_form.paid_group }}
+                    </div>
+                    <div class="mb-3" id="paidDateBlock">
+                        <label for="paidDateInput" class="form-label">Дата
+                            зачисления</label>
+                        {{ paid_form.paid_date }}
+                    </div>
+                    <div id="paidFileBlock">
+                        <span class="fs-5">Для зачисления абитуриента загрузите приказ о зачислении</span>
+                        <br>
+                        <div class="alert alert-danger">
+                            <b class="text-danger">ВНИМАНИЕ</b><br>
+                            <span>Проверьте приказ на наличие ошибок прежде чем загружать</span><br>
+                            <span>После зачисления его нельзя будет изменить</span>
                         </div>
-                        <div class="mb-3" id="paidDateBlock">
-                            <label for="paidDateInput" class="form-label">Дата
-                                зачисления</label>
-                            {{ paid_form.paid_date }}
-                        </div>
-                        <div id="paidFileBlock">
-                            <span class="fs-5">Для зачисления абитуриента загрузите приказ о зачислении</span>
-                            <br>
-                            <div class="alert alert-danger">
-                                <b class="text-danger">ВНИМАНИЕ</b><br>
-                                <span>Проверьте приказ на наличие ошибок прежде чем загружать</span><br>
-                                <span>После зачисления его нельзя будет изменить</span>
-                            </div>
-                            {{ paid_form.paid_doc }}
-                        </div>
-                    {% endif %}
+                        {{ paid_form.paid_doc }}
+                    </div>
                 </div>
                 <div class="modal-footer">
                     {% if student.status == 1 %}
