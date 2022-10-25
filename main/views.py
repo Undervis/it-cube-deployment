@@ -90,8 +90,10 @@ def journal(request):
     months = ['Сентябрь', "Октябрь", "Ноябрь", "Декабрь", "Январь", "Февраль", "Март", "Апрель", "Май"]
 
     tables = []
-    table_db = Table()
+    table_tb = Table()
     try:
+        if group_name.count("/") > 0:
+            group_name = group_name.replace("/", ",")
         wb = xl.load_workbook(str(BASE_DIR) + '/static/journal/' + group_name + '.xlsx')
         for m in months:
             try:
@@ -153,7 +155,7 @@ def journal(request):
 
     return render(request, 'journal.html', {'students': students.order_by('last_name'), 'cols': cols, 'months': months,
                                             'user_can_edit': user_can_edit, 'user': user, 'tables': tables,
-                                            'groups': groups, 'paid_groups': paid_groups, 'table_tb': table_db})
+                                            'groups': groups, 'paid_groups': paid_groups, 'table_tb': table_tb})
 
 
 class Table:
@@ -171,7 +173,10 @@ def load_json(request):
     if request.POST:
         table_data = json.loads(str(request.POST.get('data')))
         print(table_data)
-        file_name = str(BASE_DIR) + '/static/journal/' + table_data['group'] + '.xlsx'
+        group_name = str(table_data['group'])
+        if group_name.count('/') > 0:
+            group_name = group_name.replace("/", ',')
+        file_name = str(BASE_DIR) + '/static/journal/' + group_name + '.xlsx'
         try:
             wb = xl.load_workbook(file_name)
         except FileNotFoundError:

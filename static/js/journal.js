@@ -70,9 +70,6 @@ $(document).ready(function () {
         $('.journal-date').each(function () {
             $(this).val('')
         })
-        $('.journal-tb').each(function () {
-            $(this).val('')
-        })
         $('.journal-mark').each(function () {
             $(this).children('option').prop('selected', false)
         })
@@ -106,6 +103,9 @@ $(document).ready(function () {
 
     // Загрузка данных таблицы техники безопасности
     let load_tb = function () {
+        $('.journal-tb').each(function () {
+            $(this).val('')
+        })
         try {
             // Парсинг данных
             let tb_data_text = $('#loaded-tb-data').text()

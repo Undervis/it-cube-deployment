@@ -64,54 +64,54 @@
             </div>
         </div>
         {% if student.paid_delete_doc %}
-        <div class="list-group-item bg-light">
-            <p class="mb-0 text-danger text-center">Отчисление</p>
-        </div>
-        <div class="list-group-item">
-            <div class="row">
-                <div class="col-4">
-                    <div class="p-1 pt-2">
-                        <span class="fs-6 text-muted text-uppercase">Причина отчисления</span><br>
+            <div class="list-group-item bg-light">
+                <p class="mb-0 text-danger text-center">Отчисление</p>
+            </div>
+            <div class="list-group-item">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="p-1 pt-2">
+                            <span class="fs-6 text-muted text-uppercase">Причина отчисления</span><br>
+                        </div>
                     </div>
-                </div>
-                <div class="col-8 pe-1">
-                    <div class="p-1">
-                        <span class="fs-5">{{ student.paid_delete_comment }}</span>
+                    <div class="col-8 pe-1">
+                        <div class="p-1">
+                            <span class="fs-5">{{ student.paid_delete_comment }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="list-group-item">
-            <div class="row">
-                <div class="col-4">
-                    <div class="p-1 pt-2">
-                        <span class="fs-6 text-muted text-uppercase">Дата отчисления</span><br>
+            <div class="list-group-item">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="p-1 pt-2">
+                            <span class="fs-6 text-muted text-uppercase">Дата отчисления</span><br>
+                        </div>
                     </div>
-                </div>
-                <div class="col-8 pe-1">
-                    <div class="p-1">
-                        <span class="fs-5">{{ student.paid_delete_date }}</span>
+                    <div class="col-8 pe-1">
+                        <div class="p-1">
+                            <span class="fs-5">{{ student.paid_delete_date }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="list-group-item">
-            <div class="row">
-                <div class="col-4">
-                    <div class="p-1 pt-2">
-                        <span class="fs-6 text-muted text-uppercase">Приказ об отчислении</span><br>
+            <div class="list-group-item">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="p-1 pt-2">
+                            <span class="fs-6 text-muted text-uppercase">Приказ об отчислении</span><br>
+                        </div>
                     </div>
-                </div>
-                <div class="col-8 pe-1">
-                    <div class="p-1 alert alert-secondary m-0 hstack h-100">
+                    <div class="col-8 pe-1">
+                        <div class="p-1 alert alert-secondary m-0 hstack h-100">
                                         <span class="fs-6 mx-auto ps-1">
                                                 <a class="text-decoration-none"
                                                    href="/{{ student.paid_delete_doc.name }}">{{ student.paid_delete_doc.name|slice:"17:"|truncatechars:32 }}</a>
                                         </span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         {% endif %}
     </div>
 </div>

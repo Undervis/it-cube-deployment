@@ -26,40 +26,7 @@
         </ul>
 
         <div class="hstack col-md-2 text-end me-2">
-            <div class="dropdown ms-auto">
-                <a href="#" class="link-dark text-decoration-none dropdown-toggle"
-                   id="dropdownUser1"
-                   data-bs-toggle="dropdown" aria-expanded="false">
-                    {% if user.userprofile.photo %}
-                        <img src="{{ user.userprofile.photo.url }}" alt="mdo" width="32"
-                             height="32"
-                             class="rounded-circle" style="object-fit: cover">
-                    {% else %}
-                        <img src="{% static 'icons/icons/person-circle.svg' %}"
-                             width="32" height="32"
-                             class="rounded-circle"
-                             style="object-fit: cover; filter: invert(1) brightness(30%)">
-                    {% endif %}
-                </a>
-                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                    <li><img src="{{ user.userprofile.photo.url }}" style="object-fit: cover; max-width: 512px"
-                             class="m-2 mt-0 rounded-1"></li>
-                    <li><span class="dropdown-item-text fw-bold" href="#">
-                                    {{ user.userprofile.last_name }} {{ user.userprofile.first_name }}
-                                </span></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Тёмная тема (В разработке)</a>
-                    </li>
-                    <li><a class="dropdown-item" href="#">Профиль (В разработке)</a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="/logout">Выйти</a></li>
-                </ul>
-            </div>
+            {% include 'user_profile.html' %}
         </div>
     </header>
 
