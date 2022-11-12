@@ -48,7 +48,8 @@ class PaidGroupEnroll(models.Model):
         (1, 'Отчислен'),
     ]
     models.IntegerField("Статус", choices=paid_status, default=0)
-    paid_doc = models.FileField('Договор внебюджет', upload_to='documents', blank=True)
+    paid_doc = models.FileField('Приказ зачисления внебюджет', upload_to='documents', blank=True)
+    paid_contract = models.FileField('Договор', upload_to='documents/paid_contracts', blank=True)
     paid_date = models.DateField('Дата зачисления внебюджет', blank=True, null=True)
     paid_delete_doc = models.FileField('Приказ отчисления внебюджет', upload_to='documents', blank=True)
     paid_delete_date = models.DateField('Дата отчисления внебюджет', blank=True, null=True)

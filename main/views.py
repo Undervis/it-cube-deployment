@@ -32,7 +32,8 @@ def get_students_manager(request):
     elif request.GET.get('group'):
         students = Student.objects.filter(group=Group.objects.get(pk=request.GET.get('group')))
     elif request.GET.get('paidgroup'):
-        students = Student.objects.filter(paid_group=PaidGroup.objects.get(pk=request.GET.get('paidgroup')))
+        students = Student.objects.filter(
+            paid_group=PaidGroup.objects.get(paid_group=request.GET.get('paidgroup')))
     elif request.GET.get('teacher'):
         group = Student.objects.filter(group__teacher=User.objects.get(pk=request.GET.get('teacher')))
         students = group.union(
@@ -372,16 +373,17 @@ def get_student(request, pk):
         add_student_form = AddStudentForm
 
     if request.FILES.get('paid_doc'):
-        paid_student_form = AddPaidStudentForm(request.POST, request.FILES, instance=student)
+        paid_student_form = AddPaidForm(request.POST, request.FILES, instance=student)
         if paid_student_form.is_valid():
             paid_student_form.save()
             student.is_paid = True
             student.status = 0
+            student.paid_group = PaidGroupEnroll.objects.filter(student=student)
             student.save()
 
             redirect('/student/' + str(pk))
     else:
-        paid_student_form = AddPaidStudentForm
+        paid_student_form = AddPaidForm
 
     if request.FILES.get('delete_document'):
         delete_student_form = DeleteStudentForm(request.POST, request.FILES, instance=student)
@@ -395,7 +397,7 @@ def get_student(request, pk):
         delete_student_form = DeleteStudentForm
 
     if request.FILES.get('paid_delete_doc'):
-        paid_delete_student_form = DeletePaidStudentForm(request.POST, request.FILES, instance=student)
+        paid_delete_student_form = DeletePaidForm(request.POST, request.FILES, instance=student)
         if paid_delete_student_form.is_valid():
             paid_delete_student_form.save()
             if not student.group or student.delete_document:
@@ -406,7 +408,7 @@ def get_student(request, pk):
         else:
             errors = paid_delete_student_form.errors
     else:
-        paid_delete_student_form = DeletePaidStudentForm
+        paid_delete_student_form = DeletePaidForm
 
     return render(request, 'student/student.html', {'student': student,
                                                     'user_can_edit': user_can_edit,
@@ -446,27 +448,18 @@ def edit_student(request, pk):
         raise PermissionDenied
     errors = ''
     student = get_object_or_404(Student, pk=pk)
-    can_edit = True
-    if student.status == 2 or (student.status == 2 and student.paid_delete_doc):
-        can_edit = False
-    if student.status == 2 and not student.paid_delete_doc:
-        can_edit = True
-    if can_edit:
-        if request.POST:
-            student_form = StudentForm(request.POST, request.FILES, instance=student)
-            if student_form.is_valid():
-                student_form.save()
+    if request.POST:
+        student_form = StudentForm(request.POST, request.FILES, instance=student)
+        if student_form.is_valid():
+            student_form.save()
 
-                set_status(student)
+            set_status(student)
 
-                return redirect('/student/' + str(pk))
-            else:
-                errors = student_form.errors
+            return redirect('/student/' + str(pk))
         else:
-            student_form = StudentForm(instance=student)
-
+            errors = student_form.errors
     else:
-        return redirect('/')
+        student_form = StudentForm(instance=student)
 
     return render(request, 'student/student_edit.html',
                   {'student_form': student_form, 'errors': errors, 'student': student})

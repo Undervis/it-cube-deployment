@@ -58,14 +58,15 @@ class AddStudentForm(ModelForm):
             self.fields[key].required = True
 
 
-class AddPaidStudentForm(ModelForm):
+class AddPaidForm(ModelForm):
     class Meta:
-        model = Student
-        fields = ['paid_group', 'paid_date', 'paid_doc']
+        model = PaidGroupEnroll
+        fields = ['paid_group', 'paid_date', 'paid_doc', 'paid_contract']
         widgets = {
-            'paid_doc': FileInput(attrs={'class': 'form-control', 'id': 'paidFile'}),
-            'paid_date': DateInput(attrs={'class': 'form-control', 'id': 'paidDateInput', 'type': 'date'}),
             'paid_group': Select(attrs={'class': 'form-select', 'id': 'paidGroupInput'}),
+            'paid_doc': FileInput(attrs={'class': 'form-control', 'id': 'paidFile'}),
+            'paid_contract': FileInput(attrs={'class': 'form-control', 'id': 'paidContract'}),
+            'paid_date': DateInput(attrs={'class': 'form-control', 'id': 'paidDateInput', 'type': 'date'})
         }
 
     def __init__(self, *args, **kwargs):
@@ -92,9 +93,9 @@ class DeleteStudentForm(ModelForm):
             self.fields[key].required = True
 
 
-class DeletePaidStudentForm(ModelForm):
+class DeletePaidForm(ModelForm):
     class Meta:
-        model = Student
+        model = PaidGroupEnroll
         fields = ['paid_delete_date', 'paid_delete_doc', 'paid_delete_comment']
         widgets = {
             'paid_delete_doc': FileInput(attrs={'class': 'form-control', 'id': 'deletePaidFile'}),
