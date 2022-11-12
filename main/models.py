@@ -40,6 +40,21 @@ class PaidGroup(models.Model):
         return self.group_name
 
 
+class PaidGroupEnroll(models.Model):
+    student = models.ForeignKey('Student', on_delete=models.PROTECT)
+    paid_group = models.ForeignKey(PaidGroup, on_delete=models.PROTECT)
+    paid_status = [
+        (0, 'Зачислен'),
+        (1, 'Отчислен'),
+    ]
+    models.IntegerField("Статус", choices=paid_status, default=0)
+    paid_doc = models.FileField('Договор внебюджет', upload_to='documents', blank=True)
+    paid_date = models.DateField('Дата зачисления внебюджет', blank=True, null=True)
+    paid_delete_doc = models.FileField('Приказ отчисления внебюджет', upload_to='documents', blank=True)
+    paid_delete_date = models.DateField('Дата отчисления внебюджет', blank=True, null=True)
+    paid_delete_comment = models.CharField('Причина отчисления внебюджет', max_length=128, default='')
+
+
 class Group(models.Model):
     group_name = models.CharField('Название группы', max_length=64)
     direction = models.ForeignKey(Direction, on_delete=models.PROTECT, verbose_name='Направление')
@@ -94,13 +109,8 @@ class Student(models.Model):
 
     # Внебюджет
     is_paid = models.BooleanField('Внебюджет', default=False)
-    paid_group = models.ForeignKey(PaidGroup, on_delete=models.PROTECT, verbose_name='Внебюджетная группа', blank=True,
-                                   null=True)
-    paid_doc = models.FileField('Договор внебюджет', upload_to='documents', blank=True)
-    paid_date = models.DateField('Дата зачисления внебюджет', blank=True, null=True)
-    paid_delete_doc = models.FileField('Приказ отчисления внебюджет', upload_to='documents', blank=True)
-    paid_delete_date = models.DateField('Дата отчисления внебюджет', blank=True, null=True)
-    paid_delete_comment = models.CharField('Причина отчисления внебюджет', max_length=128, default='')
+    paid_group = models.ManyToManyField(PaidGroup, verbose_name='Внебюджетная группа',
+                                        blank=True, null=True, through=PaidGroupEnroll)
 
     # Основные документы
     petition_doc = models.FileField('Заявление на зачисление', upload_to='documents', blank=True)
