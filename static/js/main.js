@@ -14,6 +14,12 @@ $(document).ready(function () {
 
     })
 
+    let $toastText = $('#toast-text')
+    let toast = new bootstrap.Toast($('#liveToast'));
+    $toastText.removeClass('text-primary')
+    $toastText.addClass('text-danger');
+    toast.show()
+
     $('.nav-item.menu').each(function () {
         if ($href.indexOf('direction') > 0) {
             $(this).children('a').removeClass('active')

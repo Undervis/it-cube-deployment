@@ -96,15 +96,21 @@ class DeleteStudentForm(ModelForm):
 class DeletePaidForm(ModelForm):
     class Meta:
         model = PaidGroupEnroll
-        fields = ['paid_delete_date', 'paid_delete_doc', 'paid_delete_comment']
+        fields = ['paid_delete_date', 'paid_delete_doc', 'paid_delete_comment', 'paid_group']
         widgets = {
             'paid_delete_doc': FileInput(attrs={'class': 'form-control', 'id': 'deletePaidFile'}),
             'paid_delete_date': DateInput(attrs={'class': 'form-control', 'id': 'deletePaidDateInput', 'type': 'date'}),
             'paid_delete_comment': TextInput(attrs={'class': 'form-control', 'id': 'commentPaidInput'}),
+            'paid_group': Select(attrs={'class': 'form-select', 'id': 'paidDeleteFromInput'}, )
         }
 
     def __init__(self, *args, **kwargs):
         super(ModelForm, self).__init__(*args, **kwargs)
+
+        if type(self.instance) is Student:
+            self.fields['paid_group'].queryset = PaidGroup.objects.filter(student=self.instance)
+        else:
+            pass
 
         for key in self.fields:
             self.fields[key].required = True

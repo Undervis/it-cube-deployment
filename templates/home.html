@@ -147,14 +147,18 @@
                                         {% if s.group %}
                                             <span class="my-auto badge fw-normal bg-primary"
                                                   title="Бюджет">{{ s.group.group_name }}</span>
-                                            {% if s.paid_group %}
-                                                <span class="my-auto badge fw-normal bg-success"
-                                                      title="Внебюджет">{{ s.paid_group }}</span>
+                                            {% if s.paid_groups.count > 0 %}
+                                                {% for pg in s.paid_groups %}
+                                                    {% if pg.paid_status == 0 %}
+                                                        <span class="my-auto badge fw-normal bg-success"
+                                                              title="Внебюджет">{{ pg }}</span>
+                                                    {% endif %}
+                                                {% endfor %}
                                             {% endif %}
                                         {% else %}
-                                            {% if s.paid_group.paid_group %}
+                                            {% if s.paid_group.count > 0 %}
                                                 <span class="my-auto badge fw-normal bg-success"
-                                                      title="Внебюджет">{{ s.paid_group }}</span>
+                                                      title="Внебюджет">Внебюджет</span>
                                             {% else %}
                                                 <span class="my-auto badge fw-normal bg-info">Не определено</span>
                                             {% endif %}
@@ -188,26 +192,25 @@
                                     </td>
                                     <td data-field="status" class="col text-center">
                                         {% if s.status == 0 %}
-                                            {% if s.adding_document %}
+                                            {% if s.adding_document or s.paid_group.count > 0 %}
                                                 <span class="badge bg-primary fw-normal text-wrap">Зачислен</span>
-                                            {% endif %}
-                                            {% if s.is_paid %}
-                                                <span class="badge bg-success mt-1 fw-normal text-wrap">Внебюджет
-                                                    {% if s.paid_delete_doc %} | Отчислен {% endif %}
-                                                </span>
                                             {% endif %}
                                         {% endif %}
                                         {% if s.status == 1 or s.status == 3 %}
                                             <span class="badge bg-info fw-normal text-wrap">Рассматривается</span>
                                         {% endif %}
                                         {% if s.status == 2 %}
+                                            <span class="badge bg-danger fw-normal text-wrap">Отчислен</span>
+                                        {% else %}
                                             {% if s.delete_document %}
                                                 <span class="badge bg-danger fw-normal text-wrap">Отчислен</span>
                                             {% endif %}
-                                            {% if s.is_paid %}
-                                                <span class="badge bg-success mt-1 fw-normal text-wrap">Внебюджет
-                                                    {% if s.paid_delete_doc %} | Отчислен {% endif %}
-                                                </span>
+                                            {% if s.paid_groups.count > 0 %}
+                                                {% if s.paid_status %}
+                                                    <span class="badge bg-success mt-1 fw-normal text-wrap">Внебюджет</span>
+                                                {% else %}
+                                                    <span class="badge bg-danger mt-1 fw-normal text-wrap">Внебюджет | Отчислен</span>
+                                                {% endif %}
                                             {% endif %}
                                         {% endif %}
                                     </td>

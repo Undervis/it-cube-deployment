@@ -1,117 +1,133 @@
+{% load static %}
 <div class="card mb-4">
     <span class="card-header text-center text-muted">Внебюджет</span>
-    <div class="list-group list-group-flush">
-        <div class="list-group-item">
-            <div class="row">
-                <div class="col-4">
-                    <div class="p-1 pt-2">
-                        <span class="fs-6 text-muted text-uppercase">Группа</span><br>
-                    </div>
-                </div>
-                <div class="col-8">
-                    <div class="p-1">
-                        <span class="fs-5">{{ student.paid_group }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="list-group-item">
-            <div class="row">
-                <div class="col-4">
-                    <div class="p-1 pt-2">
-                        <span class="fs-6 text-muted text-uppercase">Направление</span><br>
-                    </div>
-                </div>
-                <div class="col-8">
-                    <div class="p-1">
-                        <span class="fs-5">{{ student.paid_group.direction }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="list-group-item bg-light">
-            <p class="mb-0 text-primary text-center">Зачисление</p>
-        </div>
-        <div class="list-group-item">
-            <div class="row">
-                <div class="col-4">
-                    <div class="p-1 pt-2">
-                        <span class="fs-6 text-muted text-uppercase">Дата зачисления</span><br>
-                    </div>
-                </div>
-                <div class="col-8">
-                    <div class="p-1">
-                        <span class="fs-5">{{ student.paid_date }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="list-group-item">
-            <div class="row">
-                <div class="col-4">
-                    <div class="p-1 pt-2">
-                        <span class="fs-6 text-muted text-uppercase">Приказ о зачислении</span><br>
-                    </div>
-                </div>
-                <div class="col-8 pe-1">
-                    <div class="p-1 alert alert-secondary m-0 hstack h-100">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        {% for pg in student.paid_groups %}
+            <div class="accordion-item bg-transparent">
+                <h2 class="accordion-header" id="flush-heading-{{ forloop.counter }}">
+                    <button class="accordion-button bg-transparent collapsed fs-5" type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapse-{{ forloop.counter }}"
+                            aria-expanded="false" aria-controls="flush-collapse-{{ forloop.counter }}">
+                        {{ pg.paid_group }}
+                        {% if pg.paid_status == 0 %}
+                            <span class="badge bg-success fw-normal d-inline-block mt-1 ms-4 p-1 px-2 border-0 fs-6 text-center"
+                                  style="transform: translateY(-13%)">
+                            Зачислен
+                            </span>
+                        {% else %}
+                            <span class="badge bg-danger fw-normal d-inline-block mt-1 ms-4 p-1 px-2 border-0 fs-6 text-center"
+                                  style="transform: translateY(-13%)">
+                            Отчислен
+                            </span>
+                        {% endif %}
+                    </button>
+                </h2>
+                <div id="flush-collapse-{{ forloop.counter }}" class="accordion-collapse collapse"
+                     aria-labelledby="flush-heading-{{ forloop.counter }}"
+                     data-bs-parent="#accordionFlushExample">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="p-1 pt-2">
+                                        <span class="fs-6 text-muted text-uppercase">Направление</span><br>
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="p-1">
+                                        <span class="fs-5">{{ pg.paid_group.direction }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item bg-light">
+                            <p class="mb-0 text-primary text-center">Зачисление</p>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="p-1 pt-2">
+                                        <span class="fs-6 text-muted text-uppercase">Дата зачисления</span><br>
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="p-1">
+                                        <span class="fs-5">{{ pg.paid_date }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="p-1 pt-2">
+                                        <span class="fs-6 text-muted text-uppercase">Приказ о зачислении</span><br>
+                                    </div>
+                                </div>
+                                <div class="col-8 pe-1">
+                                    <div class="p-1 alert alert-secondary m-0 hstack h-100">
                                         <span class="fs-6 mx-auto ps-1">
                                                 <a class="text-decoration-none"
-                                                   href="/{{ student.paid_doc.name }}">{{ student.paid_doc.name|slice:"17:"|truncatechars:32 }}</a>
+                                                   href="/media/{{ pg.paid_doc.name }}">{{ pg.paid_doc.name|slice:"10:"|truncatechars:48 }}</a>
                                         </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% if student.paid_delete_doc %}
-            <div class="list-group-item bg-light">
-                <p class="mb-0 text-danger text-center">Отчисление</p>
-            </div>
-            <div class="list-group-item">
-                <div class="row">
-                    <div class="col-4">
-                        <div class="p-1 pt-2">
-                            <span class="fs-6 text-muted text-uppercase">Причина отчисления</span><br>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-8 pe-1">
-                        <div class="p-1">
-                            <span class="fs-5">{{ student.paid_delete_comment }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="list-group-item">
-                <div class="row">
-                    <div class="col-4">
-                        <div class="p-1 pt-2">
-                            <span class="fs-6 text-muted text-uppercase">Дата отчисления</span><br>
-                        </div>
-                    </div>
-                    <div class="col-8 pe-1">
-                        <div class="p-1">
-                            <span class="fs-5">{{ student.paid_delete_date }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="list-group-item">
-                <div class="row">
-                    <div class="col-4">
-                        <div class="p-1 pt-2">
-                            <span class="fs-6 text-muted text-uppercase">Приказ об отчислении</span><br>
-                        </div>
-                    </div>
-                    <div class="col-8 pe-1">
-                        <div class="p-1 alert alert-secondary m-0 hstack h-100">
+                        {% if pg.paid_delete_doc %}
+                            <div class="list-group-item bg-light">
+                                <p class="mb-0 text-danger text-center">Отчисление</p>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="p-1 pt-2">
+                                            <span class="fs-6 text-muted text-uppercase">Причина отчисления</span><br>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 pe-1">
+                                        <div class="p-1">
+                                            <span class="fs-5">{{ pg.paid_delete_comment }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="p-1 pt-2">
+                                            <span class="fs-6 text-muted text-uppercase">Дата отчисления</span><br>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 pe-1">
+                                        <div class="p-1">
+                                            <span class="fs-5">{{ pg.paid_delete_date }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="p-1 pt-2">
+                                            <span class="fs-6 text-muted text-uppercase">Приказ об отчислении</span><br>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 pe-1">
+                                        <div class="p-1 alert alert-secondary m-0 hstack h-100">
                                         <span class="fs-6 mx-auto ps-1">
                                                 <a class="text-decoration-none"
-                                                   href="/{{ student.paid_delete_doc.name }}">{{ student.paid_delete_doc.name|slice:"17:"|truncatechars:32 }}</a>
+                                                   href="/media/{{ pg.paid_delete_doc.name }}">{{ pg.paid_delete_doc.name|slice:"10:"|truncatechars:32 }}</a>
                                         </span>
-                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-        {% endif %}
+        {% endfor %}
     </div>
 </div>

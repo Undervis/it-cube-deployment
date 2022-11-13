@@ -2,6 +2,7 @@ import datetime
 import json
 
 import openpyxl
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.exceptions import PermissionDenied
@@ -155,9 +156,10 @@ def journal(request):
         except:
             pass
 
-        return render(request, 'journal.html', {'students': students.order_by('last_name'), 'cols': cols, 'months': months,
-                                            'user_can_edit': user_can_edit, 'user': user, 'tables': tables,
-                                            'groups': groups, 'paid_groups': paid_groups, 'table_tb': table_tb})
+        return render(request, 'journal.html',
+                      {'students': students.order_by('last_name'), 'cols': cols, 'months': months,
+                       'user_can_edit': user_can_edit, 'user': user, 'tables': tables,
+                       'groups': groups, 'paid_groups': paid_groups, 'table_tb': table_tb})
     else:
         return render(request, 'page_error.html', {'error_title': 'Журнал не доступен',
                                                    'error_msg': 'Нет групп для заполнения журнала'})
@@ -245,6 +247,21 @@ def load_json(request):
     return JsonResponse({"msg": 'Success'})
 
 
+def get_paid_groups(students, mode: int):
+    if mode == 0:
+        for s in students:
+            s.paid_groups = PaidGroupEnroll.objects.filter(student=s)
+            s.paid_status = False
+            for pg in s.paid_groups:
+                if pg.paid_status == 0:
+                    s.paid_status = True
+
+        return students
+    if mode == 1:
+        students.paid_groups = PaidGroupEnroll.objects.filter(student=students)
+        return students
+
+
 @login_required(login_url='/login')
 def home(request):
     if not request.user.has_perm('main.can_edit'):
@@ -266,6 +283,8 @@ def home(request):
         students = get_students_manager(request)
     else:
         students = get_students_teacher(request)
+
+    students = get_paid_groups(students, 0)
 
     return render(request, 'home.html', {'students': students,
                                          'user_can_edit': user_can_edit,
@@ -358,6 +377,8 @@ def get_student(request, pk):
 
     errors = ''
     student = get_object_or_404(Student, pk=pk)
+    student = get_paid_groups(student, 1)
+
     if request.FILES.get('adding_document'):
         add_student_form = AddStudentForm(request.POST, request.FILES, instance=student)
         if add_student_form.is_valid():
@@ -368,20 +389,26 @@ def get_student(request, pk):
 
             redirect('/student/' + str(pk))
         else:
-            errors = add_student_form.errors
+            messages.add_message(request, messages.WARNING, add_student_form.errors.as_p)
     else:
         add_student_form = AddStudentForm
 
     if request.FILES.get('paid_doc'):
-        paid_student_form = AddPaidForm(request.POST, request.FILES, instance=student)
+        paid_student_form = AddPaidForm(request.POST, request.FILES)
         if paid_student_form.is_valid():
-            paid_student_form.save()
-            student.is_paid = True
-            student.status = 0
-            student.paid_group = PaidGroupEnroll.objects.filter(student=student)
-            student.save()
+            paid_exist = PaidGroupEnroll.objects.filter(
+                paid_group__group_name=paid_student_form.cleaned_data.get('paid_group')).exists()
+            if not paid_exist:
+                paid_enroll = paid_student_form.save(commit=False)
+                paid_enroll.student = student
+                paid_enroll.status = 0
+                paid_enroll.save()
+                student.status = 0
+                student.save()
 
-            redirect('/student/' + str(pk))
+                redirect('/student/' + str(pk))
+            else:
+                messages.add_message(request, messages.WARNING, 'Этот ученик уже есть в группе')
     else:
         paid_student_form = AddPaidForm
 
@@ -397,18 +424,22 @@ def get_student(request, pk):
         delete_student_form = DeleteStudentForm
 
     if request.FILES.get('paid_delete_doc'):
-        paid_delete_student_form = DeletePaidForm(request.POST, request.FILES, instance=student)
+        paid_enroll = PaidGroupEnroll.objects.get(paid_group__id=request.POST.get('paid_group'))
+        paid_delete_student_form = DeletePaidForm(request.POST, request.FILES, instance=paid_enroll)
         if paid_delete_student_form.is_valid():
-            paid_delete_student_form.save()
+            paid_enroll = paid_delete_student_form.save(commit=False)
+            print(paid_enroll)
+            paid_enroll.paid_status = 1
+            paid_enroll.save()
             if not student.group or student.delete_document:
                 student.status = 2
                 student.save()
 
             redirect('/student/' + str(pk))
         else:
-            errors = paid_delete_student_form.errors
+            messages.add_message(request, messages.WARNING, paid_delete_student_form.errors.as_p)
     else:
-        paid_delete_student_form = DeletePaidForm
+        paid_delete_student_form = DeletePaidForm(instance=student)
 
     return render(request, 'student/student.html', {'student': student,
                                                     'user_can_edit': user_can_edit,

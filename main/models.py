@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
@@ -43,17 +45,20 @@ class PaidGroup(models.Model):
 class PaidGroupEnroll(models.Model):
     student = models.ForeignKey('Student', on_delete=models.PROTECT)
     paid_group = models.ForeignKey(PaidGroup, on_delete=models.PROTECT)
-    paid_status = [
+    paid_status_choice = [
         (0, 'Зачислен'),
         (1, 'Отчислен'),
     ]
-    models.IntegerField("Статус", choices=paid_status, default=0)
+    paid_status = models.IntegerField("Статус", choices=paid_status_choice, default=0)
     paid_doc = models.FileField('Приказ зачисления внебюджет', upload_to='documents', blank=True)
     paid_contract = models.FileField('Договор', upload_to='documents/paid_contracts', blank=True)
     paid_date = models.DateField('Дата зачисления внебюджет', blank=True, null=True)
     paid_delete_doc = models.FileField('Приказ отчисления внебюджет', upload_to='documents', blank=True)
     paid_delete_date = models.DateField('Дата отчисления внебюджет', blank=True, null=True)
     paid_delete_comment = models.CharField('Причина отчисления внебюджет', max_length=128, default='')
+
+    def __str__(self):
+        return self.paid_group.group_name
 
 
 class Group(models.Model):
@@ -109,7 +114,6 @@ class Student(models.Model):
     delete_comment = models.CharField('Причина отчисления', max_length=128, default='')
 
     # Внебюджет
-    is_paid = models.BooleanField('Внебюджет', default=False)
     paid_group = models.ManyToManyField(PaidGroup, verbose_name='Внебюджетная группа',
                                         blank=True, null=True, through=PaidGroupEnroll)
 
@@ -134,6 +138,10 @@ class Student(models.Model):
 
     def __str__(self):
         return self.last_name + ' ' + self.first_name + ' ' + self.middle_name
+
+    def get_age(self):
+        today = datetime.date.today()
+        return today.year - self.birthday.year - ((today.month, today.day) < (self.birthday.month, self.birthday.day))
 
 
 class LoadTable(models.Model):

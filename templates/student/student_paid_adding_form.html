@@ -19,6 +19,7 @@
                 {% csrf_token %}
                 <div class="modal-body">
                     {{ errors }}
+                    {{ paid_form.student }}
                     <div class="mb-3">
                         <label for="paidGroupInput" class="form-label">Группа</label>
                         {{ paid_form.paid_group }}

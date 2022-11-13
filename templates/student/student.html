@@ -18,12 +18,18 @@
                 {% if student.status == 2 %}Отчислен {% endif %}
                 {% if student.status == 3 %}Рассматривается {% endif %}
                 </span>
-            {% if student.is_paid %}
-                <span class="badge bg-success fw-normal d-inline-block p-1 px-2 border-0 fs-6 text-center"
-                      style="transform: translateY(-13%)">
+            {% if student.paid_groups.count > 0 %}
+                {% if student.paid_status %}
+                    <span class="badge bg-success fw-normal d-inline-block p-1 px-2 border-0 fs-6 text-center"
+                          style="transform: translateY(-13%)">
                     Внебюджет
-                    {% if student.paid_delete_doc %} | Отчислен {% endif %}
-                </span>
+                    </span>
+                {% else %}
+                    <span class="badge bg-danger fw-normal d-inline-block p-1 px-2 border-0 fs-6 text-center"
+                          style="transform: translateY(-13%)">
+                    Внебюджет | Отчислен
+                    </span>
+                {% endif %}
             {% endif %}
             <a class="btn btn-primary ms-auto border-0 text-uppercase" href="#" onclick="history.back()">Вернуться назад
                 <img class="ms-1" src="{% static 'icons/icons/arrow-return-left.svg' %}"
@@ -32,7 +38,8 @@
 
         </div>
         <div class="hstack">
-            <span class="fs-4 ms-3 text-uppercase">{{ student.birthday }} ({{ student.birthday|date:"d.m.Y" }})</span>
+            <span class="fs-4 ms-3 text-uppercase">{{ student.birthday }} ({{ student.birthday|date:"d.m.Y" }})
+            <span class="text-muted"> Возраст: </span>{{ student.get_age }}</span>
             <div class="vr ms-3"></div>
             <span class="fs-4 ms-3 text-uppercase">{{ student.school }}</span>
         </div>
@@ -57,7 +64,7 @@
                 {% if student.group %}
                     {% include 'student/student_general_block.html' %}
                 {% endif %}
-                {% if student.is_paid %}
+                {% if student.paid_group %}
                     {% include 'student/student_paid_block.html' %}
                 {% endif %}
             </div>
@@ -71,21 +78,11 @@
                 <div class="col-2">
                     <p class="fs-4 text-uppercase">Действия</p>
                     <div class="panel">
-                        {% if student.status == 2 and student.paid_delete_doc %}
-                            <p class="alert alert-info">Обучающийся отчислен, операции невозможны</p>
-                        {% endif %}
-                        {% if student.status == 2 and not student.is_paid %}
-                            <p class="alert alert-info">Обучающийся отчислен, операции невозможны</p>
-                        {% endif %}
                         {% if user_can_adding %}
-                            {% if student.status != 2 %}
-                                {% if student.status == 3 or student.status == 1 or not student.group %}
-                                    {% include 'student/student_adding_form.html' %}
-                                {% endif %}
+                            {% if student.status == 3 or student.status == 1 or not student.group %}
+                                {% include 'student/student_adding_form.html' %}
                             {% endif %}
-                            {% if not student.is_paid %}
-                                {% include 'student/student_paid_adding_form.html' %}
-                            {% endif %}
+                            {% include 'student/student_paid_adding_form.html' %}
                         {% endif %}
                         {% if student.status != 2 or not student.paid_delete_doc %}
                             <div>
@@ -98,8 +95,8 @@
                             {% if student.status == 0 and student.group %}
                                 {% include 'student/student_delete_form.html' %}
                             {% endif %}
-                            {% if student.is_paid and not student.paid_delete_doc %}
-                                {% include 'student/student_paid_delete_form.html' %}
+                            {% if student.paid_group.count > 0 %}
+                                {% include 'student/paid_delete_block.html' %}
                             {% endif %}
                         {% endif %}
                     </div>
@@ -107,5 +104,23 @@
                 </div>
             {% endif %}
         </div>
+        {% if messages %}
+            {% for m in messages %}
+                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <img src="{% static 'it-cube-logo.png' %}" width="16" class="rounded me-2"
+                                 alt="...">
+                            <strong class="me-auto">Уведомление</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                    aria-label="Закрыть"></button>
+                        </div>
+                        <div class="toast-body">
+                            <span id="toast-text">{{ m }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}
