@@ -16,15 +16,21 @@
         <link rel="stylesheet" href="{% static 'custom.css' %}">
         <link rel="stylesheet" href="{% static 'journal.css' %}">
         <link rel="stylesheet" href="{% static 'darkmode.css' %}">
-        <script src="{% static 'js/jquery.js' %}"></script>
-        <script src="{% static 'js/isotope.js' %}"></script>
-        <script src="{% static 'js/cookie-jquery.js' %}"></script>
-        <script src="{% static 'js/journal.js' %}"></script>
-        <script src="{% static 'js/table.js' %}"></script>
-        <script src="{% static 'js/main.js' %}"></script>
-        <script src="{% static 'js/darkmode.js' %}"></script>
+        <script src="{% static 'js/js_frameworks/vue.js' %}"></script>
+        <script src="{% static 'js/js_frameworks/axios.js' %}"></script>
+        <script src="{% static 'js/js_frameworks/axios.js.map' %}"></script>
+        <script src="{% static 'js/js_frameworks/jquery.js' %}"></script>
+        <script src="{% static 'js/js_frameworks/isotope.js' %}"></script>
+        <script src="{% static 'js/js_frameworks/cookie-jquery.js' %}"></script>
+        <script src="{% static 'js/js_frameworks/lodash.min.js' %}"></script>
+        <script src="{% static 'js/js_main/journal.js' %}"></script>
+        <script src="{% static 'js/js_main/table.js' %}"></script>
+        <script src="{% static 'js/js_main/main.js' %}"></script>
+        <script src="{% static 'js/js_main/darkmode.js' %}"></script>
+        <script src="{% static 'js/js_main/accordion.js' %}"></script>
     </head>
     <body style="font-family: Google Sans" class="bg-light">
         {% block content %}{% endblock %}
+        <script src="{% static 'vue/app.js' %}"></script>
     </body>
 </html>

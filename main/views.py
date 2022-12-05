@@ -7,7 +7,6 @@ from .forms import *
 import openpyxl as xl
 from django.shortcuts import render
 
-
 class MainLoginView(LoginView):
     template_name = 'login.html'
     form_class = AuthUserForm
@@ -32,7 +31,7 @@ def error403_handler(request, exception):
     msg = "У вас нет прав для совершения этого действия"
     response = render(request, "page_error.html", {
                       'error_msg': msg, 'error_title': error})
-    response.status_code = 404
+    response.status_code = 403
     return response
 
 

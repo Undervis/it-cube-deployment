@@ -48,6 +48,7 @@ class PaidGroupEnroll(models.Model):
     paid_status_choice = [
         (0, 'Зачислен'),
         (1, 'Отчислен'),
+        (2, 'Резерв')
     ]
     paid_status = models.IntegerField("Статус", choices=paid_status_choice, default=0)
     paid_doc = models.FileField('Приказ зачисления внебюджет', upload_to='documents', blank=True)
@@ -77,9 +78,8 @@ class Group(models.Model):
 class Student(models.Model):
     student_status = [
         (0, 'Зачислен'),
-        (1, 'Не все документы сданы'),
-        (2, 'Отчислен'),
-        (3, 'На рассмотрении')
+        (1, 'Отчислен'),
+        (2, 'Резерв')
     ]
 
     student_social_category = [
@@ -99,7 +99,7 @@ class Student(models.Model):
     parent_number = PhoneNumberField('Номер телефона родителя')
     address = models.CharField('Адрес проживания', max_length=96, blank=True, null=True)
     email = models.EmailField('Электронный адрес')
-    status = models.IntegerField("Статус", choices=student_status, default=3)
+    status = models.IntegerField("Статус", choices=student_status, default=2)
     social_category = models.IntegerField("Социальная категория", choices=student_social_category, default=0)
     school = models.CharField(max_length=128, verbose_name='Школа', blank=True, null=True)
     petition_date = models.DateTimeField("Дата подачи заявления", blank=True, null=True)

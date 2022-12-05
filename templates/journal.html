@@ -4,30 +4,29 @@
 {% block content %}
     {% include "header.html" %}
     <div class="row mx-2">
-        <div class="col-9">
+        {% verbatim journal %}
+        <div class="col-9" id='journal-app'>
             <ul class="nav navbar nav-pills py-0 mb-3 nav-fill gap-2">
-                {% for m in months %}
-                    <li class="nav-item">
-                        <a class="nav-link month btn btn-primary">{{ m }}</a>
+                    <li v-for="m in months" class="nav-item">
+                        <a class="nav-link month btn btn-primary" @click="changeMonth(m)" :class="{ active: activeMonth == m }">{{ m }}</a>
                     </li>
-                {% endfor %}
             </ul>
             <div class="p-0 d-flex mb-3 border-0 flex-wrap align-items-center justify-content-center justify-content-md-between">
                 <ul class="nav nav-pills col-12 gap-2 col-md-auto mb-2 justify-content-center mb-md-0"
                     id="top-panel">
                     <li class="nav-item">
-                        <a data-index="0"
+                        <a data-index="0" @click="tabIndex = 0" :class="{ active: tabIndex == 0 }"
                            class="nav-link top-panel btn btn-primary border-0 px-3">
-                            <img src="{% static 'icons/icons/journal-bookmark.svg' %}"
+                            <img src="static/icons/icons/journal-bookmark.svg"
                                  class="me-2"
                                  style="transform: translateY(-10%) translateX(-5%)"
                                  alt="cube">
                         Техника безопасности</a>
                     </li>
                     <li class="nav-item">
-                        <a data-index="1"
-                           class="nav-link top-panel btn btn-primary border-0 px-3 active">
-                            <img src="{% static 'icons/icons/journal-album.svg' %}"
+                        <a data-index="1" @click="tabIndex = 1" :class="{ active: tabIndex == 1 }"
+                           class="nav-link top-panel btn btn-primary border-0 px-3">
+                            <img src="static/icons/icons/journal-album.svg"
                                  class="me-2"
                                  style="transform: translateY(-10%) translateX(-5%)"
                                  alt="cube">
@@ -35,53 +34,22 @@
                     </li>
                 </ul>
                 <div class="hstack ms-auto">
-                    {% if user.userprofile.is_teacher %}
+                    <div v-if="user.is_teacher">
                         <span class="text-danger me-4" id="warning-text" hidden>Внимание! Таблица изменена, необходимо её сохранить</span>
                         <a id="export-table" class="btn btn-primary border-0 me-2">
-                            <img src="{% static 'icons/icons/device-hdd.svg' %}"
+                            <img src="static/icons/icons/device-hdd.svg"
                                  style="filter: invert(1);
                                         transform: translateY(-5%)"
                                  class="me-1"/>
                         Сохранить</a>
-                    {% endif %}
+                    </div>
                     <a id="download-table" class="btn btn-primary border-0">
-                        <img src="{% static 'icons/icons/download.svg' %}"
+                        <img src="static/icons/icons/download.svg"
                              style="filter: invert(1)">
                     </a>
-                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                        <div id="liveToast"
-                             class="toast"
-                             role="alert"
-                             aria-live="assertive"
-                             aria-atomic="true">
-                            <div class="toast-header">
-                                <img src="{% static 'it-cube-logo.png' %}"
-                                     width="16"
-                                     class="rounded me-2"
-                                     alt="...">
-                                <strong class="me-auto">Уведомление</strong>
-                                <button type="button"
-                                        class="btn-close"
-                                        data-bs-dismiss="toast"
-                                        aria-label="Закрыть"></button>
-                            </div>
-                            <div class="toast-body">
-                                <span id="toast-text"></span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-            {% for t in tables %}
-                <a class="loaded-table-data" data-month="{{ t.month }}" hidden>
-                    { "month": "{{ t.month }}",
-                    "dates": {{ t.dates }},
-                    "students": {{ t.students }},
-                    "themes": {{ t.themes }} }
-                </a>
-            {% endfor %}
-            {% if table_tb %}<a id="loaded-tb-data" hidden>{ "tb": {{ table_tb.tb }} }</a>{% endif %}
-            <div id="table-marks" class="card table-responsive mb-2 border-bottom-0">
+            <div id="table-marks" class="card table-responsive mb-2 border-bottom-0" v-if="tabIndex == 1">
                 <div class="card-header border-bottom-0">
                     <span class="card-title fs-5">Посещаемость</span>
                 </div>
@@ -90,31 +58,33 @@
                         <tr>
                             <th scope="col" class="text-center">#</th>
                             <th scope="col" class="name" style="min-width: 220px">Фамилия Имя</th>
-                            {% for i in cols %}
-                                <th scope="col" class="text-center" style="min-width: 60px">
-                                    <input id="date-{{ i }}"
-                                           data-col="{{ i }}"
+                                <th scope="col" v-for="i in cols" class="text-center" style="min-width: 60px">
+                                    <input v-model="group_dates[i - 1]" :id="'date-' + i - 1"
+                                           :data-col="i"
                                            type="date"
                                            class="journal-date text-center"
                                            placeholder="Дата"
                                            style="max-width: 110px">
                                 </th>
-                            {% endfor %}
                         </tr>
                     </thead>
                     <tbody>
-                        {% for s in students %}
-                            <tr>
-                                <th scope="row"
-                                    class="text-center {% if s.status == 2 %}text-danger{% endif %}">{{ forloop.counter }}</th>
-                                <td class="name {% if s.status == 2 %}text-danger{% endif %}"
-                                    {% if s.status == 2 %} data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Отчислен с {{ s.delete_date }}" {% endif %}
-                                    id="name-{{ forloop.counter }}">
+                            <tr v-for="(s, parent_index) in students">
+                                <th v-if="s.status == 2" scope="row"
+                                    class="text-center text-danger">{{ parent_index + 1 }}</th>
+                                <th v-if="s.status == 0" scope="row"
+                                    class="text-center">{{ parent_index + 1 }}</th>
+                                <td v-if="s.status == 2" class="name text-danger"
+                                    data-bs-toggle="tooltip" data-bs-placement="right" :data-bs-title="'Отчислен с' + s.delete_date"
+                                    :id="'name-' + parent_index">
                                     {{ s.last_name }} {{ s.first_name }}
                                 </td>
-                                {% for col in cols %}
-                                    <td class="text-center">
-                                        <select id="mark-{{ forloop.parentloop.counter }}-{{ forloop.counter }}"
+                                <td v-if="s.status == 0" class="name"
+                                    :id="'name-' + parent_index">
+                                    {{ s.last_name }} {{ s.first_name }}
+                                </td>
+                                    <td v-for="(i, index) in cols" class="text-center">
+                                        <select v-model="group_marks[parent_index]['marks'][index]" :id="'mark-' + parent_index + '-' + index"
                                                 class="journal-mark text-center">
                                             <option value="0">
                                             </option>
@@ -126,13 +96,11 @@
                                             </option>
                                         </select>
                                     </td>
-                                {% endfor %}
                             </tr>
-                        {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <div id="table-themes" class="card table-responsive mt-4 mb-4">
+            <div id="table-themes" class="card table-responsive mt-4 mb-4" v-if="tabIndex == 1">
                 <div class="card-header border-bottom-0">
                     <span class="card-title fs-5">Темы</span>
                 </div>
@@ -141,36 +109,34 @@
                         <tr>
                             <th scope="col" class="text-center" style="width: 120px">Дата</th>
                             <th scope="col" class="text-center" style="width: 120px">Кол-во часов</th>
-                            <th scope="col" style="min-width: 720px">Тема занятия</th>
+                            <th scope="col" style="min-width: 75%">Тема занятия</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for row in cols %}
-                            <tr>
+                            <tr v-for="row in cols">
                                 <td>
-                                    <input id="theme-date-{{ row }}"
+                                    <input v-model="group_dates[row - 1]" :id="'theme-date-' + row"
                                            type="date"
                                            class="journal-date text-center"
                                            placeholder="-">
                                 </td>
                                 <td>
-                                    <input id="theme-time-{{ row }}"
+                                    <input v-model="group_themes[row - 1].time" :id="'theme-time-' + row"
                                            type="text"
                                            class="journal-date text-center"
                                            placeholder="-">
                                 </td>
                                 <td>
-                                    <input id="theme-{{ row }}" type="text" class="journal-date" placeholder="-">
+                                    <input v-model="group_themes[row - 1].theme" :id="'theme-' + row" type="text" class="journal-date" placeholder="-">
                                 </td>
                             </tr>
-                        {% endfor %}
                     </tbody>
                 </table>
                 <div class="card-footer border-top-0">
                     <span class="text-muted">IT-CUBE САТКА</span>
                 </div>
             </div>
-            <div id="table-tb" class="card table-responsive mt-2 mb-4" hidden>
+            <div id="table-tb" class="card table-responsive mt-2 mb-4" v-if="tabIndex == 0">
                 <div class="card-header border-bottom-0">
                     <span class="card-title fs-5">Техника безопасности</span>
                 </div>
@@ -186,36 +152,34 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for row in cols %}
-                            <tr>
-                                <th class="text-center">{{ forloop.counter }}</th>
-                                <td id="tb-name-{{ row }}"></td>
+                            <tr v-for="index in 16">
+                                <th class="text-center">{{ index + 1 }}</th>
+                                <td :id="'tb-name-' + index"></td>
                                 <td>
-                                    <input id="tb-bs-date-{{ row }}"
+                                    <input :id="'tb-bs-date-' + index"
                                            type="date"
                                            class="journal-tb text-center"
                                            placeholder="-">
                                 </td>
                                 <td>
-                                    <input id="tb-bs-theme-{{ row }}"
+                                    <input :id="'tb-bs-theme-' + index"
                                            type="text"
                                            class="journal-tb"
                                            placeholder="-">
                                 </td>
                                 <td>
-                                    <input id="tb-pdd-date-{{ row }}"
+                                    <input :id="'tb-pdd-date-' + index"
                                            type="date"
                                            class="journal-tb text-center"
                                            placeholder="-">
                                 </td>
                                 <td>
-                                    <input id="tb-pdd-theme-{{ row }}"
+                                    <input :id="'tb-pdd-theme-' + index"
                                            type="text"
                                            class="journal-tb"
                                            placeholder="-">
                                 </td>
                             </tr>
-                        {% endfor %}
                     </tbody>
                 </table>
                 <div class="card-footer border-top-0">
@@ -223,32 +187,9 @@
                 </div>
             </div>
         </div>
+        {% endverbatim journal %}
         <div class="col-3" style="transform: translateY(3px)">
-            <p class="fs-4 text-uppercase ms-3">Группы</p>
-            <p class="fs-6 text-uppercase text-muted mt-4 ms-3" style="transform: translateY(1px)">Бюджет</p>
-            <div class="panel home">
-                {% for g in groups %}
-                    <div class="panel-outline">
-                        <img src="{% static 'icons/icons/layers.svg' %}"
-                             class="mx-2 panel-inline"
-                             style="transform: translateY(-5%)">
-                        <a class="list-item {% if forloop.counter == 1 %}active{% endif %} group"
-                           href="?group={{ g.id }}">{{ g.group_name }}</a>
-                    </div>
-                {% endfor %}
-                
-            </div>
-            <p class="fs-6 text-uppercase text-muted mt-2 ms-3">Внебюджет</p>
-            <div class="panel home">
-                {% for pg in paid_groups %}
-                    <div class="panel-outline">
-                        <img src="{% static 'icons/icons/layers-half.svg' %}"
-                            class="mx-2 panel-inline"
-                            style="transform: translateY(-5%)">
-                        <a class="list-item group" href="?paidgroup={{ pg.id }}">{{ pg.group_name }}</a>
-                    </div>
-                {% endfor %}
-            </div>
+           {% include 'right_menu_teacher.html' %}
         </div>
     </div>
 {% endblock %}

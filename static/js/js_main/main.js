@@ -1,17 +1,28 @@
 $(document).ready(function () {
-    let $href = document.location.href
 
+    let $href = document.location.hash
     $('.panel').each(function () {
         let $btn = $('.list-item')
-        if ($href.indexOf('?') > 0) {
-            $btn.removeClass('active')
-        }
-        $btn.each(function () {
-            if ($(this).attr('href') === $href.substring($href.indexOf('?'))) {
-                $(this).addClass('active')
+        if ($href !== "#all"){
+            if ($href.indexOf('#') > 0) {
+                $btn.removeClass('active')
             }
-        })
+            $btn.each(function () {
+                if ($(this).attr('href') === $href.substring($href.indexOf('#'))) {
+                    $(this).addClass('active')
+                }
+            })
+        } else {
+            $('.all-students').addClass('active')
+        }
+    })
 
+    $('a.list-item').each(function(){
+        $(this).on('click', function(){
+            $('a.list-item').each(function(){ $(this).removeClass('active') })
+            $(this).addClass('active')
+        })
+        
     })
 
     let $toastText = $('#toast-text')

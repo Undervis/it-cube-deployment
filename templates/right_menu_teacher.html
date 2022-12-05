@@ -1,15 +1,15 @@
 {% load static %}
 
-<div class="col-3" id="right-panel-j" style="transform: translateY(3px);">
+<div class="col" id="right-panel-j" style="transform: translateY(3px);">
     <p class="fs-4 text-uppercase ms-2" style="transform: translateY(-3px)">Группы</p>
     {% if groups or paid_groups %}
     <p class="fs-6 text-uppercase text-muted mt-4 mb-4 ms-2">Бюджет</p>
     <div class="panel home" style="overflow-y: scroll; max-height: 700px">
         {% for g in groups %}
-        <div class="list-item group panel-outer">
-            <img src="{% static 'icons/icons/layers.svg' %}" class="mx-2 panel-inner">
+        <div class="list-item group panel-outer d-flex">
+            <img src="{% static 'icons/icons/layers.svg' %}" class="mx-2 panel-inner m-auto">
             <a class="{% if forloop.counter == 1 %}active{% endif %} list-item group"
-               href="?group={{ g.id }}">{{ g.group_name }}</a>
+               href="#group={{ g.id }}">{{ g.group_name }}</a>
         </div>
         {% endfor %}
     </div>
@@ -17,16 +17,16 @@
     <p class="fs-6 text-uppercase ms-2 text-muted">Внебюджет</p>
     <div class="panel home" style="overflow-y: scroll; max-height: 700px">
         {% for pg in paid_groups %}
-        <div class=" panel-outer">
-            <img src="{% static 'icons/icons/layers-half.svg' %}" class="mx-2 panel-inner">
-            <a class="list-item group" href="?paidgroup={{ pg.id }}">{{ pg.group_name }}</a>
+        <div class=" panel-outer d-flex">
+            <img src="{% static 'icons/icons/layers-half.svg' %}" class="mx-2 panel-inner m-auto">
+            <a class="list-item group" href="#paidgroup={{ pg.id }}">{{ pg.group_name }}</a>
         </div>
         {% endfor %}
     </div>
     {% else %}
     <div class="panel home" style="overflow-y: scroll; max-height: 700px">
     <div class="panel-outer">
-        <a class="list-item group active" href="#">У вас нет групп</a>
+        <a class="list-item group active" href="#all">У вас нет групп</a>
     </div>
     </div>
     {% endif %}

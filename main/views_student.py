@@ -13,7 +13,7 @@ def get_students_manager(request):
         students = Student.objects.filter(group=Group.objects.get(pk=request.GET.get('group')))
     elif request.GET.get('paidgroup'):
         students = Student.objects.filter(
-            paid_group=PaidGroup.objects.get(paid_group=request.GET.get('paidgroup')))
+            paid_group=PaidGroup.objects.get(id=request.GET.get('paidgroup')))
     elif request.GET.get('teacher'):
         group = Student.objects.filter(group__teacher=User.objects.get(pk=request.GET.get('teacher')))
         students = group.union(
@@ -144,26 +144,6 @@ def get_student(request, pk):
                                                     'paid_delete_form': paid_delete_student_form,
                                                     'errors': errors})
 
-def set_status(student):
-    docs_count = 0
-    if not student.petition_doc:
-        docs_count += 1
-    if not student.sms_agreement_doc:
-        docs_count += 1
-    if not student.agreement_doc:
-        docs_count += 1
-    if not student.passport_copy_parent:
-        docs_count += 1
-    if not student.passport_or_birth_copy:
-        docs_count += 1
-
-    if docs_count != 0:
-        student.status = 1
-    else:
-        student.status = 3
-
-    student.save()
-
 
 @login_required(login_url='/login')
 def edit_student(request, pk):
@@ -175,8 +155,6 @@ def edit_student(request, pk):
         student_form = StudentForm(request.POST, request.FILES, instance=student)
         if student_form.is_valid():
             student_form.save()
-
-            set_status(student)
 
             return redirect('/student/' + str(pk))
         else:
@@ -200,7 +178,7 @@ def create(request):
 
             student = Student.objects.last()
             student.petition_date = datetime.datetime.now()
-            set_status(student)
+            student.save()
 
             return redirect('home')
         else:

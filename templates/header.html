@@ -29,9 +29,9 @@
         {% endif %}
     </ul>
 
-    <div class="hstack {% if request.path == '/' %}col-md-3{% else %}col-md-2{%endif%} text-end me-4" style="width: 22.8%">
+    <div class="hstack {% if request.path == '/' %}col-md-3{% else %}col-md-2{%endif%} text-end me-4">
         {% if request.path == "/" %}
-        <form class="me-3 me-lg-3 w-100 input-group" role="search">
+        <form class="me-3 me-lg-3 input-group" role="search">
             <input type="search" class="form-control quicksearch"
                    placeholder="Поиск..."
                    aria-label="Поиск">

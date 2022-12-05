@@ -105,16 +105,6 @@ a.nav-link.btn {
     margin: auto;
 }
 
-@media screen and (max-width: 980px) {
-    .panel-inner {
-        display: none;
-    }
-
-    .center-table-j, .right-panel-j {
-        display: inside-block;
-    }
-}
-
 .list-group-item {
     background: none;
 }

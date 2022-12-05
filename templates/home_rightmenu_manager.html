@@ -1,44 +1,42 @@
 {% load static %}
-<div class="col">
+<div class="col-3">
     <p class="fs-4 text-uppercase ms-2" style="transform: translateY(-3px)">Направления и группы</p>
-    {% if groups or paid_groups %}
-    <p class="fs-6 text-uppercase text-muted mt-4 mb-4 ms-2">Бюджет</p>
-    <div class="panel home" style="overflow-y: scroll; max-height: 700px">
-        {% for d in directions %}
+    <div class="panel home">
         <div class="list-item group panel-outer">
-            <a role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="direction-{{ d.id }}">
-                <img src="{% static 'icons/icons/caret-right.svg' %}" class="panel-inner"></a>
-            <a class="{% if forloop.counter == 1 %}active{% endif %} list-item group"
-               href="?direction={{ d.id }}">{{ d.direction_name }}</a>
+            <img src="{% static 'icons/icons/list.svg' %}" class="panel-inner mx-2" style="padding-left: 2%; padding-right: 2%;">
+            <a class="list-item group all-students"
+            href="#all">Все учащиеся</a>
         </div>
-        <div class="collapse" id="direction-{{ d.id }}">
+    </div>
+    {% if groups or paid_groups %}
+    <div class="panel home accord">
+        {% for d in directions %}
+        <div class="list-item group panel-outer accord-item" data-direction="{{ d.direction_name }}">
+            <a class="accord-trigger d-flex"><img src="{% static 'icons/icons/caret-right.svg' %}" class="panel-inner accord-icon m-auto"></a>
+            <a class="list-item group accord-header"
+               href="#direction={{ d.id }}">{{ d.direction_name }}</a>
+        </div>
+        <div class="collapse accord-content">
             {% for g in groups %}
             {% if g.direction == d %}
-            <div class="list-item group panel-outer">
-                <img src="{% static 'icons/icons/layers.svg' %}" class="mx-2 panel-inner">
-                <a class="{% if forloop.counter == 1 %}active{% endif %} list-item group"
-                   href="?group={{ g.id }}">{{ g.group_name }}</a>
+            <div class="list-item group panel-outer ms-5" data-direction="{{ g.direction.direction_name }}">
+                <img src="{% static 'icons/icons/layers.svg' %}" class="panel-inner accord-icon me-0 ms-2" style="padding-left: 2%; padding-right: 2%;">
+                <a class="list-item group"
+                   href="#group={{ g.id }}">{{ g.group_name }}</a>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% for pg in paid_groups %}
+            {% if pg.direction == d %}
+            <div class="list-item group panel-outer ms-5" data-direction="{{ pg.direction.direction_name }}">
+                <img src="{% static 'icons/icons/layers-fill.svg' %}" class="panel-inner accord-icon me-0 ms-2" style="padding-left: 2%; padding-right: 2%;">
+                <a class="list-item group"
+                   href="#paidgroup={{ pg.id }}">{{ pg.group_name }}</a>
             </div>
             {% endif %}
             {% endfor %}
         </div>
         {% endfor %}
-    </div>
-    <br>
-    <p class="fs-6 text-uppercase ms-2 text-muted">Внебюджет</p>
-    <div class="panel home" style="overflow-y: scroll; max-height: 700px">
-        {% for pg in paid_groups %}
-        <div class=" panel-outer">
-            <img src="{% static 'icons/icons/layers-half.svg' %}" class="mx-2 panel-inner">
-            <a class="list-item group" href="?paidgroup={{ pg.id }}">{{ pg.group_name }}</a>
-        </div>
-        {% endfor %}
-    </div>
-    {% else %}
-    <div class="panel home" style="overflow-y: scroll; max-height: 700px">
-        <div class="panel-outer">
-            <a class="list-item group active" href="#">У вас нет групп</a>
-        </div>
     </div>
     {% endif %}
 </div>

@@ -2,7 +2,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from it_cube import settings
-from main import views, views_student, views_journal, views_user
+from main import views, views_student, views_journal, views_user, views_rest
+from rest_framework.routers import DefaultRouter
+from .default_router_with_view import DefaultRouterWithSimpleViews
+
+router = DefaultRouterWithSimpleViews()
+router.register(r"api/students", views_rest.HomeView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,10 +20,12 @@ urlpatterns = [
     path('load', views.load_file, name='load'),
     path('journal', views_journal.journal, name='journal'),
     path('load-journal', views_journal.load_json),
-    path('profile', views_user.user_profile, name="profile")
+    path('profile', views_user.user_profile, name="profile"),
+    path("api/journal/<str:month>/", views_rest.JournalView.as_view())
 ]
 
 handler404 = views.error404_handler
 handler403 = views.error403_handler
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += router.urls
