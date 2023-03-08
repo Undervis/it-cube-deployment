@@ -97,10 +97,22 @@ a.nav-link.btn {
     color: rgb(13, 110, 253);
 }
 
-.panel.home {
-    padding: 5px 10px;
-    border-radius: 10px;
-    border: 1px solid #e0e1e4;
+.panel-outer {
+    display: flex;
+}
+
+.panel-inner {
+    margin: auto;
+}
+
+@media screen and (max-width: 980px) {
+    .panel-inner {
+        display: none;
+    }
+
+    .center-table-j, .right-panel-j {
+        display: inside-block;
+    }
 }
 
 .list-group-item {
@@ -167,4 +179,24 @@ a.nav-link.btn {
 :root {
     --color-text: #212529;
     --color-secondary: #6c757d;
+}
+
+.panel.home.scrolled {
+    border-radius: 5px;
+    border-top: 1px dashed #ebebeb;
+    border-bottom: 1px dashed #ebebeb;
+}
+
+/* для Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: #ebebeb;
+  border-radius: 5px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(38, 124, 252);
+  border-radius: 5px;
 }

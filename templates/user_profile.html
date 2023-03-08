@@ -1,80 +1,32 @@
+{% extends "base.html" %}
 {% load static %}
-
-<div class="dropdown ms-auto">
-    <a href="#" class="link-dark text-decoration-none dropdown-toggle"
-       id="dropdownUser1"
-       data-bs-toggle="dropdown" aria-expanded="false">
-        {% if user.userprofile.photo %}
-            <img src="{{ user.userprofile.photo.url }}" alt="mdo" width="32"
-                 height="32"
-                 class="rounded-circle" style="object-fit: cover">
-        {% else %}
-            <img src="{% static 'icons/icons/person-circle.svg' %}"
-                 width="32" height="32"
-                 class="rounded-circle"
-                 style="object-fit: cover; filter: invert(1) brightness(30%)">
-        {% endif %}
-    </a>
-    <div class="modal fade" id="profileModal" tabindex="-1"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content" style="border-radius: 20px">
-                <div class="modal-header border-bottom-0 pt-3 px-4 pb-0">
-                    <h4 class="modal-title" id="staticBackdropLabel">Профиль</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                </div>
-                <div class="modal-body mt-0">
-                    <div class="row">
-                        <div class="col">
-                            {% if user.userprofile.photo %}
-                                <img src="{{ user.userprofile.photo.url }}" class="w-100"
-                                     style="object-fit: cover; border-radius: 10px"/>
-                            {% else %}
-                                <img src="{% static 'icons/icons/person-circle.svg' %}"
-                                     width="32" height="32"
-                                     class="rounded-circle"
-                                     style="object-fit: cover; filter: invert(1) brightness(30%)">
-                            {% endif %}
-                            <a class="nav-link btn btn-primary py-2 border-0 mt-2 w-100">
-                                <img class="me-1" style="transform: translateY(-10%)"
-                                     src="{% static 'icons/icons/images.svg' %}"/>
-                                Изменить фото</a>
-                            <a class="nav-link btn btn-primary py-2 border-0 mt-2 w-100">
-                                <img class="me-1" style="transform: translateY(-10%)"
-                                     src="{% static 'icons/icons/key.svg' %}"/>
-                                Изменить пароль</a>
-                        </div>
-                        <div class="col">
-
-                        </div>
+{% block title %}
+    {{ user.userprofile.first_name }} {{ user.userprofile.last_name }}
+{% endblock title %}
+{% block content %}
+    {% include "header.html" %}
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                {% if user.userprofile.photo %}
+                    <img src="{{ user.userprofile.photo.url }}" alt="mdo" width="80%"
+                        class="rounded-circle" style="object-fit: cover">
+                {% else %}
+                    <img src="{% static 'icons/icons/person-circle.svg' %}"
+                        width="80%"
+                        class="rounded-circle"
+                        style="object-fit: cover; filter: invert(1) brightness(30%)">
+                {% endif %}
+            </div>
+            <div class="col">
+                <p class="fs-3">{{ user.userprofile.first_name }} {{ user.userprofile.last_name }}</p>
+                <p class="fs-5 ms-2">Инфо</p>
+                <div class="card">
+                    <div class="card-body">
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-        {% if user.userprofile.photo %}
-            <li><img src="{{ user.userprofile.photo.url }}" width="256" height="256" style="object-fit: cover"
-                     class="m-2 mt-0 rounded-1"></li>
-        {% endif %}
-        <li><span class="dropdown-item-text fw-bold" href="#">
-                                    {{ user.userprofile.last_name }} {{ user.userprofile.first_name }}
-                                </span></li>
-        <li>
-            <hr class="dropdown-divider">
-        </li>
-        <li><a class="dropdown-item" href="#">Тёмная тема (В разработке)</a>
-        </li>
-        <li>
-            <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                    data-bs-target="#profileModal">
-                Профиль
-            </button>
-        </li>
-        <li>
-            <hr class="dropdown-divider">
-        </li>
-        <li><a class="dropdown-item" href="/logout">Выйти</a></li>
-    </ul>
-</div>
-
+{% endblock content %}

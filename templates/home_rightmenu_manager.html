@@ -1,83 +1,44 @@
 {% load static %}
 <div class="col">
-    <ul class="nav nav-pills nav-fill m-0 gap-2" id="rightTab" role="tablist"
-        style="transform: translateY(-2px)">
-        <li class="nav-item menu" role="presentation">
-            <a class="nav-link btn btn-primary active" id="dirs-tab" data-bs-toggle="tab">Направления
-            </a>
-        </li>
-        <li class="nav-item menu" role="presentation">
-            <a class="nav-link btn btn-primary" id="teachers-tab" data-bs-toggle="tab">Педагоги
-            </a>
-        </li>
-        <li class="nav-item menu" role="presentation">
-            <a class="nav-link btn btn-primary" id="groups-tab" data-bs-toggle="tab">Группы
-            </a>
-        </li>
-    </ul>
-
-    <div class="mt-2" style="transform: translateY(4px)">
-        <div class="panel home tab-pane show" id="homePanel" role="tabpanel" aria-labelledby="dirs-tab"
-             tabindex="0">
-            <div>
-                <div>
-                    <img src="{% static 'icons/icons/back.svg' %}" class="mx-2"
-                         style="transform: translateY(-5%)">
-                    <a class="list-item active" href="/">Все</a>
-                </div>
-                {% for d in directions %}
-                    <div>
-                        <img src="{% static 'icons/icons/diagram-3.svg' %}" class="mx-2"
-                             style="transform: translateY(-5%)">
-                        <a class="list-item" href="?direction={{ d.id }}">{{ d.direction_name }}</a>
-                    </div>
-                {% endfor %}
-            </div>
+    <p class="fs-4 text-uppercase ms-2" style="transform: translateY(-3px)">Направления и группы</p>
+    {% if groups or paid_groups %}
+    <p class="fs-6 text-uppercase text-muted mt-4 mb-4 ms-2">Бюджет</p>
+    <div class="panel home" style="overflow-y: scroll; max-height: 700px">
+        {% for d in directions %}
+        <div class="list-item group panel-outer">
+            <a role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="direction-{{ d.id }}">
+                <img src="{% static 'icons/icons/caret-right.svg' %}" class="panel-inner"></a>
+            <a class="{% if forloop.counter == 1 %}active{% endif %} list-item group"
+               href="?direction={{ d.id }}">{{ d.direction_name }}</a>
         </div>
-        <div class="panel home tab-pane" id="groupsPanel" role="tabpanel" aria-labelledby="groups-tab"
-             tabindex="0" hidden>
-            <div>
-                <div>
-                    <img src="{% static 'icons/icons/back.svg' %}" class="mx-2"
-                         style="transform: translateY(-5%)">
-                    <a class="list-item active" href="/">Все</a>
-                </div>
-                {% for g in groups %}
-                    <div>
-                        <img src="{% static 'icons/icons/layers.svg' %}" class="mx-2"
-                             style="transform: translateY(-5%)">
-                        <a class="list-item" href="?group={{ g.id }}">{{ g.group_name }}</a>
-                    </div>
-                {% endfor %}
-                {% for pg in paid_groups %}
-                    <div>
-                        <img src="{% static 'icons/icons/layers-half.svg' %}" class="mx-2"
-                             style="transform: translateY(-5%)">
-                        <a class="list-item" href="?paidgroup={{ pg.id }}">{{ pg.group_name }}</a>
-                    </div>
-                {% endfor %}
+        <div class="collapse" id="direction-{{ d.id }}">
+            {% for g in groups %}
+            {% if g.direction == d %}
+            <div class="list-item group panel-outer">
+                <img src="{% static 'icons/icons/layers.svg' %}" class="mx-2 panel-inner">
+                <a class="{% if forloop.counter == 1 %}active{% endif %} list-item group"
+                   href="?group={{ g.id }}">{{ g.group_name }}</a>
             </div>
+            {% endif %}
+            {% endfor %}
         </div>
-        <div class="panel home tab-pane" id="teachersPanel" role="tabpanel" aria-labelledby="teachers-tab"
-             tabindex="0" hidden>
-            <div>
-                <div>
-                    <img src="{% static 'icons/icons/back.svg' %}" class="mx-2"
-                         style="transform: translateY(-5%)">
-                    <a class="list-item active" href="/">Все</a>
-                </div>
-                {% for t in teachers %}
-                    {% if t.userprofile.is_teacher %}
-                        <div>
-                            <img src="{% static 'icons/icons/person.svg' %}" class="mx-2"
-                                 style="transform: translateY(-5%)">
-                            <a class="list-item" href="?teacher={{ t.id }}">
-                                {{ t.userprofile.last_name }}
-                                {{ t.userprofile.first_name }} {{ t.userprofile.middle_name }}</a>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
+        {% endfor %}
+    </div>
+    <br>
+    <p class="fs-6 text-uppercase ms-2 text-muted">Внебюджет</p>
+    <div class="panel home" style="overflow-y: scroll; max-height: 700px">
+        {% for pg in paid_groups %}
+        <div class=" panel-outer">
+            <img src="{% static 'icons/icons/layers-half.svg' %}" class="mx-2 panel-inner">
+            <a class="list-item group" href="?paidgroup={{ pg.id }}">{{ pg.group_name }}</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="panel home" style="overflow-y: scroll; max-height: 700px">
+        <div class="panel-outer">
+            <a class="list-item group active" href="#">У вас нет групп</a>
         </div>
     </div>
+    {% endif %}
 </div>

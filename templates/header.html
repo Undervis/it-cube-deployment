@@ -1,0 +1,42 @@
+{%load static%}
+
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom bg-white">
+    <a href="/" class="d-flex align-items-center col-md-2 ms-4 mb-2 mb-md-0 text-dark text-decoration-none">
+        <img src="{% static 'it-cube-logo.png' %}" height="32" alt="cube">
+        <span class="d-inline-block fs-5 ms-3">IT-CUBE САТКА</span>
+    </a>
+
+    <ul class="nav nav-pills col-12 gap-2 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link btn btn-primary border-0 px-3
+            {% if request.path == '/' %}active{% endif %}">
+            <img src="{% static 'icons/icons/list.svg' %}" class="me-2"
+                 style="transform: translateY(-10%) translateX(-5%)"
+                 alt="cube"> Списки</a></li>
+        <li class="nav-item"><a href="{% url 'journal' %}" class="nav-link btn btn-primary border-0 px-3 px-3
+            {% if request.path == '/journal' %}active{% endif %}">
+            <img src="{% static 'icons/icons/journal-album.svg' %}" class="me-2"
+                 style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Журнал</a></li>
+        {% if user_can_edit %}
+            <li class="nav-item"><a href="/admin" class="nav-link btn btn-primary border-0 px-3">
+                <img src="{% static 'icons/icons/sliders.svg' %}" class="me-2"
+                     style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Управление</a></li>
+            {% if request.path == "/" %}
+            <li class="nav-item"><a href="{% url 'create' %}" class="nav-link btn btn-primary border-0 px-3">
+                <img src="{% static 'icons/icons/plus-lg.svg' %}" class="me-2"
+                     style="transform: translateY(-10%) translateX(-5%)"
+                     alt="cube"> Добавить ученика</a></li>
+            {% endif %}
+        {% endif %}
+    </ul>
+
+    <div class="hstack {% if request.path == '/' %}col-md-3{% else %}col-md-2{%endif%} text-end me-4" style="width: 22.8%">
+        {% if request.path == "/" %}
+        <form class="me-3 me-lg-3 w-100 input-group" role="search">
+            <input type="search" class="form-control quicksearch"
+                   placeholder="Поиск..."
+                   aria-label="Поиск">
+        </form>
+        {% endif %}
+        {% include 'user_menu.html' %}
+    </div>
+</header>

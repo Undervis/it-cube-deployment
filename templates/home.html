@@ -3,254 +3,202 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center col-md-2 ms-4 mb-2 mb-md-0 text-dark text-decoration-none">
-            <img src="{% static 'it-cube-logo.png' %}" height="32" alt="cube">
-            <span class="d-inline-block fs-5 ms-3">IT-CUBE САТКА</span>
-        </a>
+{%include "header.html"%}
+<div class="container-fluid px-4">
+    <div class="row">
+        <div class="col-9">
+            <div class="hstack gap-2">
+                <p class="fs-4 text-uppercase">Учащиеся<span class="text-muted ms-2">{{ students.count }}</span></p>
+                <div class="ms-auto mb-3">
+                    <div class="dropdown">
+                        <a class="text-uppercase btn btn-primary border-0 dropdown-toggle"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false" data-bs-auto-close="outside">
+                            Отображаемые поля
+                        </a>
 
-        <ul class="nav nav-pills col-12 gap-2 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li class="nav-item"><a href="{% url 'home' %}" class="nav-link btn btn-primary border-0 px-3 active">
-                <img src="{% static 'icons/icons/list.svg' %}" class="me-2"
-                     style="transform: translateY(-10%) translateX(-5%)"
-                     alt="cube"> Списки</a></li>
-            <li class="nav-item"><a href="{% url 'journal' %}" class="nav-link btn btn-primary border-0 px-3 px-3">
-                <img src="{% static 'icons/icons/journal-album.svg' %}" class="me-2"
-                     style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Журнал</a></li>
-            {% if user_can_edit %}
-                <li class="nav-item"><a href="/admin" class="nav-link btn btn-primary border-0 px-3">
-                    <img src="{% static 'icons/icons/sliders.svg' %}" class="me-2"
-                         style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Управление</a></li>
-                <li class="nav-item"><a href="{% url 'create' %}" class="nav-link btn btn-primary border-0 px-3">
-                    <img src="{% static 'icons/icons/plus-lg.svg' %}" class="me-2"
-                         style="transform: translateY(-10%) translateX(-5%)"
-                         alt="cube"> Добавить ученика</a></li>
-            {% endif %}
-        </ul>
-
-        <div class="hstack col-md-3 text-end me-2">
-            <form class="me-3 me-lg-3 w-100 input-group" role="search">
-                <input type="search" class="form-control quicksearch"
-                       placeholder="Поиск..."
-                       aria-label="Поиск">
-            </form>
-
-            {% include 'user_profile.html' %}
-        </div>
-    </header>
-    <div class="container-fluid px-4">
-        <div class="row">
-            <div class="col-9">
-                <div class="hstack gap-2">
-                    <p class="fs-4 text-uppercase">Учащиеся<span class="text-muted ms-2">{{ students.count }}</span></p>
-                    <div class="ms-auto mb-3">
-                        <div class="dropdown">
-                            <a class="text-uppercase btn btn-primary border-0 dropdown-toggle"
-                               data-bs-toggle="dropdown"
-                               aria-expanded="false" data-bs-auto-close="outside">
-                                Отображаемые поля
-                            </a>
-
-                            <div class="dropdown-menu" id="looking-fields">
-                                <div class="form-check mx-2" hidden>
-                                    <input type="checkbox" data-field="student" class="form-check-input"
-                                           id="studentCheck"
-                                           checked>
-                                    <label class="form-check-label" for="studentCheck">Дата рождения</label>
-                                </div>
-                                <div class="form-check mx-2">
-                                    <input type="checkbox" data-field="bdate" class="form-check-input" id="birthCheck"
-                                           checked>
-                                    <label class="form-check-label" for="birthCheck">Дата рождения</label>
-                                </div>
-                                <hr class="dropdown-divider">
-                                <div class="form-check mx-2">
-                                    <input type="checkbox" data-field="school" class="form-check-input"
-                                           id="schoolCheck">
-                                    <label class="form-check-label" for="schoolCheck">Школа</label>
-                                </div>
-                                <hr class="dropdown-divider">
-                                <div class="form-check mx-2">
-                                    <input type="checkbox" data-field="group" class="form-check-input" id="groupCheck"
-                                           checked>
-                                    <label class="form-check-label" for="groupCheck">Группа</label>
-                                </div>
-                                <hr class="dropdown-divider">
-                                <div class="form-check mx-2">
-                                    <input type="checkbox" data-field="parent-name" class="form-check-input"
-                                           id="parentNameCheck" checked>
-                                    <label class="form-check-label" for="parentNameCheck">ФИО Родителя</label>
-                                </div>
-                                <hr class="dropdown-divider">
-                                <div class="form-check mx-2">
-                                    <input type="checkbox" data-field="parent-number" class="form-check-input"
-                                           id="parentNumberCheck" checked>
-                                    <label class="form-check-label" for="parentNumberCheck">Номер Родителя</label>
-                                </div>
-                                <hr class="dropdown-divider">
-                                <div class="form-check mx-2">
-                                    <input type="checkbox" data-field="address" class="form-check-input"
-                                           id="addressCheck" checked>
-                                    <label class="form-check-label" for="addressCheck">Адрес</label>
-                                </div>
-                                <hr class="dropdown-divider">
-                                <div class="form-check mx-2">
-                                    <input type="checkbox" data-field="social-category" class="form-check-input"
-                                           id="socialCheck">
-                                    <label class="form-check-label" for="socialCheck">Социальная категория</label>
-                                </div>
-                                <hr class="dropdown-divider">
-                                <div class="form-check mx-2">
-                                    <input type="checkbox" data-field="status" class="form-check-input" id="statusCheck"
-                                           checked>
-                                    <label class="form-check-label" for="statusCheck">Статус</label>
-                                </div>
+                        <div class="dropdown-menu" id="looking-fields">
+                            <div class="form-check mx-2" hidden>
+                                <input type="checkbox" data-field="student" class="form-check-input"
+                                       id="studentCheck"
+                                       checked>
+                                <label class="form-check-label" for="studentCheck">Дата рождения</label>
+                            </div>
+                            <div class="form-check mx-2">
+                                <input type="checkbox" data-field="bdate" class="form-check-input" id="birthCheck"
+                                       checked>
+                                <label class="form-check-label" for="birthCheck">Дата рождения</label>
+                            </div>
+                            <hr class="dropdown-divider">
+                            <div class="form-check mx-2">
+                                <input type="checkbox" data-field="school" class="form-check-input"
+                                       id="schoolCheck">
+                                <label class="form-check-label" for="schoolCheck">Школа</label>
+                            </div>
+                            <hr class="dropdown-divider">
+                            <div class="form-check mx-2">
+                                <input type="checkbox" data-field="group" class="form-check-input" id="groupCheck"
+                                       checked>
+                                <label class="form-check-label" for="groupCheck">Группа</label>
+                            </div>
+                            <hr class="dropdown-divider">
+                            <div class="form-check mx-2">
+                                <input type="checkbox" data-field="parent-name" class="form-check-input"
+                                       id="parentNameCheck" checked>
+                                <label class="form-check-label" for="parentNameCheck">ФИО Родителя</label>
+                            </div>
+                            <hr class="dropdown-divider">
+                            <div class="form-check mx-2">
+                                <input type="checkbox" data-field="parent-number" class="form-check-input"
+                                       id="parentNumberCheck" checked>
+                                <label class="form-check-label" for="parentNumberCheck">Номер Родителя</label>
+                            </div>
+                            <hr class="dropdown-divider">
+                            <div class="form-check mx-2">
+                                <input type="checkbox" data-field="address" class="form-check-input"
+                                       id="addressCheck" checked>
+                                <label class="form-check-label" for="addressCheck">Адрес</label>
+                            </div>
+                            <hr class="dropdown-divider">
+                            <div class="form-check mx-2">
+                                <input type="checkbox" data-field="social-category" class="form-check-input"
+                                       id="socialCheck">
+                                <label class="form-check-label" for="socialCheck">Социальная категория</label>
+                            </div>
+                            <hr class="dropdown-divider">
+                            <div class="form-check mx-2">
+                                <input type="checkbox" data-field="status" class="form-check-input" id="statusCheck"
+                                       checked>
+                                <label class="form-check-label" for="statusCheck">Статус</label>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="card table-responsive mb-4" style="border-bottom: none">
-                    <table class="table table-hover mb-0 align-middle" id="main-table">
-                        <thead class="card-header align-middle">
-                        <tr id="table-header">
-                            <td class="col text-center" style="min-width: 300px" data-sort="name"
-                                data-field="student-name">ФИО
-                            </td>
-                            <td class="col text-center" data-field="bdate">Дата рождения</td>
-                            <td class="col text-center" data-field="school" hidden>Школа</td>
-                            <td class="col text-center" data-field="group">Группа</td>
-                            <td class="col text-center" data-field="parent-name">ФИО Родителя</td>
-                            <td class="col text-center" data-field="parent-number">Номер родителя</td>
-                            <td class="col text-center" data-field="address">Адрес проживания</td>
-                            <td class="col text-center" data-field="social-category" hidden>Социальная категория</td>
-                            <td class="col text-center" data-field="status">Статус</td>
-                        </tr>
-                        </thead>
-                        <tbody class="grid">
-                        {% if students %}
-                            {% for s in students %}
-                                <tr class="tr-item grid-item" ondblclick="location.href='/student/{{ s.id }}';"
-                                    style="cursor:pointer">
-
-                                    <td data-field="student-name" class="col text-center">
-                                        <span class="petition-date" hidden>{{ s.petition_date|date:"U" }}</span>
-                                        <span class="name">{{ s.last_name }} {{ s.first_name }} {{ s.middle_name }}</span>
-                                    </td>
-                                    <td data-field="bdate" class="col text-center">
-                                        <span><a title="{{ s.birthday }}">{{ s.birthday|date:"d.m.Y" }}</a></span>
-                                    </td>
-                                    <td data-field="school" class="col text-center" hidden>
-                                        <span>{{ s.school }}</span>
-                                    </td>
-                                    <td data-field="group" class="col text-center">
-                                        {% if s.group %}
-                                            <span class="my-auto badge fw-normal bg-primary"
-                                                  title="Бюджет">{{ s.group.group_name }}</span>
-                                            {% if s.paid_groups.count > 0 %}
-                                                {% for pg in s.paid_groups %}
-                                                    {% if pg.paid_status == 0 %}
-                                                        <span class="my-auto badge fw-normal bg-success"
-                                                              title="Внебюджет">{{ pg }}</span>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                        {% else %}
-                                            {% if s.paid_group.count > 0 %}
-                                                <span class="my-auto badge fw-normal bg-success"
-                                                      title="Внебюджет">Внебюджет</span>
-                                            {% else %}
-                                                <span class="my-auto badge fw-normal bg-info">Не определено</span>
-                                            {% endif %}
-                                        {% endif %}
-                                    </td>
-                                    <td data-field="parent-name" class="col text-center">
-                                        <span>{{ s.parent_name }}</span>
-                                    </td>
-                                    <td data-field="parent-number" class="col text-center">
-                                        <span>{{ s.parent_number }}</span>
-                                    </td>
-                                    <td data-field="address" class="col text-center">
-                                        <span>{{ s.address }}</span>
-                                    </td>
-                                    <td data-field="social-category" class="col text-center" hidden>
-                                        {% if s.social_category == 0 %}
-                                            <span>Отсутствует</span>
-                                        {% endif %}
-                                        {% if s.social_category == 1 %}
-                                            <span>Многодетная семья</span>
-                                        {% endif %}
-                                        {% if s.social_category == 2 %}
-                                            <span>Неполная семья</span>
-                                        {% endif %}
-                                        {% if s.social_category == 3 %}
-                                            <span>Инвалидность</span>
-                                        {% endif %}
-                                        {% if s.social_category == 4 %}
-                                            <span>ОВЗ</span>
-                                        {% endif %}
-                                    </td>
-                                    <td data-field="status" class="col text-center">
-                                        {% if s.status == 0 %}
-                                            {% if s.adding_document or s.paid_group.count > 0 %}
-                                                <span class="badge bg-primary fw-normal text-wrap">Зачислен</span>
-                                            {% endif %}
-                                        {% endif %}
-                                        {% if s.status == 1 or s.status == 3 %}
-                                            <span class="badge bg-info fw-normal text-wrap">Рассматривается</span>
-                                        {% endif %}
-                                        {% if s.status == 2 %}
-                                            <span class="badge bg-danger fw-normal text-wrap">Отчислен</span>
-                                        {% else %}
-                                            {% if s.delete_document %}
-                                                <span class="badge bg-danger fw-normal text-wrap">Отчислен</span>
-                                            {% endif %}
-                                            {% if s.paid_groups.count > 0 %}
-                                                {% if s.paid_status %}
-                                                    <span class="badge bg-success mt-1 fw-normal text-wrap">Внебюджет</span>
-                                                {% else %}
-                                                    <span class="badge bg-danger mt-1 fw-normal text-wrap">Внебюджет | Отчислен</span>
-                                                {% endif %}
-                                            {% endif %}
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        {% else %}
-                            <span class="p-3 mb-0">Учащихся в этом разделе нет</span>
-                        {% endif %}
-                        </tbody>
-                    </table>
                 </div>
             </div>
-            {% if not user.userprofile.is_teacher %}
-                {% include 'home_rightmenu_manager.html' %}
+            {% if students %}
+            <div class="card table-responsive mb-4" style="border-bottom: none">
+                <table class="table table-hover mb-0 align-middle" id="main-table">
+                    <thead class="card-header align-middle">
+                    <tr id="table-header">
+                        <td class="col text-center" style="min-width: 300px" data-sort="name"
+                            data-field="student-name">ФИО
+                        </td>
+                        <td class="col text-center" data-field="bdate">Дата рождения</td>
+                        <td class="col text-center" data-field="school" hidden>Школа</td>
+                        <td class="col text-center" data-field="group">Группа</td>
+                        <td class="col text-center" data-field="parent-name">ФИО Родителя</td>
+                        <td class="col text-center" data-field="parent-number">Номер родителя</td>
+                        <td class="col text-center" data-field="address">Адрес проживания</td>
+                        <td class="col text-center" data-field="social-category" hidden>Социальная категория</td>
+                        <td class="col text-center" data-field="status">Статус</td>
+                    </tr>
+                    </thead>
+                    <tbody class="grid">
+
+                    {% for s in students %}
+                    <tr class="tr-item grid-item" ondblclick="location.href='/student/{{ s.id }}';"
+                        style="cursor:pointer">
+
+                        <td data-field="student-name" class="col text-center">
+                            <span class="petition-date" hidden>{{ s.petition_date|date:"U" }}</span>
+                            <span class="name">{{ s.last_name }} {{ s.first_name }} {{ s.middle_name }}</span>
+                        </td>
+                        <td data-field="bdate" class="col text-center">
+                            <span><a title="{{ s.birthday }}">{{ s.birthday|date:"d.m.Y" }}</a></span>
+                        </td>
+                        <td data-field="school" class="col text-center" hidden>
+                            <span>{{ s.school }}</span>
+                        </td>
+                        <td data-field="group" class="col text-center">
+                            {% if s.group %}
+                            <span class="my-auto badge fw-normal bg-primary"
+                                  title="Бюджет">{{ s.group.group_name }}</span>
+                            {% if s.paid_groups.count > 0 %}
+                            {% for pg in s.paid_groups %}
+                            {% if pg.paid_status == 0 %}
+                            <span class="my-auto badge fw-normal bg-success"
+                                  title="Внебюджет">{{ pg }}</span>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            {% else %}
+                            {% if s.paid_group.count > 0 %}
+                            <span class="my-auto badge fw-normal bg-success"
+                                  title="Внебюджет">Внебюджет</span>
+                            {% else %}
+                            <span class="my-auto badge fw-normal bg-info">Не определено</span>
+                            {% endif %}
+                            {% endif %}
+                        </td>
+                        <td data-field="parent-name" class="col text-center">
+                            <span>{{ s.parent_name }}</span>
+                        </td>
+                        <td data-field="parent-number" class="col text-center">
+                            <span>{{ s.parent_number }}</span>
+                        </td>
+                        <td data-field="address" class="col text-center">
+                            <span>{{ s.address }}</span>
+                        </td>
+                        <td data-field="social-category" class="col text-center" hidden>
+                            {% if s.social_category == 0 %}
+                            <span>Отсутствует</span>
+                            {% endif %}
+                            {% if s.social_category == 1 %}
+                            <span>Многодетная семья</span>
+                            {% endif %}
+                            {% if s.social_category == 2 %}
+                            <span>Неполная семья</span>
+                            {% endif %}
+                            {% if s.social_category == 3 %}
+                            <span>Инвалидность</span>
+                            {% endif %}
+                            {% if s.social_category == 4 %}
+                            <span>ОВЗ</span>
+                            {% endif %}
+                        </td>
+                        <td data-field="status" class="col text-center">
+                            {% if s.status == 0 %}
+                            {% if s.adding_document or s.paid_group.count > 0 %}
+                            <span class="badge bg-primary fw-normal text-wrap">Зачислен</span>
+                            {% endif %}
+                            {% endif %}
+                            {% if s.status == 1 or s.status == 3 %}
+                            <span class="badge bg-info fw-normal text-wrap">Рассматривается</span>
+                            {% endif %}
+                            {% if s.status == 2 %}
+                            <span class="badge bg-danger fw-normal text-wrap">Отчислен</span>
+                            {% else %}
+                            {% if s.delete_document %}
+                            <span class="badge bg-danger fw-normal text-wrap">Отчислен</span>
+                            {% endif %}
+                            {% if s.paid_groups.count > 0 %}
+                            {% if s.paid_status %}
+                            <span class="badge bg-success mt-1 fw-normal text-wrap">Внебюджет</span>
+                            {% else %}
+                            <span class="badge bg-danger mt-1 fw-normal text-wrap">Внебюджет | Отчислен</span>
+                            {% endif %}
+                            {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+
+                    </tbody>
+                </table>
+            </div>
             {% else %}
-                <div class="col-3">
-                    <p class="fs-4 text-uppercase">Группы</p>
-                    <div class="panel home">
-                        <div>
-                            <img src="{% static 'icons/icons/back.svg' %}" class="mx-2"
-                                 style="transform: translateY(-5%)">
-                            <a class="list-item active" href="/">Все</a>
-                        </div>
-                        {% for g in groups %}
-                            <div>
-                                <img src="{% static 'icons/icons/layers.svg' %}" class="mx-2"
-                                     style="transform: translateY(-5%)">
-                                <a class="list-item" href="?group={{ g.id }}">{{ g.group_name }}</a>
-                            </div>
-                        {% endfor %}
-                        {% for pg in paid_groups %}
-                            <div>
-                                <img src="{% static 'icons/icons/layers-half.svg' %}" class="mx-2"
-                                     style="transform: translateY(-5%)">
-                                <a class="list-item" href="?paidgroup={{ pg.id }}">{{ pg.group_name }}</a>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
+            <div class="card">
+                <span class="p-3 mb-0">Учащихся в этом разделе нет</span>
+            </div>
+
             {% endif %}
         </div>
+        {% if not user.userprofile.is_teacher %}
+        {% include 'home_rightmenu_manager.html' %}
+        {% else %}
+        {% include 'right_menu_teacher.html' %}
+        {% endif %}
     </div>
+</div>
 {% endblock %}

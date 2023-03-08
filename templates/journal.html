@@ -1,35 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
-
-{% block title %}Журнал{% endblock %}
-
+{% block title %}Журнал{% endblock title %}
 {% block content %}
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center col-md-2 ms-4 mb-2 mb-md-0 text-dark text-decoration-none">
-            <img src="{% static 'it-cube-logo.png' %}" height="32" alt="cube">
-            <span class="d-inline-block fs-5 ms-3">IT-CUBE САТКА</span>
-        </a>
-
-        <ul class="nav nav-pills col-12 gap-2 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li class="nav-item"><a href="{% url 'home' %}" class="nav-link btn btn-primary border-0 px-3">
-                <img src="{% static 'icons/icons/list.svg' %}" class="me-2"
-                     style="transform: translateY(-10%) translateX(-5%)"
-                     alt="cube"> Списки</a></li>
-            <li class="nav-item"><a href="{% url 'journal' %}" class="nav-link btn btn-primary border-0 px-3 active">
-                <img src="{% static 'icons/icons/journal-album.svg' %}" class="me-2"
-                     style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Журнал</a></li>
-            {% if user_can_edit %}
-                <li class="nav-item"><a href="/admin" class="nav-link btn btn-primary border-0 px-3">
-                    <img src="{% static 'icons/icons/sliders.svg' %}" class="me-2"
-                         style="transform: translateY(-10%) translateX(-5%)" alt="cube"> Управление</a></li>
-            {% endif %}
-        </ul>
-
-        <div class="hstack col-md-2 text-end me-2">
-            {% include 'user_profile.html' %}
-        </div>
-    </header>
-
+    {% include "header.html" %}
     <div class="row mx-2">
         <div class="col-9">
             <ul class="nav navbar nav-pills py-0 mb-3 nav-fill gap-2">
@@ -39,44 +12,61 @@
                     </li>
                 {% endfor %}
             </ul>
-        <hr style="width: 99%; margin: 1% auto;">
-            <div class="card mb-3 border-0">
-                <div class="card-body p-0 d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
-                    <ul class="nav nav-pills col-12 gap-2 col-md-auto mb-2 justify-content-center mb-md-0"
-                        id="top-panel">
-                        <li class="nav-item"><a data-index="0" class="nav-link top-panel btn btn-primary border-0 px-3">
-                            <img src="{% static 'icons/icons/journal-bookmark.svg' %}" class="me-2"
+            <div class="p-0 d-flex mb-3 border-0 flex-wrap align-items-center justify-content-center justify-content-md-between">
+                <ul class="nav nav-pills col-12 gap-2 col-md-auto mb-2 justify-content-center mb-md-0"
+                    id="top-panel">
+                    <li class="nav-item">
+                        <a data-index="0"
+                           class="nav-link top-panel btn btn-primary border-0 px-3">
+                            <img src="{% static 'icons/icons/journal-bookmark.svg' %}"
+                                 class="me-2"
                                  style="transform: translateY(-10%) translateX(-5%)"
-                                 alt="cube"> Техника безопасности</a></li>
-                        <li class="nav-item"><a data-index="1" class="nav-link top-panel btn btn-primary border-0 px-3 active">
-                            <img src="{% static 'icons/icons/journal-album.svg' %}" class="me-2"
-                                 style="transform: translateY(-10%) translateX(-5%)" alt="cube">Журнал</a></li>
-                    </ul>
-                    <div class="hstack ms-auto">
-                        {% if user.userprofile.is_teacher %}
-                            <span class="text-danger me-4" id="warning-text" hidden>
-                                Внимание! Таблица изменена, необходимо её сохранить
-                            </span>
-                            <a id="export-table" class="btn btn-primary border-0 me-2">
-                                <img src="{% static 'icons/icons/device-hdd.svg' %}"
-                                     style="filter: invert(1); transform: translateY(-5%)" class="me-1"/>
-                                Сохранить</a>
-                        {% endif %}
-                        <a id="download-table" class="btn btn-primary border-0">
-                            <img src="{% static 'icons/icons/download.svg' %}" style="filter: invert(1)">
-                        </a>
-                        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                                <div class="toast-header">
-                                    <img src="{% static 'it-cube-logo.png' %}" width="16" class="rounded me-2"
-                                         alt="...">
-                                    <strong class="me-auto">Уведомление</strong>
-                                    <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                            aria-label="Закрыть"></button>
-                                </div>
-                                <div class="toast-body">
-                                    <span id="toast-text"></span>
-                                </div>
+                                 alt="cube">
+                        Техника безопасности</a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-index="1"
+                           class="nav-link top-panel btn btn-primary border-0 px-3 active">
+                            <img src="{% static 'icons/icons/journal-album.svg' %}"
+                                 class="me-2"
+                                 style="transform: translateY(-10%) translateX(-5%)"
+                                 alt="cube">
+                        Журнал</a>
+                    </li>
+                </ul>
+                <div class="hstack ms-auto">
+                    {% if user.userprofile.is_teacher %}
+                        <span class="text-danger me-4" id="warning-text" hidden>Внимание! Таблица изменена, необходимо её сохранить</span>
+                        <a id="export-table" class="btn btn-primary border-0 me-2">
+                            <img src="{% static 'icons/icons/device-hdd.svg' %}"
+                                 style="filter: invert(1);
+                                        transform: translateY(-5%)"
+                                 class="me-1"/>
+                        Сохранить</a>
+                    {% endif %}
+                    <a id="download-table" class="btn btn-primary border-0">
+                        <img src="{% static 'icons/icons/download.svg' %}"
+                             style="filter: invert(1)">
+                    </a>
+                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                        <div id="liveToast"
+                             class="toast"
+                             role="alert"
+                             aria-live="assertive"
+                             aria-atomic="true">
+                            <div class="toast-header">
+                                <img src="{% static 'it-cube-logo.png' %}"
+                                     width="16"
+                                     class="rounded me-2"
+                                     alt="...">
+                                <strong class="me-auto">Уведомление</strong>
+                                <button type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="toast"
+                                        aria-label="Закрыть"></button>
+                            </div>
+                            <div class="toast-body">
+                                <span id="toast-text"></span>
                             </div>
                         </div>
                     </div>
@@ -90,49 +80,55 @@
                     "themes": {{ t.themes }} }
                 </a>
             {% endfor %}
-            {% if table_tb %}
-                <a id="loaded-tb-data" hidden>
-                    { "tb": {{ table_tb.tb }} }</a>
-            {% endif %}
+            {% if table_tb %}<a id="loaded-tb-data" hidden>{ "tb": {{ table_tb.tb }} }</a>{% endif %}
             <div id="table-marks" class="card table-responsive mb-2 border-bottom-0">
                 <div class="card-header border-bottom-0">
                     <span class="card-title fs-5">Посещаемость</span>
                 </div>
                 <table class="table mb-0 table-bordered table-striped" id="TableToExport">
                     <thead class="table-light">
-                    <tr>
-                        <th scope="col" class="text-center">#</th>
-                        <th scope="col" class="name" style="min-width: 220px">Фамилия Имя</th>
-                        {% for i in cols %}
-                            <th scope="col" class="text-center" style="min-width: 60px">
-                                <input id="date-{{ i }}" data-col="{{ i }}" type="date" class="journal-date text-center"
-                                       placeholder="Дата" style="max-width: 110px"></th>
-                        {% endfor %}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for s in students %}
                         <tr>
-                            <th scope="row"
-                                class="text-center {% if s.status == 2 %}text-danger{% endif %}">{{ forloop.counter }}</th>
-                            <td class="name {% if s.status == 2 %}text-danger{% endif %}"
-                                    {% if s.status == 2 %}
-                                data-bs-toggle="tooltip" data-bs-placement="right"
-                                data-bs-title="Отчислен с {{ s.delete_date }}"
-                                    {% endif %}
-                                id="name-{{ forloop.counter }}">{{ s.last_name }} {{ s.first_name }}</td>
-                            {% for col in cols %}
-                                <td class="text-center">
-                                    <select id="mark-{{ forloop.parentloop.counter }}-{{ forloop.counter }}"
-                                            class="journal-mark text-center">
-                                        <option value="0"></option>
-                                        <option value="1">НБ</option>
-                                        <option value="2">Б</option>
-                                    </select>
-                                </td>
+                            <th scope="col" class="text-center">#</th>
+                            <th scope="col" class="name" style="min-width: 220px">Фамилия Имя</th>
+                            {% for i in cols %}
+                                <th scope="col" class="text-center" style="min-width: 60px">
+                                    <input id="date-{{ i }}"
+                                           data-col="{{ i }}"
+                                           type="date"
+                                           class="journal-date text-center"
+                                           placeholder="Дата"
+                                           style="max-width: 110px">
+                                </th>
                             {% endfor %}
                         </tr>
-                    {% endfor %}
+                    </thead>
+                    <tbody>
+                        {% for s in students %}
+                            <tr>
+                                <th scope="row"
+                                    class="text-center {% if s.status == 2 %}text-danger{% endif %}">{{ forloop.counter }}</th>
+                                <td class="name {% if s.status == 2 %}text-danger{% endif %}"
+                                    {% if s.status == 2 %} data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Отчислен с {{ s.delete_date }}" {% endif %}
+                                    id="name-{{ forloop.counter }}">
+                                    {{ s.last_name }} {{ s.first_name }}
+                                </td>
+                                {% for col in cols %}
+                                    <td class="text-center">
+                                        <select id="mark-{{ forloop.parentloop.counter }}-{{ forloop.counter }}"
+                                                class="journal-mark text-center">
+                                            <option value="0">
+                                            </option>
+                                            <option value="1">
+                                                НБ
+                                            </option>
+                                            <option value="2">
+                                                Б
+                                            </option>
+                                        </select>
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -142,23 +138,32 @@
                 </div>
                 <table class="table mb-0 table-bordered table-striped" id="TableToExport">
                     <thead class="table-light">
-                    <tr>
-                        <th scope="col" class="text-center" style="width: 120px">Дата</th>
-                        <th scope="col" class="text-center" style="width: 120px">Кол-во часов</th>
-                        <th scope="col" style="min-width: 720px">Тема занятия</th>
-                    </tr>
+                        <tr>
+                            <th scope="col" class="text-center" style="width: 120px">Дата</th>
+                            <th scope="col" class="text-center" style="width: 120px">Кол-во часов</th>
+                            <th scope="col" style="min-width: 720px">Тема занятия</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {% for row in cols %}
-                        <tr>
-                            <td><input id="theme-date-{{ row }}" type="date" class="journal-date text-center"
-                                       placeholder="-"></td>
-                            <td><input id="theme-time-{{ row }}" type="text" class="journal-date text-center"
-                                       placeholder="-"></td>
-                            <td><input id="theme-{{ row }}" type="text" class="journal-date"
-                                       placeholder="-"></td>
-                        </tr>
-                    {% endfor %}
+                        {% for row in cols %}
+                            <tr>
+                                <td>
+                                    <input id="theme-date-{{ row }}"
+                                           type="date"
+                                           class="journal-date text-center"
+                                           placeholder="-">
+                                </td>
+                                <td>
+                                    <input id="theme-time-{{ row }}"
+                                           type="text"
+                                           class="journal-date text-center"
+                                           placeholder="-">
+                                </td>
+                                <td>
+                                    <input id="theme-{{ row }}" type="text" class="journal-date" placeholder="-">
+                                </td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
                 <div class="card-footer border-top-0">
@@ -171,53 +176,75 @@
                 </div>
                 <table class="table mb-0 table-bordered table-striped" id="TableToExport">
                     <thead class="table-light">
-                    <tr>
-                        <th scope="row" class="text-center">#</th>
-                        <th scope="col" class="" style="width: 220px">Фамилия Имя</th>
-                        <th scope="col" class="text-center" style="width: 120px">Дата</th>
-                        <th scope="col" style="min-width: 400px">Тема</th>
-                        <th scope="col" class="text-center" style="width: 120px">Дата</th>
-                        <th scope="col" style="min-width: 400px">Тема</th>
-                    </tr>
+                        <tr>
+                            <th scope="row" class="text-center">#</th>
+                            <th scope="col" class="" style="width: 220px">Фамилия Имя</th>
+                            <th scope="col" class="text-center" style="width: 120px">Дата</th>
+                            <th scope="col" style="min-width: 400px">Тема</th>
+                            <th scope="col" class="text-center" style="width: 120px">Дата</th>
+                            <th scope="col" style="min-width: 400px">Тема</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {% for row in cols %}
-                        <tr>
-                            <th class="text-center">{{ forloop.counter }}</th>
-                            <td id="tb-name-{{ row }}"></td>
-                            <td><input id="tb-bs-date-{{ row }}" type="date" class="journal-tb text-center"
-                                       placeholder="-"></td>
-                            <td><input id="tb-bs-theme-{{ row }}" type="text" class="journal-tb"
-                                       placeholder="-"></td>
-                            <td><input id="tb-pdd-date-{{ row }}" type="date" class="journal-tb text-center"
-                                       placeholder="-"></td>
-                            <td><input id="tb-pdd-theme-{{ row }}" type="text" class="journal-tb"
-                                       placeholder="-"></td>
-                        </tr>
-                    {% endfor %}
+                        {% for row in cols %}
+                            <tr>
+                                <th class="text-center">{{ forloop.counter }}</th>
+                                <td id="tb-name-{{ row }}"></td>
+                                <td>
+                                    <input id="tb-bs-date-{{ row }}"
+                                           type="date"
+                                           class="journal-tb text-center"
+                                           placeholder="-">
+                                </td>
+                                <td>
+                                    <input id="tb-bs-theme-{{ row }}"
+                                           type="text"
+                                           class="journal-tb"
+                                           placeholder="-">
+                                </td>
+                                <td>
+                                    <input id="tb-pdd-date-{{ row }}"
+                                           type="date"
+                                           class="journal-tb text-center"
+                                           placeholder="-">
+                                </td>
+                                <td>
+                                    <input id="tb-pdd-theme-{{ row }}"
+                                           type="text"
+                                           class="journal-tb"
+                                           placeholder="-">
+                                </td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
                 <div class="card-footer border-top-0">
                     <span class="text-muted">IT-CUBE САТКА</span>
                 </div>
             </div>
-
         </div>
         <div class="col-3" style="transform: translateY(3px)">
-            <p class="fs-4 text-uppercase">Группы</p>
+            <p class="fs-4 text-uppercase ms-3">Группы</p>
+            <p class="fs-6 text-uppercase text-muted mt-4 ms-3" style="transform: translateY(1px)">Бюджет</p>
             <div class="panel home">
                 {% for g in groups %}
-                    <div>
-                        <img src="{% static 'icons/icons/layers.svg' %}" class="mx-2"
+                    <div class="panel-outline">
+                        <img src="{% static 'icons/icons/layers.svg' %}"
+                             class="mx-2 panel-inline"
                              style="transform: translateY(-5%)">
                         <a class="list-item {% if forloop.counter == 1 %}active{% endif %} group"
                            href="?group={{ g.id }}">{{ g.group_name }}</a>
                     </div>
                 {% endfor %}
+                
+            </div>
+            <p class="fs-6 text-uppercase text-muted mt-2 ms-3">Внебюджет</p>
+            <div class="panel home">
                 {% for pg in paid_groups %}
-                    <div>
-                        <img src="{% static 'icons/icons/layers-half.svg' %}" class="mx-2"
-                             style="transform: translateY(-5%)">
+                    <div class="panel-outline">
+                        <img src="{% static 'icons/icons/layers-half.svg' %}"
+                            class="mx-2 panel-inline"
+                            style="transform: translateY(-5%)">
                         <a class="list-item group" href="?paidgroup={{ pg.id }}">{{ pg.group_name }}</a>
                     </div>
                 {% endfor %}
