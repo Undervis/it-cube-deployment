@@ -6,6 +6,7 @@ import openpyxl as xl
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from it_cube.settings import BASE_DIR
 
 @login_required(login_url='/login')
 def journal(request):
