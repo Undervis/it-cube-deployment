@@ -6,7 +6,7 @@ from rest_framework import permissions
 from .serializers import StudentsSerializer
 from .models import *
 import openpyxl as xl
-import jsonpickle
+from it_cube.settings import BASE_DIR
 from django.shortcuts import redirect
 
 class Table:
@@ -45,7 +45,6 @@ class JournalView(APIView):
         # Проверка авторизации пользователя и перевод на логин если пользователь не авторизован
         if not user.is_authenticated:
             return redirect("/login")
-        print(month)
         # Проверка наличия групп
         if Group.objects.all().count() or PaidGroup.objects.all().count():
             # Если пользователь учитель то ему выдаются только его группы, иначе выдаются все группы
